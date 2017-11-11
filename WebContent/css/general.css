@@ -1,0 +1,29 @@
+        	body{
+				color: #fff;
+    			background-color: #C461AE;
+        	}
+        	.col-3{
+        		padding: 0px;
+        	}
+        	img{
+        		height: auto;
+        		width: 100%;
+        		display: block;
+        		margin: 0 auto;
+        	}
+        	.recuadro{        		
+        		padding: 3px;
+        	}
+
+        	.interno{        		
+    			background-color: #EA6790;
+    			padding: 3px;
+    			height: 100%;
+        	}
+        	.btn-Close{
+        	    position: absolute;
+    			right: 5px;
+    			border-bottom-left-radius: 3.25rem;
+    			opacity: 0.5;
+    			filter: alpha(opacity=50);
+    		}
