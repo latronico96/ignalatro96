@@ -4,12 +4,12 @@
 <%@page import="funciones.Funciones"%>
 <%@page import="java.sql.Statement"%>
 <%@page import="java.sql.DriverManager"%>
-<%@ page session="false" pageEncoding="ISO-8859-1" contentType="text/html; charset=ISO-8859-1" %>
+<%@ page session="false" pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
 
 <!DOCTYPE html>
 <html lang="es">
     <head>
-        <meta charset="ISO-8859-1" />
+        <meta charset="UTF-8" />
         <title>Prueba 29/10/2017</title>
         <link rel="stylesheet" href="css/bootstrap.css">                 
         <link rel="stylesheet" href="css/pisaBootstrap.css">         

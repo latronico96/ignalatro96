@@ -1,7 +1,18 @@
         	body{
-				color: #fff;
-    			background-color: #C461AE;
+				background-color: #dcdcdc;		
+				height:auto;		
         	}
+        	
+        	.cuerpo{
+				height:100%;
+			    overflow: auto;
+			    display: block;
+			    position: relative;
+			    float: none;
+			    margin: auto;
+			    
+        	}
+        	
         	.col-3{
         		padding: 0px;
         	}
@@ -12,13 +23,14 @@
         		margin: 0 auto;
         	}
         	.recuadro{        		
-        		padding: 3px;
-        	}
+        		padding: 3px;               
+            }
 
-        	.interno{        		
-    			background-color: #EA6790;
-    			padding: 3px;
-    			height: 100%;
+            .interno{               
+                padding: 3px;                
+                margin: 20px;
+                overflow: auto;
+                 height: 100%;
         	}
         	.btn-Close{
         	    position: absolute;
@@ -27,3 +39,65 @@
     			opacity: 0.5;
     			filter: alpha(opacity=50);
     		}
+
+.T-rojo {
+    color: #d11141 !important;
+    }
+.T-verde {
+    color: #00b159 !important;
+    }
+.T-celeste {
+    color: #00aedb !important;
+    }
+.T-naranja {
+    color: #f37735 !important;
+    }
+.T-amarillo {
+    color: #ffc425 !important;
+    }
+.T-blanco {
+    color: #ffffff !important;
+    }
+.T-negro {
+    color: #000000 !important;
+    }
+
+.rojo{ 
+    background-color: #d11141 !important;
+    }
+.verde{ 
+    background-color: #298b40 !important;
+    }
+.celeste{ 
+    background-color: #00aedb !important;
+    }
+.naranja{ 
+    background-color: #f37735 !important;
+    }
+.amarillo{ 
+    background-color: #ffc425 !important;
+    }
+.blanco{ 
+    background-color: #ffffff !important;
+    }
+.negro{ 
+    background-color: #000000 !important;
+    }
+
+#salir{
+    position: absolute;
+    right: 0px;
+}
+
+.rojo a:focus, .rojo a:hover,
+.verde a:focus, .verde a:hover,
+.celeste a:focus, .celeste a:hover,
+.naranja a:focus, .naranja a:hover,
+.amarillo a:focus, .amarillo a:hover,
+.blanco a:focus, .blanco a:hover,
+.negro a:focus, .negro a:hover{
+    cursor: pointer;
+    opacity: 0.5;
+    color: #000000;
+}
+
