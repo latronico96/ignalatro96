@@ -1,3 +1,10 @@
+spam.form-control {
+    color: unset;
+    background-color:  unset;
+    background-image: unset;
+    background-clip: unset;
+}
+
 .form-control {
     display: block;
     width: 100%;
@@ -5,10 +12,6 @@
     margin: 5px auto;
     font-size: 1rem;
     line-height: unset;
-    color: #495057;
-    background-color: #fff;
-    background-image: none;
-    background-clip: padding-box;
     border: 0px solid #ced4da;
     border-radius: .25rem;
     transition: border-color ease-in-out 0.0s,box-shadow ease-in-out 0.0s;
@@ -35,6 +38,10 @@
     width: 100%;
     color: #495057;
     text-align: inherit;
+}
+
+.navbar {
+    margin-top: 2px;
 }
 
 .navbar-light .navbar-nav .nav-link {

@@ -1,6 +1,6 @@
         	body{
 				background-color: #dcdcdc;		
-				height:auto;		
+					
         	}
         	
         	.cuerpo{
@@ -9,7 +9,7 @@
 			    display: block;
 			    position: relative;
 			    float: none;
-			    margin: auto;
+			    margin: 0px auto;
 			    
         	}
         	
@@ -28,8 +28,8 @@
 
             .interno{               
                 padding: 3px;                
-                margin: 20px;
-                overflow: auto;
+                /*margin: 20px;
+                overflow: auto;*/
                  height: 100%;
         	}
         	.btn-Close{
@@ -101,3 +101,7 @@
     color: #000000;
 }
 
+.pie{
+	bottom: 0px;
+	position: fixed;
+}
