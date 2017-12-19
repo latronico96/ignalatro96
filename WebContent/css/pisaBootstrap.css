@@ -3,6 +3,8 @@ spam.form-control {
     background-color:  unset;
     background-image: unset;
     background-clip: unset;
+    font-weight: bolder;
+    border: 0px solid #ced4da;
 }
 
 .form-control {
@@ -12,9 +14,11 @@ spam.form-control {
     margin: 5px auto;
     font-size: 1rem;
     line-height: unset;
-    border: 0px solid #ced4da;
+    border: 1px solid #ced4da;
     border-radius: .25rem;
     transition: border-color ease-in-out 0.0s,box-shadow ease-in-out 0.0s;
+	position: relative;
+	float: left;
 }
 
 .custom-file-control:lang(en)::after {
@@ -50,4 +54,17 @@ spam.form-control {
 
 .navbar-light .navbar-nav .nav-link:focus, .navbar-light .navbar-nav .nav-link:hover {
     color: unset;
+}
+
+.card-header{
+	background-color: #4f4f4f;	
+}
+
+.card-header h5 a{
+	color: #fff;	
+}
+
+.modal-dialog {
+    max-width: 600px;
+    margin: 30px auto;
 }

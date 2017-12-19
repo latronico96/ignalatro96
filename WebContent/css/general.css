@@ -1,107 +1,183 @@
-        	body{
-				background-color: #dcdcdc;		
-					
-        	}
-        	
-        	.cuerpo{
-				height:100%;
-			    overflow: auto;
-			    display: block;
-			    position: relative;
-			    float: none;
-			    margin: 0px auto;
-			    
-        	}
-        	
-        	.col-3{
-        		padding: 0px;
-        	}
-        	img{
-        		height: auto;
-        		width: 100%;
-        		display: block;
-        		margin: 0 auto;
-        	}
-        	.recuadro{        		
-        		padding: 3px;               
-            }
+@import url("datepicker.css");
+@import url("ui.jqgrid.css");
+@import url("jquery-ui.css");
+@import url("bootstrap.css");
+@import url("pisaBootstrap.css");
+@import url("anchos.css");
 
-            .interno{               
-                padding: 3px;                
-                /*margin: 20px;
+body {
+	background-color: #dcdcdc;
+}
+
+.cuerpo {
+	height: 100%;
+	overflow: auto;
+	display: block;
+	position: relative;
+	float: none;
+	margin: 0px auto;
+}
+
+.col-3 {
+	padding: 0px;
+}
+
+img {
+	height: auto;
+	width: 100%;
+	display: block;
+	margin: 0 auto;
+}
+
+.recuadro {
+	padding: 3px;
+}
+
+.interno {
+	padding: 3px;
+	/*margin: 20px;
                 overflow: auto;*/
-                 height: 100%;
-        	}
-        	.btn-Close{
-        	    position: absolute;
-    			right: 5px;
-    			border-bottom-left-radius: 3.25rem;
-    			opacity: 0.5;
-    			filter: alpha(opacity=50);
-    		}
+	height: 100%;
+}
+
+.btn-Close {
+	position: absolute;
+	right: 5px;
+	border-bottom-left-radius: 3.25rem;
+	opacity: 0.5;
+	filter: alpha(opacity = 50);
+}
 
 .T-rojo {
-    color: #d11141 !important;
-    }
+	color: #d11141 !important;
+}
+
 .T-verde {
-    color: #00b159 !important;
-    }
+	color: #00b159 !important;
+}
+
 .T-celeste {
-    color: #00aedb !important;
-    }
+	color: #00aedb !important;
+}
+
 .T-naranja {
-    color: #f37735 !important;
-    }
+	color: #f37735 !important;
+}
+
 .T-amarillo {
-    color: #ffc425 !important;
-    }
+	color: #ffc425 !important;
+}
+
 .T-blanco {
-    color: #ffffff !important;
-    }
+	color: #ffffff !important;
+}
+
 .T-negro {
-    color: #000000 !important;
-    }
-
-.rojo{ 
-    background-color: #d11141 !important;
-    }
-.verde{ 
-    background-color: #298b40 !important;
-    }
-.celeste{ 
-    background-color: #00aedb !important;
-    }
-.naranja{ 
-    background-color: #f37735 !important;
-    }
-.amarillo{ 
-    background-color: #ffc425 !important;
-    }
-.blanco{ 
-    background-color: #ffffff !important;
-    }
-.negro{ 
-    background-color: #000000 !important;
-    }
-
-#salir{
-    position: absolute;
-    right: 0px;
+	color: #000000 !important;
 }
 
-.rojo a:focus, .rojo a:hover,
-.verde a:focus, .verde a:hover,
-.celeste a:focus, .celeste a:hover,
-.naranja a:focus, .naranja a:hover,
-.amarillo a:focus, .amarillo a:hover,
-.blanco a:focus, .blanco a:hover,
-.negro a:focus, .negro a:hover{
-    cursor: pointer;
-    opacity: 0.5;
-    color: #000000;
+.rojo {
+	background-color: #d11141 !important;
 }
 
-.pie{
+.verde {
+	background-color: #298b40 !important;
+}
+
+.celeste {
+	background-color: #00aedb !important;
+}
+
+.naranja {
+	background-color: #f37735 !important;
+}
+
+.amarillo {
+	background-color: #ffc425 !important;
+}
+
+.blanco {
+	background-color: #ffffff !important;
+}
+
+.negro {
+	background-color: #000000 !important;
+}
+
+#salir {
+	position: absolute;
+	right: 0px;
+}
+
+.rojo a:focus, .rojo a:hover, .verde a:focus, .verde a:hover, .celeste a:focus,
+	.celeste a:hover, .naranja a:focus, .naranja a:hover, .amarillo a:focus,
+	.amarillo a:hover, .blanco a:focus, .blanco a:hover, .negro a:focus,
+	.negro a:hover {
+	cursor: pointer;
+	opacity: 0.5;
+	color: #000000;
+}
+
+#Cuerpo {
+	min-height: 80vh;
+}
+
+.pie {
 	bottom: 0px;
-	position: fixed;
+	/*position: fixed;*/
+}
+
+.noMargin {
+	margin: 0px !important;
+}
+
+.noMargin-left {
+	margin-left: 0px !important;
+}
+
+.noMargin-right {
+	margin-right: 0px !important;
+}
+
+.noMargin-top {
+	margin-top: 0px !important;
+}
+
+.noMargin-bottom {
+	margin-bottom: 0px !important;
+}
+
+.noPadding {
+	padding: 0px !important;
+}
+
+.noPadding-left {
+	padding-left: 0px !important;
+}
+
+.noPadding-right {
+	padding-right: 0px !important;
+}
+
+.noPadding-top {
+	padding-top: 0px !important;
+}
+
+.noPadding-bottom {
+	padding-bottom: 0px !important;
+}
+
+.fila {
+	width: 100%;
+}
+
+#DESCRIPCIONDELSISTEMA{
+	font-size: 20px;
+	padding: 15px;
+	text-align: justify;
+	}
+	
+#Cuerpo > div {
+	margin-top:5px;
+    float: left;
 }

@@ -90,6 +90,9 @@ public class UploadServlet extends HttpServlet {
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
         }else{
         	String insert="delete from dbGaleria where gar_nrofo="+data.trim();
@@ -97,7 +100,10 @@ public class UploadServlet extends HttpServlet {
 				Connection cn=fun.Conectar();
 				Statement st = cn.createStatement();	
 				st.executeUpdate(insert);
-			} catch (SQLException e) {
+	        } catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ClassNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
