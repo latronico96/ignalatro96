@@ -68,3 +68,7 @@ spam.form-control {
     max-width: 600px;
     margin: 30px auto;
 }
+
+.navbar-light .navbar-nav .show > .nav-link, .navbar-light .navbar-nav .active > .nav-link, .navbar-light .navbar-nav .nav-link.show, .navbar-light .navbar-nav .nav-link.active {
+    color: white;
+}

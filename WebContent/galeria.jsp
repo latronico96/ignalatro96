@@ -22,7 +22,7 @@
     <body>
     	<div class="container">
     		<div class="row">
-    			<div clas="row"><h1>Te Amo Mucho</h1></div>
+    			<div class="row"><h1>Te Amo Mucho</h1></div>
     		</div>
     	</div>
         <div class="container">
@@ -86,7 +86,6 @@
 			        </div>
 		        </div>
             </div>
-        </div>
         
         <div class="row">
 	        

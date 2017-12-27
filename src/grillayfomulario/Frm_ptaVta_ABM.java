@@ -2,17 +2,20 @@ package grillayfomulario;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.util.Iterator;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 import funciones.Funciones;
 
@@ -23,6 +26,8 @@ import funciones.Funciones;
 public class Frm_ptaVta_ABM extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     private Funciones fun = null;
+    private String tabla="dbCondIva";
+    private String claveCampo="iva_codig";
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -35,8 +40,72 @@ public class Frm_ptaVta_ABM extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		fun = new Funciones();
+		Map<String,String> tipos=fun.getTipos(tabla);
+		String campos="";
+		String valores="";
+		String claveValor="";
+		Map<String,String> parametros=fun.parametrosAMap(request);
+	    Iterator it = parametros.entrySet().iterator();
+		while (it.hasNext()) {
+			Map.Entry pair = (Map.Entry)it.next();
+			if (!campos.equals("")){ 
+				campos+=",";
+				valores+=",";
+			}else{
+				/* mantiene el orden pero no se que tan seguro es
+				this.claveCampo=(String) pair.getKey();
+				claveValor=(String) pair.getValue();*/
+			}
+			if (this.claveCampo.equals(pair.getKey())){
+				claveValor=(String) pair.getValue();
+			}
+			campos+=pair.getKey() ;
+			valores+= fun.PrepararCampo( (String)pair.getKey(), tipos, (String)pair.getValue());
+		    System.out.println(pair.getKey() + " = " + pair.getValue());
+		    it.remove(); // avoids a ConcurrentModificationException
+		}
+
+		String delete="delete from "+this.tabla+" where "+this.claveCampo+"='"+claveValor+"'";
+		String insert="insert into "+this.tabla+" ("+campos+") values ("+valores+")";
+		    System.out.println(delete);
+		    System.out.println(insert);
+		
+		response.setContentType("application/json"); 
+	    PrintWriter prt=response.getWriter();
+	    JSONObject json=new JSONObject();
+	    Connection cn = null;
+		try {
+			cn = fun.Conectar();
+			cn.setAutoCommit(false);
+			Statement st = cn.createStatement();			
+			st.executeUpdate(delete);
+			st.executeUpdate(insert);		    
+			cn.commit();
+			st.close();
+			cn.close();
+			json.put("error","0");  
+			json.put("msg","sin errores se modifico con exito");	
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			json.put("error","1");  
+			json.put("msg","Error con la conexióon. Por favor vuelva a intentarlo.");	
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block		if (cn != null) {
+            try {
+                System.err.print("Transaction is being rolled back");
+                cn.rollback();
+                cn.close();
+            } catch(SQLException excep) {
+            	excep.printStackTrace();
+            }        
+			e.printStackTrace();
+			json.put("error","1");  
+			json.put("msg","Error con la base de datos. Por favor vuelva a intentarlo.");	
+		}
+		prt.print(json.toString());
+		
 	}
 
 	/**
@@ -145,13 +214,13 @@ public class Frm_ptaVta_ABM extends HttpServlet {
 	    	filtro+= BusquedaCampo+" LIKE '%"+BusquedaValor+"%' ";	   		
 	    }
 		
-			
+	    
+	     response.setContentType("application/json"); 
 	     PrintWriter prt=response.getWriter();
 	     try{			    
 		      // the sql server url		          
 		     String sql="Select * from dbCondIva ORDER BY " + ordenarcampo+ " " +ordenarmetodo;
-		     JSONObject jsonGrilla=fun.Grilla(sql,empieza,termina,pagina,rp);	    
-		     response.setContentType("application/json"); 		   
+		     JSONObject jsonGrilla=fun.Grilla(sql,empieza,termina,pagina,rp);	 		   
 		     prt.print(jsonGrilla.toString());
 		     
 	     }catch(Exception e){

@@ -76,7 +76,7 @@
 								<div class="dropdown-divider"></div>
 								<a class="dropdown-item">Acerca de</a>
 							</div></li>
-						<li class="nav-item" id="salir"><a class="nav-link">Salir</a>
+						<li class="nav-item" id="salir"><a class="nav-link" href="Frm_logeo">Salir</a>
 						</li>
 					</ul>
 				</div>

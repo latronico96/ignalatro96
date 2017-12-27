@@ -68,11 +68,11 @@ img {
 	color: #ffc425 !important;
 }
 
-.T-blanco {
+.T-blanco,.T-blanco > * {
 	color: #ffffff !important;
 }
 
-.T-negro {
+.T-negro, .T-negro > * {
 	color: #000000 !important;
 }
 

@@ -3,6 +3,7 @@
 <%@page import="funciones.Funciones"%>
 <%
 	Funciones fun = new Funciones();
+	String idGrilla = "Frm_ptaVta_ABM";
 %>
 <!DOCTYPE html>
 <html lang="es">
@@ -41,21 +42,23 @@
 <script type="text/javascript" src="js/i18n/grid.locale-es.js"></script>
 <script>
 stringFrom="<div id=\"form\">\n"+
-			<%=fun.buttonString("btn_rev",  "form-control ", "width:19px;height: 22.5px;", "button", "se apreto", "<img src=\"/img/iconos/glyphicons-208-remove.png\">","")%> +
-			<%=fun.inputString("codig", "form-control dato", "width:80px;", "text", "placeholder=\"Codigo\"")%> +
-			<%=fun.inputString("nombr", "form-control dato", "width:300px;", "text", "placeholder=\"Nombre\"")%> +
-			<%=fun.inputString("diiva", "form-control dato", "width:100px;", "text", "placeholder=\"Discirmina iva\"")%> +
-			<%=fun.buttonString("btn_act",  "form-control ", "width:20px;height: 22.5px;", "button", "se apreto", "<img src=\"/img/iconos/check.svg\">","")%> +
-		"</div>";
+			<% out.println(fun.buttonString("btn_rev",  "form-control ", "width:19px;height: 22.5px;", "button", "se apreto", "<img src=\"/img/iconos/glyphicons-208-remove.png\">","")); %> +
+			<% out.println(fun.inputString("iva_codig", "form-control dato", "width:80px;", "text", "placeholder=\"Codigo\"")); %> +
+			<% out.println(fun.inputString("iva_nombr", "form-control dato", "width:300px;", "text", "placeholder=\"Nombre\"")); %> +
+			<% out.println(fun.inputString("iva_diiva", "form-control dato", "width:100px;", "text", "placeholder=\"Discirmina iva\"")); %> +
+			<% out.println(fun.buttonString("btn_act",  "form-control ", "width:20px;height: 22.5px;", "button", "se apreto", "<img src=\"/img/iconos/check.svg\">", "" )); %> +
+			"</div>";
+var idGrilla="<%=idGrilla%>";
+var NidGrilla="#"+idGrilla;
         $(document).ready(function(){
         	$('#exampleModal').modal('show');
-        	
+        	$("#exampleModal" ).draggable();
         	Grilla();
 		});
         function Grilla() {
         	
-        	$("#frm_ptaVta_ABM").jqGrid({
-        		url : "./Frm_ptaVta_ABM",
+        	$(NidGrilla).jqGrid({
+        		url : "./"+idGrilla,
         		datatype : "json",
         		mtype : 'POST',
         		colNames : ['iva_codig',
@@ -70,7 +73,7 @@ stringFrom="<div id=\"form\">\n"+
         		rowNum : '10',
         		rowList : [
         				10, 15, 20, 25, 50, 75, 100, 150, 200, 250, 500, 750 ],
-        		pager : '#frm_ptaVta_ABM_pie',
+        		pager : NidGrilla+'_pie',
         		sortname : 'iva_codig',
         		viewrecords : true,
         		sortorder : "desc",
@@ -98,28 +101,52 @@ stringFrom="<div id=\"form\">\n"+
         								default:
         									if ((TeclasPer.search(e.key) >= 0) || (e.which == 8)) {
         										$("#BusquedaValor").focus();
-        									}	
+        									}	LL
         								break;											
         							}												
         		}),*/
         		gridComplete: function (){ 
         			$('tbody [role="row"]').each(function(id,val){ if(id%2==0){ 
-        						$('#frm_ptaVta_ABM #'+id).css('background-color','rgb(224, 224, 224)');
+        						$(NidGrilla+' #'+id).css('background-color','rgb(224, 224, 224)');
         			}});
+        			$("#form").remove();
         			$(".ui-jqgrid-bdiv").prepend(stringFrom);
+        			$("#btn_rev").unbind("click");
         			$("#btn_rev").click(function(){$(".dato").val("");});
-        			$("#frm_ptaVta_ABM_pie_left").prepend(<%=fun.buscadorGrilla("nombre","iva_nombr")%>);
         			
+        			$("#btn_act").unbind("click");
+        			$("#btn_act").click(function(){
+        		        $.ajax({
+        		            dataType: 'json',
+        		            data: $('.dato').serialize(),
+        		            type: 'GET',
+        		            url: idGrilla,
+        		            success: function(data){
+        		            	console.log(data);
+        		            	if(data.error==0){
+        		            		$(NidGrilla).trigger( 'reloadGrid' );	
+        		            	}
+                            },
+        		            error:  function(data){
+        		            	console.log(data);
+	                            
+                            }
+        		        });
+
+        			});
+
+        			$("#jqgridSearchForm").remove();
+        			$(NidGrilla+"_pie_left").prepend(<% out.println(fun.buscadorGrilla("nombre","iva_nombr")); %>);        			
         			$("tr.jqgrow.ui-row-ltr.ui-widget-content").first().trigger( "click");
-        			$("#frm_ptaVta_ABM").focus(); 
+        			$(NidGrilla).focus(); 
         							
         		},
         		ondblClickRow : function(id) {
-        			var ret = $("#frm_ptaVta_ABM").jqGrid('getRowData', id);        			
+        			var ret = $(NidGrilla).jqGrid('getRowData', id);        			
         			$.each(Object.values(ret),function(i,val){$(".dato")[i].value=val;})
         			        			
         		},
-        		caption : "frm_ptaVta_ABM"
+        		caption : ""
         	});
         	
         	$(".ui-jqgrid-titlebar").hide();
@@ -145,8 +172,8 @@ stringFrom="<div id=\"form\">\n"+
 				<div class="modal-body">
 
 					<div class="d-block">
-						<table id="frm_ptaVta_ABM"></table>
-						<div id="frm_ptaVta_ABM_pie"></div>
+						<table id="<%=idGrilla%>"></table>
+						<div id="<%=idGrilla%>_pie"></div>
 					</div>
 				</div>
 				<div class="modal-footer">

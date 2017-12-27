@@ -13,6 +13,125 @@
 <script src="js/jquery-3.2.1.js"></script>
 <script src="js/popper.js"></script>
 <script src="js/bootstrap.js"></script>
+<script>
+	$(document).ready(function(){
+	    $("input[type=button]").click(function(){
+		    var formulario = $("#login");
+		    var cancelar = false;
+		    var objeto="";
+		    var mensaje = "";
+		    var parametros = "";
+		    
+		    if(this.id == "btn_Enviar"){
+		    	formulario =$("#frm_login");
+		    	$("*",formulario).popover('hide');
+			    if( !cancelar && $("#usuario", formulario).val() == ""){			    	
+				    mensaje = "El usuario no puede ser vacio.";
+				    cancelar = true;
+				    objeto=$("#usuario", formulario);
+				    $("#usuario", formulario).focus();
+			    }
+			    
+			    if( !cancelar && $("#contrasenia", formulario).val() == ""){
+				    mensaje = "La contraseña no puede ser vacia.";
+				    cancelar = true;
+				    objeto=$("#contrasenia", formulario);
+				    $("#contrasenia", formulario).focus();
+			    }
+			    
+		    }else{
+		    	formulario =$("#frm_registrar");
+		    	$("*",formulario).popover('hide');
+		    	if (!cancelar && $("#compania",formulario).val()==""){
+					mensaje = "La compania no puede quedar vacia.";
+					cancelar = true;
+				    objeto=$("#compania", formulario);
+					$("#compania",formulario).focus();
+				}
+				if (!cancelar && $("#razon",formulario).val()==""){
+					mensaje = "La razon social no puede quedar vacia.";
+					cancelar = true;
+				    objeto=$("#razon", formulario);
+					$("#razon",formulario).focus();
+				}
+				if (!cancelar && $("#abrev",formulario).val()==""){
+					mensaje = "La abreviatura no puede quedar vacia.";
+					cancelar = true;
+				    objeto=$("#abrev", formulario);
+					$("#abrev",formulario).focus();
+				}
+				if (!cancelar && $("#condIva",formulario).val()==""){
+					mensaje = "La condIva no puede quedar vacia.";
+					cancelar = true;
+				    objeto=$("#condIva", formulario);
+					$("#condIva",formulario).focus();
+				}
+				if (!cancelar && $("#cuit",formulario).val()==""){
+					mensaje = "El cuit no puede quedar vacio.";
+					cancelar = true;
+				    objeto=$("#cuit", formulario);
+					$("#cuit",formulario).focus();
+				}
+				if (!cancelar && $("#usuario",formulario).val()==""){
+					mensaje = "El usuario no puede quedar vacio.";
+					cancelar = true;
+				    objeto=$("#usuario", formulario);
+					$("#usuario",formulario).focus();
+				}
+				if (!cancelar && $("#contrasenia",formulario).val()==""){
+					mensaje = "La contraseña no puede quedar vacia.";
+					cancelar = true;
+				    objeto=$("#contrasenia", formulario);
+					$("#contrasenia",formulario).focus();
+				}
+				if (!cancelar && $("#contrasenia2",formulario).val()==""){
+					mensaje = "La contraseña no puede quedar vacia.";
+					cancelar = true;
+				    objeto=$("#contrasenia2", formulario);
+					$("#contrasenia2",formulario).focus();
+				}
+				if (!cancelar && $("#contrasenia2",formulario).val()!=$("#contrasenia",formulario).val()){
+					mensaje = "Las contraseñas deben coinsidir";
+					cancelar = true;
+				    objeto=$("#contrasenia2", formulario);
+					$("#contrasenia2",formulario).focus();
+				}
+
+		    }
+		    parametros = $(".campo",formulario).serialize();
+		    
+		    if(cancelar){
+		    	console.log(mensaje);
+		    	objeto.popover({ 
+		    	    html : true,
+		    	    trigger: "manual"
+		    	})
+		    	var popover = objeto.data('bs.popover');
+		    	popover.config.content  = mensaje;		        
+		        objeto.popover('show');
+		    }else{
+			    $.ajax({
+			        dataType: 'json',
+			        data: parametros,
+			        type: 'GET',
+			        url: "/Frm_logeo",
+			        success: function(data){
+			        	if(data.cod!=1){
+			        		alert(data.msg);
+			        	}else{
+			        		window.location.href = "frm_main.jsp";
+			        	}		        	
+				        console.log(JSON.stringify(data));
+			        },
+			        error: function(data){
+			        	alert(data.msg);
+			        }
+			    });
+			    
+		    }
+	    });
+    });
+</script>
 </head>
 <body style="height: 100vh;">
 	<div class="container container-fluid cuerpo">
@@ -29,20 +148,18 @@
 			</div>
 			</nav>
 		</div>
-		<div class="row justify-content-between">
+		<div id="frm_login" class="row justify-content-between">
 			<nav
 				class="navbar navbar-expand col navbar-light negro T-blanco rounded">
 			<div class="collapse navbar-collapse" id="navbarNav">
 				<ul class="navbar-nav">
-					<li class="nav-item col"><h3>Login</h3></li>
+					<li class="nav-item col"><h3>Login</h3><%=fun.input("form", "campo", "", "hidden","value=\"frm_login\"")%></li>
 					<li class="nav-item col"><spam class="form-control">Usuario</spam></li>
-					<li class="nav-item col"><input class="form-control"
-						type="text" name="usuario" /></li>
+					<li class="nav-item col"><%=fun.input("usuario", "form-control campo", "", "text"," maxlength=\"45\"")%></li>
 					<li class="nav-item col"><spam class="form-control">contraseña</spam></li>
-					<li class="nav-item col"><input class="form-control"
-						type="text" name="contraseña" /></li>
-					<li class="nav-item col"><input class="btn " type="button"
-						id="btn_Enviar" value="Ingresar" /></li>
+					<li class="nav-item col"><%=fun.input("contrasenia", "form-control campo", "", "password"," maxlength=\"60\"")%></li>
+					<li class="nav-item col"><%=fun.input("btn_Enviar", "form-control campo btn float-right", "padding: 10px; margin: 3px;",
+					"button", "value=\"Ingresar\"")%></li>
 				</ul>
 			</div>
 			</nav>
@@ -55,39 +172,45 @@
 						con backups diarios, que le permite crear facturas elecrtonias, y
 						mas huevadas q se me van a ocurrir.</div>
 				</div>
-				<div class="with-50-00">
+				<div id="frm_registrar" class="with-50-00">
 					<div class="fila">
 
 						<spam class="form-control with-50-00">Compania</spam>
-						<input class="form-control with-50-00 campo" type="text"
-							name="usuario" />
+						<%=fun.input("form", "campo", "", "hidden","value=\"frm_registrar\"")%>
+						<%=fun.input("compania", "form-control with-50-00 campo", "", "text"," maxlength=\"45\"")%>
 					</div>
 					<div class="fila">
 						<spam class="form-control with-50-00">Razón Social</spam>
-						<input class="form-control with-50-00 campo" type="text"
-							name="usuario" />
+						<%=fun.input("razon", "form-control with-50-00 campo", "", "text"," maxlength=\"45\"")%>
 					</div>
 					<div class="fila">
 						<spam class="form-control with-50-00">Abreviatura</spam>
-						<input class="form-control with-50-00 campo" type="text"
-							name="usuario" />
+						<%=fun.input("abrev", "form-control with-50-00 campo", "", "text"," maxlength=\"3\"")%>
 					</div>
 					<div class="fila">
 						<spam class="form-control with-50-00">Condicion de Iva</spam>
-						<select class="form-control with-50-00 campo" type="text"
-							name="usuario">
-							<%=fun.GetHTMLSelect("iva_codig", "iva_nombr", "dbCondIva", "")%>
-						</select>
+						<%=fun.select("condIva", "form-control with-50-00 campo", "", "",
+					fun.GetHTMLOtion("iva_codig", "iva_nombr", "dbCondIva", ""), "")%>
 					</div>
 					<div class="fila">
 						<spam class="form-control with-50-00">C.U.I.T.</spam>
-						<input class="form-control with-50-00 campo" type="text"
-							name="usuario" />
+						<%=fun.input("cuit", "form-control with-50-00 campo", "", "text"," maxlength=\"11\"")%>
 					</div>
 					<div class="fila">
-						<input class="form-control with-50-00 campo btn float-right"
-							type="Button" style="padding: 10px; margin: 3px;"
-							value="Registrarse" />
+						<spam class="form-control with-50-00">Usuario</spam>
+						<%=fun.input("usuario", "form-control with-50-00 campo", "", "text"," maxlength=\"45\"")%>
+					</div>
+					<div class="fila">
+						<spam class="form-control with-50-00">Contraseña</spam>
+						<%=fun.input("contrasenia", "form-control with-50-00 campo", "", "password"," maxlength=\"60\"")%>
+					</div>
+					<div class="fila">
+						<spam class="form-control with-50-00">Confirmar Contraseña</spam>
+						<%=fun.input("contrasenia2", "form-control with-50-00 campo", "", "password"," maxlength=\"60\"")%>
+					</div>
+					<div class="fila">
+						<%=fun.input("registrarse", "form-control with-50-00 campo btn float-right",
+					"padding: 10px; margin: 3px;", "button", "value=\"Registrarse\"")%>
 					</div>
 				</div>
 			</div>
