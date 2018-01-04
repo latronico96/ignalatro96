@@ -2,7 +2,10 @@
 @import url("ui.jqgrid.css");
 @import url("jquery-ui.css");
 @import url("bootstrap.css");
+@import url("jquery-ui.theme.css");
 @import url("pisaBootstrap.css");
+
+@import url("modals.css");
 @import url("anchos.css");
 
 body {
@@ -104,6 +107,10 @@ img {
 	background-color: #000000 !important;
 }
 
+.transparente {
+	background-color: transparent !important;
+}
+
 #salir {
 	position: absolute;
 	right: 0px;
@@ -180,4 +187,41 @@ img {
 #Cuerpo > div {
 	margin-top:5px;
     float: left;
+}
+
+
+/**************************BOTON AZUL*****************************/
+.btn-azul {
+    color: #fff;
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.btn-azul:hover {
+    color: #fff;
+    background-color: #0069d9; 
+    border-color: #0062cc;
+}
+
+.btn-azul:disabled {
+	background-color: #007bff;
+	border-color: #007bff;
+}
+
+/**************************BOTON GRIS*****************************/
+.btn-gris {
+    color: #fff;
+    background-color: #868e96;
+    border-color: #868e96;
+}
+
+.btn-gris:hover {
+    color: #fff;
+    background-color: #727b84;
+    border-color: #6c757d;
+}
+
+.btn-gris:disabled {
+    background-color: #868e96;
+    border-color: #868e96;
 }

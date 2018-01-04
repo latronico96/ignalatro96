@@ -373,8 +373,8 @@ public class Funciones {
 
 	public String buscadorGrilla(String SearchBy,String field){
 		return "\""+("<div id=\"jqgridSearchForm\">"
-				+ this.input("jqgridSearInput", "form-control with-85-00 noPadding" , "min-width: 100px; margin: 5px 1%;" , "text", "data-field=\"field\" placeholder=\""+SearchBy+"\"")
-				+ this.button("btn_act",  "form-control with-9-00", "min-width:20px;height: 18.5px;padding 3px;", "button", "se apreto", "<img src=\"/img/iconos/glyphicons-28-search.png\">", "") 
+				+ this.input("jqgridSearInput", "form-control with-85-00 noPadding" , "margin: 1px calc(1% - 1px);" , "text", "data-field=\"field\" placeholder=\""+SearchBy+"\"")
+				+ this.button("btn_act",  "form-control with-9-00 noPadding", "height: 18.5px; margin: 1px calc(1% - 1px);", "button", "se apreto", "<img src=\"/img/iconos/glyphicons-28-search.png\">", "") 
 				+ "</div>").replaceAll("\"", "\\\\\"")+"\"";
 
 	}

@@ -1,0 +1,96 @@
+
+
+/**************************MODAL*****************************/
+.backmodal {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1040;
+    background-color: rgba(0,0,0,0.8);
+    display: none;
+}
+
+.modal {
+    position: relative;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 0.3rem;
+    outline: 0;
+    margin: auto;
+    z-index: 3200;
+}
+
+.modal-head {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    padding: 10px;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.modal-title {
+    margin-bottom: 0;
+    line-height: 1.5;
+    font-size: 1.25rem;
+}
+
+.close {
+    padding: 0;
+    background: transparent;
+    border: 0;
+    -webkit-appearance: none;
+    float: right;
+    font-size: 1.5rem;
+    font-weight: bold;
+    line-height: 1;
+    color: #000;
+    text-shadow: 0 1px 0 #fff;
+    opacity: .5;
+}
+
+.modal-body {
+    position: relative;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    padding: 10px;
+}
+
+.modal-foot {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+    -ms-flex-pack: end;
+    justify-content: flex-end;
+    padding: 5px 10px;
+    border-top: 1px solid #e9ecef;
+}
+
+.modal-foot > :not(:last-child) {
+    margin-right: .25rem;
+}
+
+.modal-foot > .btn {
+    width: auto;
+}
+
+/********************TIPOS DE MODAL****************************/
+.modal-pregunta {
+    width: 40%;
+    margin-top: 100px;
+}
+
+.modal-alerta {
+    width: 30%;
+    margin-top: 200px;
+}
