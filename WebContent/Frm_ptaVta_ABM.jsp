@@ -116,7 +116,7 @@
 	        				dataType:'json',
 	        				data:$('.dato').serialize(),
 	        				type:'GET',
-	        				url:idGrilla,
+	        				url:  <%=URL%>,
 	        				success:function(data){
 	        					console.log(data);
 								if(data.error == 0){

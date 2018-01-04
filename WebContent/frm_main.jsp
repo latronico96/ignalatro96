@@ -36,7 +36,10 @@
         	});
         });	
 		
-		
+		$(".card-header").click( function(){
+			alert(this.id);
+			
+		});
 		
 	});
 </script>
