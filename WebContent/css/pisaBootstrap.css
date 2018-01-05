@@ -152,3 +152,27 @@ spam.form-control {
 	{
 	color: white;
 }
+
+fieldset {
+    min-width: 0;
+    padding: 0 10px 15px 0;
+    margin: 0px;
+    border: 0;
+    min-width: -webkit-min-content;
+    border-width: 2px;
+    border-style: groove;
+    border-color: threedface;
+    border-image: initial;
+    border-radius: 8px;
+}
+
+legend {
+    display: block;    
+    width: auto;
+    padding: 0px 5px;
+    margin: 0px 0px 0px 5px;
+    font-size: 1.5rem;
+    line-height: inherit;
+    color: inherit;
+    white-space: normal;
+}

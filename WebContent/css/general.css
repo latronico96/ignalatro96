@@ -176,6 +176,7 @@ img {
 
 .fila {
 	width: 100%;
+	display: inline-block;
 }
 
 #DESCRIPCIONDELSISTEMA{

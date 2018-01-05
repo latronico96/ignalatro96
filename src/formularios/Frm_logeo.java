@@ -51,7 +51,7 @@ public class Frm_logeo extends HttpServlet {
 		
 		PrintWriter v=response.getWriter();
 		JSONObject jsonok=new JSONObject(); 
-		System.out.println( "Login prueba " );
+		//System.out.println( "Login prueba " );
 		/*Iterator it = parametros.entrySet().iterator();
 		while (it.hasNext()) {
 			Map.Entry pair = (Map.Entry)it.next();
