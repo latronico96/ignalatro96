@@ -226,3 +226,59 @@ img {
     background-color: #868e96;
     border-color: #868e96;
 }
+/**************************EFECTOS*DE*TOOLTIP**********************************/
+
+.tool {
+position: relative;
+    width: 100px;
+    height: 32px;
+    display: inline-block;
+    overflow: hidden;
+}
+
+.tool > img {
+  display: block;
+  width: 100%;
+  /*height: auto;*/
+  padding: 10% 0%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.tool > .overlay {
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  right: 0;
+  background-color: #000000;
+  overflow: hidden;
+  width: 100%;
+  height:0;
+  transition: .5s ease;
+}
+
+.tool:hover .overlay {
+  bottom: 0;
+  height: 100%;
+}
+
+.textimg {
+  white-space: nowrap; 
+  color: white;
+  font-size: 20px;
+  position: absolute;
+  overflow: hidden;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+}
+/*
+
+<div class="tool">
+  <img src="img_avatar.png" alt="Avatar" class="image">
+  <div class="overlay">
+    <div class="textimg">Hello World</div>
+  </div>
+</div>*/
+

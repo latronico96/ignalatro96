@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
@@ -13,6 +14,7 @@ import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -28,6 +30,7 @@ public class Funciones {
 	private int codigoHash=12;
 	public Map<String,String> parametros=new HashMap<String,String>();
 	public int compania=0;
+	public  Date hoy = new Date();
 	/*public String server="";
 	public String puerto="";
 	public String usuario="";
@@ -39,8 +42,8 @@ public class Funciones {
 	}
 	
 	public Funciones(HttpServletRequest request){
-		
 		this.CargarConfiguracion();
+		compania =  getCompania(request);
 
 	}
 
@@ -83,6 +86,10 @@ public class Funciones {
 		return String.valueOf( request.getSession().getAttribute("usu_usuar"));
 	}
 	
+	public int getCompania(HttpServletRequest request){
+		Object compa= request.getSession().getAttribute("usu_compa");	
+		return (compa==null?0:Integer.parseUnsignedInt((String) compa) );
+	}
 	public String getCodUsuario(HttpServletRequest request){
 		return String.valueOf( request.getSession().getAttribute("usu_usuar"));
 	}
@@ -109,11 +116,16 @@ public class Funciones {
 	}
 	
 	
-	public String getMaximo(String tabla,String campo){
+	public String getMaximoStr(String tabla,String campo){
+		return this.getMaximoStr(tabla, campo, "");
+	}
+
+	
+	public int getMaximo(String tabla,String campo){
 		return this.getMaximo(tabla, campo, "");
 	}
 
-	public String getMaximo(String tabla,String campo, String where){
+	public int getMaximo(String tabla,String campo, String where){
 		String wheresql=(where.trim().equals("")?"":"where "+where);
 		int max=0;
 		try {		
@@ -132,7 +144,10 @@ public class Funciones {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return String.valueOf(max);
+		return max;
+	}
+	public String getMaximoStr(String tabla,String campo, String where){
+		return String.valueOf(getMaximo( tabla, campo,  where));
 	}
 
 	public String isNull(String valor){
@@ -243,6 +258,58 @@ public class Funciones {
 			e.printStackTrace();
 		}
 		return json;
+	}
+
+	public JSONObject ResultSetToJSONObject(ResultSet rs){
+		JSONObject objAux=new JSONObject();
+		try {
+			if (!rs.isClosed()){
+				String[] vec= this.getCampos(rs);//devuelve el nombre de las columnas    
+				if (rs.next()){
+					objAux= new JSONObject();
+					for (int i = 0 ; i <vec.length;i++){	       
+						objAux.put(vec[i], this.acentos(rs.getString(vec[i]).replaceAll("\n", "")));	         
+					}
+				}
+			}		
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return objAux;
+	}
+	
+	public String  ResultSetToJavaScriptMap(String name,ResultSet rs){
+		String respuesta="var "+name+" = new Map();\n";				
+		try {
+			if (!rs.isClosed()){
+				String[] campos= this.getCampos(rs);//devuelve el nombre de las columnas    
+				while (rs.next()){
+					for (int i = 0 ; i <campos.length;i++){	 
+						
+						respuesta+= name + ".set('"+campos[i]+"','"+this.acentos(rs.getString(campos[i]).replaceAll("\n", ""))+"');\n";;	         
+					}
+				}
+			}		
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return respuesta;
+	}
+	
+	public String  JSONObjectToJavaScriptMap(String name,JSONObject json){
+		String respuesta="var "+name+" = new Map();\n";				
+		for (Object key : json.keySet()) {
+		        //hago un foreach
+		        String keyStr = (String)key;
+		        Object keyvalue = json.get(keyStr);       
+		        //si es un objeto el hijo traigos como si estuvieran al mismo nivel
+		        if (keyvalue instanceof JSONObject){
+		        	JSONObjectToJavaScriptMap(name,(JSONObject)keyvalue);
+		        }else{
+		        	respuesta+= name + ".set('"+keyStr+"','"+this.acentos(String.valueOf(keyvalue).replaceAll("\n", ""))+"');\n";
+		        }
+		    }
+		return respuesta;
 	}
 
 	public JSONObject Grilla(String subConsulta,String desde,String hasta, String pagina,String CantPorPagina){
@@ -374,7 +441,7 @@ public class Funciones {
 	public String buscadorGrilla(String SearchBy,String field){
 		return "\""+("<div id=\"jqgridSearchForm\">"
 				+ this.input("jqgridSearInput", "form-control with-85-00 noPadding" , "margin: 1px calc(1% - 1px);" , "text", "data-field=\"field\" placeholder=\""+SearchBy+"\"")
-				+ this.button("btn_act",  "form-control with-9-00 noPadding", "height: 18.5px; margin: 1px calc(1% - 1px);", "button", "se apreto", "<img src=\"/img/iconos/glyphicons-28-search.png\">", "") 
+				+ this.button("btn_act",  "form-control with-9-00 noPadding", "height: 18.5px; margin: 1px calc(1% - 1px);", "button", "se apreto", "<img src=\"/img/iconos/glyphicons-28-search.png\" style=\"height: 18px;width: auto;\">", "") 
 				+ "</div>").replaceAll("\"", "\\\\\"")+"\"";
 
 	}
@@ -501,6 +568,113 @@ public class Funciones {
 			e.printStackTrace();
 		}
 		return res;
+	}
+	
+	public void Verificar(Connection cn, String tipo, int codus, int codig) throws SQLException,Exception  {
+		String sqlinsert="insert into (vba_compa,vba_tipov,vba_codig,vba_codus,vba_fecha) values "
+									+ "(?,?,?,?,?)";
+		PreparedStatement pr=cn.prepareStatement(sqlinsert);
+		pr.setInt(0, this.compania);
+		pr.setString(1, tipo);
+		pr.setInt(2, codig);
+		pr.setInt(3, codus);
+		pr.setDate(4, new java.sql.Date(this.hoy.getTime()));
+		pr.executeQuery();	
+	}
+	
+	public static void out(Object obj){
+		if (true){
+			System.out.println(obj);
+		}
+	}
+	
+	public  String fillLeft(String str, int n) {
+		if (n > (str.length())) {
+			while ((str.length()) < n) {
+				str = " " + str;
+			}
+		}
+
+		return str;
+	}
+
+	public  String fillRight(String str, int n) {
+		if (n > (str.length())) {
+			while ((str.length()) < n) {
+				str = str + " ";
+			}
+		}
+
+		return str;
+	}
+	
+	public String ValyGet(String cod, String id){
+		String tabla="";
+		String campo="";
+		String err="";
+		String sql="";
+		switch (cod) {
+			case "CLI":
+				tabla="dbClientes";
+				campo="cli_codig";
+				break;
+			case "EMP":
+				tabla="dbempleados";
+				campo="emp_codig";
+				id=this.fillZero(id, 4);
+				break;
+			case "HCL":
+				tabla="dbHistClinicas";
+				campo="hcl_nrohc";
+				id=this.fillZero(id, 5);
+		}
+		
+		JSONObject obj=new JSONObject();
+		JSONObject jsonGen=new JSONObject();
+		
+		try {
+			Connection conexion =this.Conectar();
+			Statement st = conexion.createStatement();
+			ResultSet rs = null;
+			
+			switch (cod) {
+			case "ATETUR": case "PATTUR": case "PATOTR": case "CLILEG": case "EMPTUR": case "TITLEG":
+				rs = st.executeQuery(sql);
+				break;
+			default:
+				rs = st.executeQuery("select * from "+tabla+" where "+campo+"="+id+"");
+				break;
+			}
+			
+			if(rs.next()){				
+				err="0";
+				String[] vec= this.getCampos(rs);//devuelve el nombre de las columnas
+				for (int i = 0 ; i <vec.length;i++)
+				{	
+				    obj.put(vec[i], rs.getString(vec[i])==null?"":rs.getString(vec[i]).trim());
+				}
+				jsonGen.put("error",err);  
+				jsonGen.put("datos",obj);
+				
+			}else{
+				err="1";
+				jsonGen.put("error",err); 
+			}
+		
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return jsonGen.toString();
+		
+	}
+	public String fillZero(String str,int max) {
+		  str = str.toString();
+		  return (str.length() < max ? fillZero("0" + str, max) : str);
 	}
 
 	/**

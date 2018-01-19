@@ -7,8 +7,7 @@
 	String idGrilla = "GrillaClientes";
 	String URL = "'./Frm_GrillaClientes'";
 %>
-
-<div id="<%=idForm%>" data-popup="true" class="backmodal formulario">
+<div id="<%=idForm%>" class="formulario">
 	<style type="text/css">
 		#form {
 			position: relative;
@@ -30,58 +29,122 @@
 			z-index: 1;
 		}
 		
-		#<%=idForm%>>div {
-			width: 720px;
-			margin-top: 20px;
+		#<%=idForm %> >div {
+			width: 100%;
+			margin-top: 1px;
+		}
+		
+		#<%=idForm %> > h3>img {
+			background-color: #ffffff;
+		}
+		
+		#<%=idForm %> {
+			width: 100%;
+		}
+		
+		#<%=idForm %>  .tool:not(:first-child) {
+		    cursor: pointer;
+		    border-right: solid #fff 1px;
 		}
 	</style>
-
-	<div class="modal" data-tmodal="alerta">
-		<div class="modal-header">
-			<h5 class="modal-title" id="exampleModalLabel">Grilla Clientes
-			<button type="button" type="button" class="close"
-				onclick="cerrarFormu('<%=idForm%>');">
-				<span aria-hidden="true">&times;</span>
-			</button>
-		</div>
-		<div class="modal-body">
-			<div class="d-block">
-				<table id="<%=idGrilla%>"></table>
-				<div id="<%=idGrilla%>_pie"></div>
+	<div class="fila negro T-blanco rounded" style="height: 40px;padding: 4px 10px;">
+		<div class="tool">
+			<h3 style="margin: 0px;">Clientes</h3>
+		</div>			
+		<div class="tool tool-boton" data-modo="CONS">
+			<img src="/img/iconos/glyphicons-28-search.png"
+				style="width: auto; filter: invert(55%);">
+			<div class="overlay">
+				<div class="textimg">Consultar</div>
 			</div>
 		</div>
-		<div class="modal-footer">
-			<button type="button" class="btn btn-primary">Guardar Cambios</button>
-			<button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="cerrarFormu('<%=idForm%>');">Cerrar</button>
+		<div class="tool tool-boton" data-modo="ALTA">
+			<img src="/img/iconos/glyphicons-433-plus.png"
+				style="width: auto; filter: invert(55%);">
+			<div class="overlay">
+				<div class="textimg">Crear</div>
+			</div>
+		</div>
+		<div class="tool tool-boton" data-modo="MODI">
+			<img src="/img/iconos/glyphicons-31-pencil.png"
+				style="width: auto; filter: invert(55%);">
+			<div class="overlay">
+				<div class="textimg">Modificar</div>
+			</div>
+		</div>
+		<div class="tool tool-boton" data-modo="BAJA">
+			<img src="/img/iconos/glyphicons-208-remove.png"
+				style="width: auto; filter: invert(55%);">
+			<div class="overlay">
+				<div class="textimg">Eliminar</div>
+			</div>
 		</div>
 	</div>
 
-	<script type="text/javascript">
+	<div class="d-block">
+		<table id="<%=idGrilla%>"></table>
+		<div id="<%=idGrilla%>_pie"></div>
+	</div>
+</div>
+<script type="text/javascript">
 			
 		var idGrilla="<%=idGrilla%>";
         var NidGrilla = "#" + idGrilla;
         
         $(document).ready(function(){	        
-	        $("<#<%=idForm%>").draggable();
-	        Grilla();
+	       	/* $("#<%=idForm%>").draggable();*/
+	       Grilla();
+	       	
+	        $("#<%=idForm %>  .tool:not(:first-child)").click(function(){
+	        	var cod=GetSelected();
+	        	cargando();
+				$.ajax({
+					type:'GET',
+					url: 'Frm_ClienteABM',
+					data: { modo: $(this).data("modo"), cli_codig: cod },
+					success:function(data){     			
+			    		cerrarAlerta();
+						$("#<%=idForm%>").prepend($(data));  			      				
+	        		}, 
+	        		error:function(data){     			
+			    		cerrarAlerta();
+	        	    	console.log(data);
+				    }
+	        	});
+	        });		       	
         });
+        function GetSelected(){
+        	var id = $(NidGrilla).jqGrid('getGridParam','selrow');
+        	var cli=0;
+			if (id) {
+				var ret = $(NidGrilla).jqGrid('getRowData',id);
+				cli = ret.cli_codig;
+			}
+        	return cli;
+        }
         
         function Grilla(){	        
 	        $(NidGrilla).jqGrid({
 	        	url: <%=URL%>,
 	        	datatype:"json",
-	        	mtype:'POST', 
-	        	colNames:['iva_codig', 'iva_nombr', 'iva_diiva'],
+	        	mtype:'GET', 
+	        	colNames:['Compania','Cod.','Nombre','Telefono','Celular','Direcion','IVA','Documento','Plazo'],
 	        	colModel:[
-	        		{name:'iva_codig', index:'iva_codig', width:100},
-	        		{name:'iva_nombr', index:'iva_nombr', width:300},
-	        		{name:'iva_diiva', index:'iva_diiva', width:100}],
-	        	width:700,
-	        	height:500,
+	        		{name:'cli_compa', index:'cli_compa', width:100, hidden:true},
+	        		{name:'cli_codig', index:'cli_codig', width:30, hidden:false,  formatter:'FormatCliente'},
+	        		{name:'cli_nombr', index:'cli_nombr', width:100, hidden:false},
+	        		{name:'cli_telef', index:'cli_telef', width:60,hidden:false},
+	        		{name:'cli_celul', index:'cli_celul', width:60,hidden:false},
+	        		{name:'cli_direc', index:'cli_direc', width:100,hidden:false},
+	        		{name:'iva_nombr', index:'iva_nombr', width:60,hidden:false},
+	        		{name:'cli_nrdoc', index:'cli_nrdoc', width:80,hidden:false},
+	        		{name:'cli_plazo', index:'cli_plazo', width:20,hidden:false, align:'right'}],
+	        	width: ($("#Cuerpo").width()-10),
+	        	height: ($("#Cuerpo").height()-80),
 	        	rowNum:'10',
 	        	rowList:[10, 15, 20, 25, 50, 75, 100, 150, 200, 250, 500, 750],
 	        	pager:NidGrilla + '_pie',
-	        	sortname:'iva_codig',
+	        	sortname:'cli_codig',
 	        	viewrecords:true,
 	        	sortorder:"desc",
 	        	hidegrid:false,
@@ -93,7 +156,7 @@
 	        			}
 	        		});
 	        		$("#jqgridSearchForm").remove();
-	        		$(NidGrilla + "_pie_left").prepend(<%out.println(fun.buscadorGrilla("nombre", "iva_nombr"));%>);
+	        		$(NidGrilla + "_pie_left").prepend(<%out.println(fun.buscadorGrilla("nombre", "cli_nombr"));%>);
 	        		$("tr.jqgrow.ui-row-ltr.ui-widget-content").first().trigger("click");
 	        		$(NidGrilla).focus();
 	        	}, 
@@ -103,10 +166,18 @@
 	        			$(".dato")[i].value = val;
 	        		})
 	        	},
+	        	loadBeforeSend: function () {
+	        		var x=this;	        	
+	        	    $(this).closest("div.ui-jqgrid-view").find("table.ui-jqgrid-htable>thead>tr>th").each(function(index, elem){
+	        	    	$(elem).css("text-align", (x.p.colModel[index].align===undefined? "left" : x.p.colModel[index].align));
+	        	    });
+	        	},
 	        	caption:""
 	        });
-	        $(".ui-jqgrid-titlebar").hide();	        
+	        $(".ui-jqgrid-titlebar").hide();	 
+	        $( window ).resize(function(){  
+	      	  reSizeGrid("GrillaClientes",($("#Cuerpo").width()-10),($("#Cuerpo").height()-80));
+	      	});
         }
 	</script>
-	
 </div>

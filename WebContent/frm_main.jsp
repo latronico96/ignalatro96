@@ -9,8 +9,6 @@
 <head>
 <meta charset="utf-8" />
 <title>Prueba 29/10/2017</title>
-<link rel="stylesheet" href="css/bootstrap.css">
-<link rel="stylesheet" href="css/pisaBootstrap.css">
 <link rel="stylesheet" href="css/general.css">
 <script type="text/javascript" src="js/jquery-3.2.1.js"></script>
 <script type="text/javascript" src="js/popper.js"></script>
@@ -18,34 +16,9 @@
 <script type="text/javascript" src="js/datepickers.js"></script>
 <script type="text/javascript" src="js/jquery.jqGrid.min.js"></script>
 <script type="text/javascript" src="js/i18n/grid.locale-es.js"></script>
-<script type="text/javascript" src="js/general.js"></script>
-<script>
-	$(document).ready(function(){
-		$("#puntosDeVenta").click(function(){
-			$.ajax({
-				type:'GET',
-				url: 'Frm_ptaVta_ABM.jsp',
-				success:function(data){
-					$(document.body).prepend($(data));
-					$(".modal").draggable();
-					$('#Frm_ptaVta_ABM').show();    			      				
-        		}, 
-        		error:function(data){
-        	    	console.log(data);
-			    }
-        	});
-        });	
-		
-		$(".card-header").click( function(){
-			alert(this.id);
-			
-		});
-		
-	});
-</script>
+<script type="text/javascript" src="js/general.js" charset="UTF-8"></script>
 </head>
 <body style="height: 100vh;">
-	<section id="bloqueoAlerta" class="backmodal"></section>
 	<div class="container container-fluid cuerpo" style="">
 		<!-- Barra de menus -->
 		<div class="row justify-content-between">
@@ -117,24 +90,24 @@
 				<div class="list-group" id="list-tab" role="tablist">
 					<div id="accordion" role="tablist">
 						<div class="card">
-							<div class="card-header" role="tab" id="Cli">
+							<div class="card-header" role="tab" id="Cli" data-url="Frm_GrillaClientes.jsp" data-form="Frm_GrillaClientes">
 								<h5 class="mb-0">
-									<a class="collapsed" href="#Cuerpo">Clientes</a>
+									<a class="collapsed" href="javascript:void(0)">Clientes</a>
 								</h5>
 							</div>
 							<div class="card-header" role="tab" id="Art">
 								<h5 class="mb-0">
-									<a class="collapsed" href="#Cuerpo">Artículos</a>
+									<a class="collapsed" href="javascript:void(0)">Artículos</a>
 								</h5>
 							</div>
 							<div class="card-header" role="tab" id="Cmp">
 								<h5 class="mb-0">
-									<a class="collapsed" href="#Cuerpo">Cmp. de venta</a>
+									<a class="collapsed" href="javascript:void(0)">Cmp. de venta</a>
 								</h5>
 							</div>
 							<div class="card-header" role="tab" id="Rec">
 								<h5 class="mb-0">
-									<a class="collapsed" href="#Cuerpo">Recibos</a>
+									<a class="collapsed" href="javascript:void(0)">Recibos</a>
 								</h5>
 							</div>
 						</div>
@@ -145,8 +118,8 @@
 			<!-- cuerpo -->
 			<div class="col-10 noPadding-left">
 				<div class="tab-content rounded" id="Cuerpo">
-					<table id="GrillaCuerpo"></table>
-					<div id="GrillaCuerpo_pie"></div>
+					<!-- table id="GrillaCuerpo"></table>
+					<div id="GrillaCuerpo_pie"></div-->
 				</div>
 			</div>
 			<!-- fin cuerpo -->
@@ -163,7 +136,63 @@
 		</div>		
 		<!-- fin pie -->
 	</div>
+	
+	<section id="bloqueoAlerta" class="backmodal"></section><!-- div para mensajes emergentes (al final para que este arriba de todos los formularios -->
 </body>
 </html>
+<script>
+	$(document).ready(function(){
+		$("#puntosDeVenta").click(function(){
+	    	cargando();
+			$.ajax({
+				type:'GET',
+				url: 'Frm_ptaVta_ABM.jsp',		
+				success: function(data) {
+		    		cerrarAlerta();
+					$(document.body).prepend($(data));
+					$(".modal").draggable();
+					$('#Frm_ptaVta_ABM').show();  	      				
+        		}, 
+        		error:function(data){        			
+		    		cerrarAlerta();
+        	    	console.log(data);
+			    }
+        	});
+        });	
+		
+		$(".card-header").click( function(){
+	    	cargando();
+			var boton=$(this);
+			$.ajax({
+				type:'GET',
+				url: boton.data('url'), 
+				success: function(data) {
+		    		cerrarAlerta();
+					$("#Cuerpo").html($(data));
+					$(".modal").draggable();
+					$(boton.data('form')).show();   	       			
+        		}, 
+        		error:function(data){      			
+		    		cerrarAlerta();
+        	    	console.log(data);
+			    },
+			    complete: function(httpObj, textStatus){
+			        switch( 1*httpObj.status )
+			        {
+			             case 301:case 302: //here you do whatever you need to do
+			                       //when your php does a redirection
+			                       alert("Redirection");
+			                       break;
+			             case 404: //here you handle the calls to dead pages
+			                       alert("Page Not Found");
+			                       break;
+			        }
+			     }
+        	});
+			
+		});
+		
+	});
+</script>
 
 

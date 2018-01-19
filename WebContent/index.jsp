@@ -1,20 +1,21 @@
+<%@page import="java.math.BigInteger"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@page import="funciones.Funciones"%>
 <%
 	Funciones fun = new Funciones();
 %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+<!DOCTYPE html>
+<html lang="es">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<meta charset="utf-8" />
+<title>Prueba 29/10/2017</title>
 <link rel="stylesheet" href="css/general.css">
 <script src="js/jquery-3.2.1.js"></script>
 <script src="js/jquery-ui.js"></script>
 <script src="js/popper.js"></script>
 <script src="js/bootstrap.js"></script>
-<script src="js/general.js"></script>
+<script src="js/general.js" charset="UTF-8"></script>
 <script>
 	$(document).ready(function(){
 	    $("input[type=button]").click(function(){
@@ -109,16 +110,26 @@
 			    popover.config.content = mensaje;
 			    objeto.popover('show');
 		    }else{
-			    $.ajax({dataType:'json', data:parametros, type:'GET', url:"/Frm_logeo", success:function(data){
-				    if(data.cod != 1){
-					    abrirAlerta("ERR", data.msg);
-				    }else{
-					    window.location.href = "frm_main.jsp";
-				    }
-				    console.log(JSON.stringify(data));
-			    }, error:function(data){
-				    abrirAlerta("ERR", data.msg);
-			    }});
+		    	cargando();
+			    $.ajax({
+			    	dataType:'json',
+			    	data:parametros,
+			    	type:'GET',
+			    	url:"/Frm_logeo", 
+			    	success:function(data){		
+			    		cerrarAlerta();
+				    	if(data.cod != 1){
+					    	abrirAlerta("ERR", data.msg);
+				    	}else{
+					   		window.location.href = "frm_main.jsp";
+				    	}
+				    	console.log(JSON.stringify(data));
+			    	},
+			    	error:function(data){		
+			    		cerrarAlerta();
+				    	abrirAlerta("ERR", data.msg);
+			    	}
+			    });
 			    
 		    }
 	    });
@@ -146,12 +157,12 @@
 				class="navbar navbar-expand col navbar-light negro T-blanco rounded">
 			<div class="collapse navbar-collapse" id="navbarNav">
 				<ul class="navbar-nav">
-					<li class="nav-item col"><h3>Login</h3><%=fun.input("form", "campo", "", "hidden", "value=\"frm_login\"")%></li>
+					<li class="nav-item col"><h4 style="margin-bottom: 2px;">Login</h4><%=fun.input("form", "campo", "", "hidden", "value=\"frm_login\"")%></li>
 					<li class="nav-item col"><spam class="form-control">Usuario</spam></li>
 					<li class="nav-item col"><%=fun.input("usuario", "form-control campo", "", "text", " maxlength=\"45\"")%></li>
 					<li class="nav-item col"><spam class="form-control">contraseña</spam></li>
 					<li class="nav-item col"><%=fun.input("contrasenia", "form-control campo", "", "password", " maxlength=\"60\"")%></li>
-					<li class="nav-item col"><%=fun.input("btn_Enviar", "form-control campo btn float-right", "padding: 10px; margin: 3px;",
+					<li class="nav-item col"><%=fun.input("btn_Enviar", "form-control campo btn float-right", "padding: 2px; margin: 0px;",
 					"button", "value=\"Ingresar\"")%></li>
 				</ul>
 			</div>

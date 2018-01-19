@@ -79,7 +79,7 @@ public class UploadServlet extends HttpServlet {
 				}
 	
 	        }
-	        String max=fun.getMaximo("dbGaleria","gar_nrofo");
+	        String max=fun.getMaximoStr("dbGaleria","gar_nrofo");
 	        String insert="insert into dbGaleria (gar_nrofo,gar_fpath,gar_titul,gar_texto,gar_orden) values ("+max+",'"+path+"','"+titulo+"','"+texto+"',"+max+") ";
 			
 	        try {

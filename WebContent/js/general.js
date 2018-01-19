@@ -8,6 +8,9 @@ $(document).bind('keydown',function(e){
 	    
 	});
 
+function cargando(){
+	abrirAlerta("","","Cargando...","");
+}
 function abrirAlerta(tipo,msg,titulo="",cfocus=""){//ABRE MODAL ALERTA DE TIPOS (ERROR-NOTIFICACIÓN)
 
 	if(titulo==""){	
@@ -20,17 +23,19 @@ function abrirAlerta(tipo,msg,titulo="",cfocus=""){//ABRE MODAL ALERTA DE TIPOS 
 			break;
 		}
 	}
+	
+	if(msg.trim()!=""){
+		msg='<div class="modal-body">'+msg.trim()+'.</div>';
+	}
+	
 	$("#bloqueoAlerta").html(
 		'<div class="modal modal-alerta" data-tmodal="alerta"> '+
 		' 	<div class="modal-head"> '+
 		' 		<h5 class="modal-title">'+titulo+'</h5> '+
 		' 		<button type="button" class="close" onclick="cerrarAlerta('+cfocus+');"> '+
-		' 			<span aria-hidden="true" >×</span> '+
+		' 			<span aria-hidden="true" >x</span> '+
 		' 		</button> '+
-		' 	</div> '+
-		' 	<div class="modal-body"> '+
-		' 		'+msg+'. '+
-		' 	</div> '+
+		' 	</div> '+msg+
 		' 	<div class="modal-foot"> '+
 		' 		<button id="btnCerrarAlerta" type="button" class="btn btn-gris" onclick="cerrarAlerta('+cfocus+');">Cerrar</button> '+
 		' 	</div> '+
@@ -141,3 +146,65 @@ function teclaEsc(){//CIERRA EN ORDEN: MODAL (ALERTA-PREGUNTA-LOADING); FORMULAR
 	
 	return ok;
 }
+function fillZero(str, max) {
+	  str = str.toString();
+	  return str.length < max ? fillZero("0" + str, max) : str;
+	}
+
+
+function reSizeGrid(idGrid,width,height){
+	$("#"+idGrid).jqGrid('setGridWidth', width).jqGrid('setGridHeight', height);	
+}
+
+$.extend($.fn.fmatter , {
+    FormatCliente : function(cellvalue, options, rowdata) {
+    return fillZero(cellvalue,3);
+}
+});
+
+$.extend($.fn.fmatter.FormatCliente , {
+    unformat : function(cellvalue, options) {
+    return parseInt(cellvalue);
+}
+});
+
+function funciones(nombre,arg1=[]){//devuelve resultados de las funciones declaradas en Funciones.java
+	//Declarar los parametros de la funcion como:
+	// var arg =['["valor"','"tipo"','"valor"','"tipo"...]']; en el orden que se los declara en las funciones
+	//Con alguno de los siguientes tipos : 
+	// int, String, boolean, HttpServletRequest, double, float, long
+	//Despues llamar a la funcion:
+	// funciones("nombre de la funcion", arg)
+	var js=JSON.stringify({nombre: nombre ,parametro:arg1});
+	var x="";
+	$.ajax({
+		url:'funciones',
+		type:'GET',
+		data:{js:js},
+		success: function(data){
+			if (isBoolean(data.trim())){
+			 x = stringToBoolean(data.trim());
+			 }else{
+				 x = data.trim();
+			 }
+		},	
+		async:false
+	});
+	return x;
+	
+}
+
+function stringToBoolean(string){
+    switch(string.toLowerCase().trim()){
+        case "true": case "yes": case "1": return true;
+        case "false": case "no": case "0": case null: return false;
+        default: return Boolean(string);
+    }
+}
+function isBoolean(string){
+	 switch(string.toLowerCase().trim()){
+     case "true":  return true;
+     case "false":  return true;
+     default: return false;
+	 }
+ }
