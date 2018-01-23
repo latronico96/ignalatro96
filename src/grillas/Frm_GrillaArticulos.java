@@ -16,15 +16,15 @@ import funciones.Funciones;
 /**
  * Servlet implementation class GrillaCliente
  */
-@WebServlet("/Frm_GrillaClientes")
-public class Frm_GrillaClientes extends HttpServlet {
+@WebServlet("/Frm_GrillaArticulos")
+public class Frm_GrillaArticulos extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private Funciones fun=null;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public Frm_GrillaClientes() {
+	public Frm_GrillaArticulos() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -141,18 +141,10 @@ public class Frm_GrillaClientes extends HttpServlet {
 		try{			    
 			// the sql server url		          
 			String sql=
-					"select cli_compa, cli_codig, \n"
-					+ "	CASE WHEN trim(cli_fnomb)='' THEN cli_nombr ELSE cli_fnomb END as cli_nombr,\n"
-					+ "	CASE WHEN trim(cli_ftele)='' THEN cli_telef ELSE cli_ftele END as cli_telef, \n"
-					+ "	CASE WHEN trim(cli_fcelu)='' THEN cli_celul ELSE cli_fcelu END as cli_celul, \n"
-					+ "	CASE WHEN trim(cli_fdire)='' THEN cli_direc ELSE cli_fdire END as cli_direc, \n"
-					+ "	iva_nombr, \n"
-					+ "	concat(trim(doc_nombre),' ',convert( CASE WHEN trim(cli_fndoc)='' THEN cli_nrdoc ELSE cli_fndoc END,char))  as cli_nrdoc, \n"
-					+ "	cli_plazo,cli_email \n"
-					+ "from  dbClientes \n"
-					+ "	left join dbCondIva on (iva_codig=CASE WHEN trim(cli_fcond)='' THEN cli_condi ELSE cli_fcond END) \n"
-					+ "left join dbTipoDocumentos on ( doc_codig =CASE WHEN trim(cli_fndoc)='' THEN cli_tpdoc ELSE cli_ftdoc END) "
-					+ " WHERE cli_compa="+String.valueOf(fun.compania)+" \n"
+					"select  art_compa,art_codig,mar_nombr,art_nombr,art_pneto,art_final,art_activ \n"
+					+ "	from dbArticulos \n"
+					+ "		left join dbMarcas on (art_marca=mar_codig and art_compa=mar_compa) \n"
+					+ " Where art_compa="+String.valueOf(fun.compania)+" \n"				
 					+ " ORDER BY " + ordenarcampo+ " " +ordenarmetodo;
 			JSONObject jsonGrilla=fun.Grilla(sql,empieza,termina,pagina,rp);	 		   
 			prt.print(jsonGrilla.toString());

@@ -26,8 +26,9 @@ import funciones.Funciones;
 public class Frm_ptaVta_ABM extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     private Funciones fun = null;
-    private String tabla="dbCondIva";
-    private String claveCampo="iva_codig";
+    private String tabla="dbPuntosVentas";
+    private String claveCampo="ptv_codig";
+    private String claveCompa="ptv_compa";
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -40,7 +41,7 @@ public class Frm_ptaVta_ABM extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		fun = new Funciones();
+		fun = new Funciones(request);
 		Map<String,String> tipos=fun.getTipos(tabla);
 		String campos="";
 		String valores="";
@@ -66,7 +67,7 @@ public class Frm_ptaVta_ABM extends HttpServlet {
 		    it.remove(); // avoids a ConcurrentModificationException
 		}
 
-		String delete="delete from "+this.tabla+" where "+this.claveCampo+"='"+claveValor+"'";
+		String delete="delete from "+this.tabla+" where "+this.claveCompa+"="+String.valueOf(fun.compania)+" and "+this.claveCampo+"='"+claveValor+"'";
 		String insert="insert into "+this.tabla+" ("+campos+") values ("+valores+")";
 		    System.out.println(delete);
 		    System.out.println(insert);
@@ -219,7 +220,9 @@ public class Frm_ptaVta_ABM extends HttpServlet {
 		PrintWriter prt=response.getWriter();
 		try{			    
 			// the sql server url		          
-			String sql="Select * from dbCondIva ORDER BY " + ordenarcampo+ " " +ordenarmetodo;
+			String sql="Select * from "+tabla+" "
+					+ "where "+this.claveCompa+"="+String.valueOf(fun.compania)
+					+ " ORDER BY " + ordenarcampo+ " " +ordenarmetodo;
 			JSONObject jsonGrilla=fun.Grilla(sql,empieza,termina,pagina,rp);	 		   
 			prt.print(jsonGrilla.toString());
 

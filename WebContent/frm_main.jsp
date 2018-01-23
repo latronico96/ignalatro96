@@ -58,7 +58,8 @@
 							</a>
 							<div class="dropdown-menu" aria-labelledby="configuracion">
 								<a class="dropdown-item" id="datosDeFacturacion">Datos De Facturación</a>
-								<a class="dropdown-item" id="puntosDeVenta">Puntos de Venta</a>
+								<a class="dropdown-item" id="puntosDeVenta" data-url="Frm_ptaVta_ABM.jsp" data-form="Frm_ptaVta_ABM">Puntos de Venta</a>
+								<a class="dropdown-item" id="marcas" data-url="Frm_ptaVta_ABM.jsp" data-form="Frm_ptaVta_ABM">Marcas</a>
 								<a class="dropdown-item" id="impuestos">Impuestos</a>
 								<div class="dropdown-divider"></div>
 								<a class="dropdown-item" id="contantes">Contantes</a>
@@ -95,17 +96,17 @@
 									<a class="collapsed" href="javascript:void(0)">Clientes</a>
 								</h5>
 							</div>
-							<div class="card-header" role="tab" id="Art">
+							<div class="card-header" role="tab" id="Art" data-url="Frm_GrillaArticulos.jsp" data-form="Frm_GrillaArticulos">
 								<h5 class="mb-0">
 									<a class="collapsed" href="javascript:void(0)">Artículos</a>
 								</h5>
 							</div>
-							<div class="card-header" role="tab" id="Cmp">
+							<div class="card-header" role="tab" id="Cmp" data-url="Frm_GrillaComprobantes.jsp" data-form="Frm_GrillaComprobantes">
 								<h5 class="mb-0">
 									<a class="collapsed" href="javascript:void(0)">Cmp. de venta</a>
 								</h5>
 							</div>
-							<div class="card-header" role="tab" id="Rec">
+							<div class="card-header" role="tab" id="Rec" data-url="Frm_GrillaRecibos.jsp" data-form="Frm_GrillaRecibos">
 								<h5 class="mb-0">
 									<a class="collapsed" href="javascript:void(0)">Recibos</a>
 								</h5>
@@ -142,22 +143,26 @@
 </html>
 <script>
 	$(document).ready(function(){
-		$("#puntosDeVenta").click(function(){
-	    	cargando();
-			$.ajax({
-				type:'GET',
-				url: 'Frm_ptaVta_ABM.jsp',		
-				success: function(data) {
-		    		cerrarAlerta();
-					$(document.body).prepend($(data));
-					$(".modal").draggable();
-					$('#Frm_ptaVta_ABM').show();  	      				
-        		}, 
-        		error:function(data){        			
-		    		cerrarAlerta();
-        	    	console.log(data);
-			    }
-        	});
+		$(".dropdown .dropdown-item").click(function(){
+			
+			var item=$(this);	
+			if(item.data().hasOwnProperty("url")){
+		    	cargando();
+				$.ajax({
+					type:'GET',
+					url: item.data("url"),		
+					success: function(data) {
+			    		cerrarAlerta();
+						$(document.body).prepend($(data));
+						$(".modal").draggable();
+						$('#'+item.data("form")).show();  	      				
+	        		}, 
+	        		error:function(data){        			
+			    		cerrarAlerta();
+	        	    	console.log(data);
+				    }
+	        	});				
+			}
         });	
 		
 		$(".card-header").click( function(){

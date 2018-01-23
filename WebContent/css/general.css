@@ -229,11 +229,15 @@ img {
 /**************************EFECTOS*DE*TOOLTIP**********************************/
 
 .tool {
-position: relative;
-    width: 100px;
+	position: relative;
+    /*width: 100px;*/
     height: 32px;
     display: inline-block;
     overflow: hidden;
+}
+
+.tool-boton {
+    min-width: 90px;
 }
 
 .tool > img {

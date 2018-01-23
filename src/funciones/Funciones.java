@@ -379,7 +379,9 @@ public class Funciones {
 
 	public String PrepararCampo(String campo,Map<String,String> tipos,String valor){
 		String comillas="'";
-		Boolean esTexto=tipos.get(campo.toLowerCase()).toLowerCase().startsWith("varchar") || tipos.get(campo.toLowerCase()).toLowerCase().startsWith("datetime");
+		Boolean esTexto=(tipos.get(campo.toLowerCase()).toLowerCase().startsWith("varchar") || 
+						tipos.get(campo.toLowerCase()).toLowerCase().startsWith("datetime") ||
+						tipos.get(campo.toLowerCase()).toLowerCase().startsWith("char"));
 		return (esTexto?comillas+valor+comillas:valor);
 	} 
 	

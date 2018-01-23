@@ -16,15 +16,15 @@ import funciones.Funciones;
 /**
  * Servlet implementation class GrillaCliente
  */
-@WebServlet("/Frm_GrillaClientes")
-public class Frm_GrillaClientes extends HttpServlet {
+@WebServlet("/Frm_GrillaComprobantes")
+public class Frm_GrillaComprobantes extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private Funciones fun=null;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public Frm_GrillaClientes() {
+	public Frm_GrillaComprobantes() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -139,20 +139,23 @@ public class Frm_GrillaClientes extends HttpServlet {
 		response.setContentType("application/json"); 
 		PrintWriter prt=response.getWriter();
 		try{			    
-			// the sql server url		          
+			// the sql server url	
+			
+			if(ordenarcampo.equals("cmp_compo")){
+				ordenarcampo=" concat(cmp_letra,' ', cmp_ptvta,' ',cmp_nroco) ";
+			}
+			
 			String sql=
-					"select cli_compa, cli_codig, \n"
-					+ "	CASE WHEN trim(cli_fnomb)='' THEN cli_nombr ELSE cli_fnomb END as cli_nombr,\n"
-					+ "	CASE WHEN trim(cli_ftele)='' THEN cli_telef ELSE cli_ftele END as cli_telef, \n"
-					+ "	CASE WHEN trim(cli_fcelu)='' THEN cli_celul ELSE cli_fcelu END as cli_celul, \n"
-					+ "	CASE WHEN trim(cli_fdire)='' THEN cli_direc ELSE cli_fdire END as cli_direc, \n"
-					+ "	iva_nombr, \n"
-					+ "	concat(trim(doc_nombre),' ',convert( CASE WHEN trim(cli_fndoc)='' THEN cli_nrdoc ELSE cli_fndoc END,char))  as cli_nrdoc, \n"
-					+ "	cli_plazo,cli_email \n"
-					+ "from  dbClientes \n"
-					+ "	left join dbCondIva on (iva_codig=CASE WHEN trim(cli_fcond)='' THEN cli_condi ELSE cli_fcond END) \n"
-					+ "left join dbTipoDocumentos on ( doc_codig =CASE WHEN trim(cli_fndoc)='' THEN cli_tpdoc ELSE cli_ftdoc END) "
-					+ " WHERE cli_compa="+String.valueOf(fun.compania)+" \n"
+					"select cmp_compa, cmp_codig,"
+					+ "		DATE_FORMAT(cmp_fecha,'%d/%m/%Y') as cmp_fecha,"
+					+ "case cmp_tipco when 'F' then 'Fac' \n"
+					+ "					when 'C' then 'N/C' \n"
+					+ "					when 'D' then 'N/D' \n"
+					+ "					else 'Otros' end  as cmp_tipco, \n"
+					+ " concat(cmp_letra,' ', cmp_ptvta,' ',cmp_nroco) as cmp_compo,cli_nombr,cmp_impor  \n"
+					+ " from dbComprobantes \n"
+					+ "	left join dbClientes on (cmp_codcl=cli_codig) \n"
+					+ " where cmp_compa="+String.valueOf(fun.compania)+" \n"				
 					+ " ORDER BY " + ordenarcampo+ " " +ordenarmetodo;
 			JSONObject jsonGrilla=fun.Grilla(sql,empieza,termina,pagina,rp);	 		   
 			prt.print(jsonGrilla.toString());
