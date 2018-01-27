@@ -190,7 +190,9 @@ img {
     float: left;
 }
 
-
+.numero{
+	text-align: right;
+}
 /**************************BOTON AZUL*****************************/
 .btn-azul {
     color: #fff;

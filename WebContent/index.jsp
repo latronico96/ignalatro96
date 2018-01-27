@@ -194,7 +194,7 @@
 					<div class="fila">
 						<spam class="form-control with-50-00">Condicion de Iva</spam>
 						<%=fun.select("condIva", "form-control with-50-00 campo", "", "",
-					fun.GetHTMLOtion("iva_codig", "iva_nombr", "dbCondIva", ""), "")%>
+					fun.GetHTMLOtion("iva_codig", "iva_nombr", "dbCondIva", "",""), "")%>
 					</div>
 					<div class="fila">
 						<spam class="form-control with-50-00">C.U.I.T.</spam>

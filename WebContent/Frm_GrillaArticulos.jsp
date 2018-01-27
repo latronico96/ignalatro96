@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@page import="funciones.Funciones"%>
 <%
-	Funciones fun = new Funciones();
+	Funciones fun = new Funciones(request);
 	String idForm = "Frm_GrillaArticulos";
 	String idGrilla = "GrillaArticulos";
 	String URL = "'./Frm_GrillaArticulos'";
@@ -100,8 +100,8 @@
 	        	cargando();
 				$.ajax({
 					type:'GET',
-					url: 'Frm_ArticulosABM',
-					data: { modo: $(this).data("modo"), cli_codig: cod },
+					url: 'Frm_ArticuloABM',
+					data: { modo: $(this).data("modo"), art_codig: cod },
 					success:function(data){     			
 			    		cerrarAlerta();
 						$("#<%=idForm%>").prepend($(data));  			      				
@@ -115,12 +115,12 @@
         });
         function GetSelected(){
         	var id = $(NidGrilla).jqGrid('getGridParam','selrow');
-        	var cli=0;
+        	var art=0;
 			if (id) {
 				var ret = $(NidGrilla).jqGrid('getRowData',id);
-				cli = ret.cli_codig;
+				art = ret.art_codig;
 			}
-        	return cli;
+        	return art;
         }
         
         function Grilla(){	        
@@ -154,7 +154,7 @@
 	        			}
 	        		});
 	        		$("#jqgridSearchForm").remove();
-	        		$(NidGrilla + "_pie_left").prepend(<%out.println(fun.buscadorGrilla("nombre", "cli_nombr"));%>);
+	        		$(NidGrilla + "_pie_left").prepend(<%out.println(fun.buscadorGrilla("nombre", "art_nombr"));%>);
 	        		$("tr.jqgrow.ui-row-ltr.ui-widget-content").first().trigger("click");
 	        		$(NidGrilla).focus();
 	        	}, 

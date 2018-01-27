@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@page import="funciones.Funciones"%>
 <%
-	Funciones fun = new Funciones();
+	Funciones fun = new Funciones(request);
 	String idForm = "Frm_GrillaComprobantes";
 	String idGrilla = "GrillaComprobantes";
 	String URL = "'./Frm_GrillaComprobantes'";

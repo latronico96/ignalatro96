@@ -177,3 +177,7 @@ legend {
     color: inherit;
     white-space: normal;
 }
+
+input[type="radio"].form-control, input[type="checkbox"].form-control {
+    margin: auto 0px;
+}

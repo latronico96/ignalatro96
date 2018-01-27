@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@page import="funciones.Funciones"%>
 <%
-	Funciones fun = new Funciones();
+	Funciones fun = new Funciones(request);
 %>
 <!DOCTYPE html>
 <html lang="es">
@@ -11,9 +11,11 @@
 <title>Prueba 29/10/2017</title>
 <link rel="stylesheet" href="css/general.css">
 <script type="text/javascript" src="js/jquery-3.2.1.js"></script>
+<script type="text/javascript" src="js/jquery-ui.js"></script>
 <script type="text/javascript" src="js/popper.js"></script>
 <script type="text/javascript" src="js/bootstrap.js"></script>
 <script type="text/javascript" src="js/datepickers.js"></script>
+<script type="text/javascript" src="js/jquery.priceformat.js"></script>
 <script type="text/javascript" src="js/jquery.jqGrid.min.js"></script>
 <script type="text/javascript" src="js/i18n/grid.locale-es.js"></script>
 <script type="text/javascript" src="js/general.js" charset="UTF-8"></script>
@@ -59,7 +61,7 @@
 							<div class="dropdown-menu" aria-labelledby="configuracion">
 								<a class="dropdown-item" id="datosDeFacturacion">Datos De Facturación</a>
 								<a class="dropdown-item" id="puntosDeVenta" data-url="Frm_ptaVta_ABM.jsp" data-form="Frm_ptaVta_ABM">Puntos de Venta</a>
-								<a class="dropdown-item" id="marcas" data-url="Frm_ptaVta_ABM.jsp" data-form="Frm_ptaVta_ABM">Marcas</a>
+								<a class="dropdown-item" id="marcas" data-url="Frm_marcas_ABM.jsp" data-form="Frm_marcas_ABM">Marcas</a>
 								<a class="dropdown-item" id="impuestos">Impuestos</a>
 								<div class="dropdown-divider"></div>
 								<a class="dropdown-item" id="contantes">Contantes</a>
@@ -160,7 +162,19 @@
 	        		error:function(data){        			
 			    		cerrarAlerta();
 	        	    	console.log(data);
-				    }
+	        		},
+				    complete: function(httpObj, textStatus){
+				        switch( 1*httpObj.status )
+				        {
+				             case 301:case 302: //here you do whatever you need to do
+				                       //when your php does a redirection
+				                       alert("Redirection");
+				                       break;
+				             case 404: //here you handle the calls to dead pages
+				                       alert("Page Not Found");
+				                       break;
+				        }
+				     }
 	        	});				
 			}
         });	

@@ -45,7 +45,7 @@
 			<h5 class="modal-title" id="exampleModalLabel">Administración de
 				Puntos de Venta</h5>
 			<button type="button" type="button" class="close"
-				onclick="cerrarFormu('Frm_ptaVta_ABM');">
+				onclick="cerrarFormu('<%=idForm%>');">
 				<span aria-hidden="true">&times;</span>
 			</button>
 		</div>
@@ -57,7 +57,7 @@
 		</div>
 		<div class="modal-footer">
 			<button type="button" class="btn btn-primary">Guardar Cambios</button>
-			<button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="cerrarFormu('Frm_ptaVta_ABM');">Cerrar</button>
+			<button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="cerrarFormu('<%=idForm%>');">Cerrar</button>
 		</div>
 	</div>
 
@@ -82,6 +82,31 @@
         	form.draggable();
 	        Grilla();
         });
+        
+    	function validarPtVta(){
+    		var formulario = $("#<%=idForm%>");    		
+    		var res=true;
+    		
+    		if(res && $("#ptv_nombr",formulario).val()==""){
+    			mensaje="El nombre no puede quedar vacio.";
+    			res=false;
+    			$("#ptv_nombr").abrirpopover(mensaje);
+    		}
+    		
+    		if(res && $("#ptv_tipop",formulario).val()==""){
+    			mensaje="El tipo de punto de venta no puede quedar vacio.";
+    			res=false;
+    			$("#ptv_tipop").abrirpopover(mensaje);
+    		}
+    		
+    		if(res && $("#ptv_tipop",formulario).val()=="E" && $("#ptv_certi",formulario).val()==""){
+    			mensaje="El certificado no puede quedar vacio si es un punto de venta Electrónico.";
+    			res=false;
+    			$("#ptv_certi").abrirpopover(mensaje);
+    		}
+    		
+    		return res;   		
+    	}
         
         function Grilla(){	        
 	        $(NidGrilla).jqGrid({
@@ -118,7 +143,7 @@
 	        		$(".ui-jqgrid-bdiv",form).prepend(stringFrom);
 	        		$("#btn_rev",form).unbind("click").click(function(){
 	        			$(".dato",form).val("");
-		        		$("#ptv_codig",form).val(Math.max(...$(NidGrilla).jqGrid('getCol', 'ptv_codig', false))+1);   	
+		        		$("#ptv_codig",form).val(Math.max(...$(NidGrilla).jqGrid('getCol', 'ptv_codig', false).concat([0]))+1);   	
 	        		});	        		        		
 	        		$("#btn_act",form).unbind("click").click(function(){
 	        			
@@ -162,12 +187,12 @@
 	        			
 	        		});
 	        		$("#ptv_tipop",form).change();
-	        		$("#ptv_codig",form).val(Math.max(...$(NidGrilla).jqGrid('getCol', 'ptv_codig', false))+1);
-	        		
+	        		$("#ptv_codig",form).val(Math.max(...$(NidGrilla).jqGrid('getCol', 'ptv_codig', false).concat([0]))+1);
+	        		$("#mar_activ",form).prop("checked",true);
 	        		$("#ptv_codig",form).prop("disabled",true);
 	        		
 	        		$("#jqgridSearchForm",form).remove();
-	        		$(NidGrilla + "_pie_left",form).prepend(<%out.println(fun.buscadorGrilla("nombre", "iva_nombr"));%>);
+	        		$(NidGrilla + "_pie_left",form).prepend(<%out.println(fun.buscadorGrilla("nombre", "ptv_nombr"));%>);
 	        		$("tr.jqgrow.ui-row-ltr.ui-widget-content",form).first().trigger("click");
 	        		$(NidGrilla,form).focus();
 	        	}, 

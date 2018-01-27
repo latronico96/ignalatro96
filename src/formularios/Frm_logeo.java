@@ -86,8 +86,8 @@ public class Frm_logeo extends HttpServlet {
 				cn.setAutoCommit(false);
 				Statement st = cn.createStatement();
 				//CONSULTA
-				parametros.put("com_codig", String.valueOf(1+fun.getMaximo(tablaCmp, "com_codig")));
-				parametros.put("usu_usuar", String.valueOf(1+fun.getMaximo(tablaUsu, "usu_usuar")));
+				parametros.put("com_codig", String.valueOf(1+fun.getMaximo(tablaCmp, "com_codig","")));
+				parametros.put("usu_usuar", String.valueOf(1+fun.getMaximo(tablaUsu, "usu_usuar",parametros.getOrDefault("com_codig", ""))));
 				
 				
 				//compania

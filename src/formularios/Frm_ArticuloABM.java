@@ -25,17 +25,17 @@ import funciones.Funciones;
 /**
  * Servlet implementation class ClientesABM
  */
-@WebServlet("/Frm_ClienteABM")
-public class Frm_ClienteABM extends HttpServlet {
+@WebServlet("/Frm_ArticuloABM")
+public class Frm_ArticuloABM extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     private Funciones fun = null;
-    private String tabla="dbClientes";
-    private String claveCampo="cli_codig";
+    private String tabla="dbArticulos";
+    private String claveCampo="art_codig";
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Frm_ClienteABM() {
+    public Frm_ArticuloABM() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -49,30 +49,29 @@ public class Frm_ClienteABM extends HttpServlet {
 		
 		fun=new Funciones(request);
 		String modo=request.getParameter("modo");
-		int cod=Integer.parseInt("0"+request.getParameter("cli_codig"));
+		int cod=Integer.parseInt("0"+request.getParameter("art_codig"));
 		String respuesta="";
 		
 		JSONObject obj=new JSONObject();
 		switch (modo) {
 		case "ALTA":
-			String cli_codi=String.valueOf(fun.getMaximo(tabla,claveCampo,"cli_compa")+1);
-			obj.put("cli_codig", fun.fillZero( cli_codi, 4));
-			obj.put("cli_fac", "true");
-			obj.put("cli_compa", fun.compania);			
-			respuesta=fun.JSONObjectToJavaScriptMap("Cliente", obj);
+			String cli_codi=String.valueOf(fun.getMaximo(tabla,claveCampo,"art_compa")+1);
+			obj.put("art_codig", fun.fillZero( cli_codi, 4));
+			obj.put("art_compa", fun.compania);			
+			respuesta=fun.JSONObjectToJavaScriptMap("Articulo", obj);
 			break;
 		case "BAJA":case "MODI": case "CONS":
 			Connection cn;
 			try {
 				cn = fun.Conectar();
 				PreparedStatement pst=cn.prepareStatement(
-						"select *,case when cli_fnomb='' then 'false' else 'true' end as cli_fac  "
+						"select *  "
 						+ "from "+tabla+" "
-						+ " where "+claveCampo+"= ? and cli_compa = ? ");
+						+ " where "+claveCampo+"= ? and art_compa = ? ");
 				pst.setInt(1, cod);
-				pst.setInt(1, fun.compania);
+				pst.setInt(2, fun.compania);
 				ResultSet rs= pst.executeQuery();
-				respuesta=fun.ResultSetToJavaScriptMap("Cliente", rs);
+				respuesta=fun.ResultSetToJavaScriptMap("Articulo", rs);
 			} catch (ClassNotFoundException | SQLException e) {
 				// TODO Auto-generated catch block
 				System.out.println("erro al cargar los datos del clientes " + String.valueOf(cod));				
@@ -84,9 +83,9 @@ public class Frm_ClienteABM extends HttpServlet {
 		} 	
 		
 		
-		request.setAttribute("Cliente",respuesta);
+		request.setAttribute("Articulo",respuesta);
         request.setAttribute("modo",modo);
-        RequestDispatcher rd=request.getRequestDispatcher("Frm_ClienteABM.jsp");
+        RequestDispatcher rd=request.getRequestDispatcher("Frm_ArticuloABM.jsp");
         rd.forward(request, response);
 	}
 

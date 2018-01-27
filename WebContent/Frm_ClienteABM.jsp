@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@page import="funciones.Funciones"%>
 <%
-	Funciones fun = new Funciones();
+	Funciones fun = new Funciones(request);
 	String idForm = "Frm_ClienteABM";
 	String idGrilla = "ClienteABM";
 	String URL = "'./Frm_ClienteABM'";
@@ -71,13 +71,13 @@
 					</div>
 					<div class="fila">				
 						<spam class="form-control with-20-00">Cond. de IVA</spam>
-						<%=fun.select("cli_condi", "form-control with-80-00 campo", "", "",
-										fun.GetHTMLOtion("iva_codig", "iva_nombr", "dbCondIva", ""), "")%>
+						<%=fun.select("cli_cliva", "form-control with-80-00 campo", "", "",
+										fun.GetHTMLOtion("iva_codig", "iva_nombr", "dbCondIva","", ""), "")%>
 					</div>
 					<div class="fila">
 						<spam class="form-control with-20-00">Tipo de Doc.</spam>
 						<%=fun.select("cli_tpdoc", "form-control with-30-00 campo", "", "",
-										fun.GetHTMLOtion("doc_codig", "doc_nombre", "dbTipoDocumentos", ""), "")%>		
+										fun.GetHTMLOtion("doc_codig", "doc_nombre", "dbTipoDocumentos","", ""), "")%>		
 						<spam class="form-control with-20-00">Nro. Doc.</spam>
 						<%=fun.input("cli_nrdoc","form-control with-30-00 campo","","text"," maxlength=\"11\"")%>
 					</div>
@@ -88,8 +88,8 @@
 						<spam class="form-control with-20-00">CBU</spam>
 						<%=fun.input("cli_nrocbu","form-control with-30-00 campo","","text"," maxlength=\"22\"")%>
 						<spam class="form-control with-17-00">Cond. de pagos</spam>
-						<% String optionsCondi="<option value=\"C\">Contado</option>"
-												+"<option value=\"T\">Cta. Corriente</option>"; 
+						<% String optionsCondi="<option value=\""+fun.Contado+"\">Contado</option>"
+												+"<option value=\""+fun.CtaCorrienta+"\">Cta. Corriente</option>"; 
 						out.println(fun.select("cli_condi","form-control with-18-00 campo","","",optionsCondi,""));%>	
 						<spam class="form-control with-10-00">Plazo</spam>
 						<%=fun.input("cli_plazo","form-control with-5-00 campo","","text"," maxlength=\"2\"")%>
@@ -119,13 +119,13 @@
 					</div>
 					<div class="fila">			
 						<spam class="form-control with-20-00">Cond. de IVA</spam>
-						<%=fun.select("cli_fcond", "form-control with-80-00 campo", "", "",
-										fun.GetHTMLOtion("iva_codig", "iva_nombr", "dbCondIva", ""), "")%>
+						<%=fun.select("cli_fciva", "form-control with-80-00 campo", "", "",
+										fun.GetHTMLOtion("iva_codig", "iva_nombr", "dbCondIva", "", ""), "")%>
 					</div>
 					<div class="fila">
 						<spam class="form-control with-20-00">Tipo de Doc.</spam>
 						<%=fun.select("cli_ftdoc", "form-control with-30-00 campo", "", "",
-										fun.GetHTMLOtion("doc_codig", "doc_nombre", "dbTipoDocumentos", ""), "")%>
+										fun.GetHTMLOtion("doc_codig", "doc_nombre", "dbTipoDocumentos", "", ""), "")%>
 						<spam class="form-control with-20-00">Nro. Doc.</spam>
 						<%=fun.input("cli_fndoc","form-control with-30-00 campo","","text"," maxlength=\"11\"")%>
 					</div>
@@ -191,31 +191,132 @@
         				$("input,textarea",$("#facturacion",formulario)).val("");
         				$("select option",$("#facturacion",formulario)).removeAttr("selected");
         			}
-        	});
+        	});        	
         	
         	$("#btn_confirmar",formulario).unbind("click").click(function(){
-        		cargando();
-			    $.ajax({
-			    	dataType:'json',
-			    	data: $(".campo", formulario).serialize(),
-			    	type:'POST',
-			    	url:"/<%=idForm%>", 
-			    	success:function(data){		
-			    		cerrarAlerta();//mensaje cargando
-				    	if(data.error !=0){
-					    	abrirAlerta("ERR", data.msg);//hubo  un error
-				    	}else{
-				    		cerrarFormu('<%=idForm%>'); // cierra le fomrulario
+        		if (validarCli()){
+        			cargando();
+				    $.ajax({
+				    	dataType:'json',
+				    	data: $(".campo", formulario).serialize(),
+				    	type:'POST',
+				    	url:"/<%=idForm%>", 
+				    	success:function(data){		
+				    		cerrarAlerta();//mensaje cargando
+					    	if(data.error !=0){
+						    	abrirAlerta("ERR", data.msg);//hubo  un error
+					    	}else{
+					    		cerrarFormu('<%=idForm%>'); // cierra le fomrulario
+					    	}
+				    	},
+				    	error:function(data){		
+				    		cerrarAlerta();
+					    	abrirAlerta("ERR", data.msg);
 				    	}
-			    	},
-			    	error:function(data){		
-			    		cerrarAlerta();
-				    	abrirAlerta("ERR", data.msg);
-			    	}
-			    });
-        	});
+				    });
+        		}
+        	}); 
         	$("#Titulo",formulario).html(modoTitulo);
         });
+        
+
+    	
+    	function validarCli(){
+    		var formulario = $("#<%=idForm%>");    		
+    		var res=true;
+    		
+    		if(res && $("#cli_nombr",formulario).val()==""){
+    			mensaje="El nombre no puede quedar vacio.";
+    			res=false;
+    			$("#cli_nombr").abrirpopover(mensaje);
+    		}
+    		if(res && $("#cli_telef",formulario).val()==""){
+    			mensaje="El telefono no puede quedar vacio.";
+    			res=false;
+    			$("#cli_telef").abrirpopover(mensaje);
+    		}/*
+    		if(res && $("#cli_celul",formulario).val()==""){
+    			mensaje="no puede quedar vacio.";
+    			res=false;
+    			$("#cli_celul").abrirpopover(mensaje);
+    		}
+    		if(res && $("#cli_direc",formulario).val()==""){
+    			mensaje="no puede quedar vacio.";
+    			res=false;
+    			$("#cli_direc").abrirpopover(mensaje);
+    		}*/
+    		if(res && $("#cli_cliva",formulario).val()==""){
+    			mensaje="La condicion de IVA no puede quedar vacia.";
+    			res=false;
+    			$("#cli_condi").abrirpopover(mensaje);
+    		}
+    		if(res && $("#cli_tpdoc",formulario).val()==""){
+    			mensaje="El tipo de Documento no puede quedar vacio.";
+    			res=false;
+    			$("#cli_tpdoc").abrirpopover(mensaje);
+    		}
+    		if(res && $("#cli_nrdoc",formulario).val()==""){
+    			mensaje="El numero de Dcoumento no puede quedar vacio.";
+    			res=false;
+    			$("#cli_nrdoc").abrirpopover(mensaje);
+    		}/*
+    		if(res && $("#cli_email",formulario).val()==""){
+    			mensaje="El email no puede quedar vacio.";
+    			res=false;
+    			$("#cli_email").abrirpopover(mensaje);
+    		}
+    		if(res && $("#cli_nrocbu",formulario).val()==""){
+    			mensaje="El CBU no puede quedar vacio.";
+    			res=false;
+    			$("#cli_nrocbu").abrirpopover(mensaje);
+    		}*/
+
+    		if(res && $("#cli_condi",formulario).val()==""){
+    			mensaje="Condicion de pago no puede quedar vacio.";
+    			res=false;
+    			$("#cli_condi").abrirpopover(mensaje);
+    		}
+
+    		if(res && $("#cli_plazo",formulario).val()=="" && $("#cli_condi",formulario).val()=="U"){
+    			mensaje="Si se factura a cta. Corriente el plazo de pago no puede quedar vacio.";
+    			res=false;
+    			$("#cli_plazo").abrirpopover(mensaje);
+    		}
+
+    		if(res && $("cli_fnomb").val()==""){
+    			if(res && $("cli_ftele").val()==""){
+    				mensaje="El telefono no puede quedar vacio.";
+    				res=false;
+    				$("#cli_ftele").abrirpopover(mensaje);
+    			}
+    			/*if(res && $("cli_fcelu").val()==""){
+    				mensaje="El cleular no puede quedar vacio.";
+    				res=false;
+    				$("#cli_fcelu").abrirpopover(mensaje);
+    			}
+    			if(res && $("cli_fdire").val()==""){
+    				mensaje="La direccion no puede quedar vacia.";
+    				res=false;
+    				$("#cli_fdire").abrirpopover(mensaje);
+    			}*/
+    			if(res && $("cli_fciva").val()==""){
+    				mensaje="La condicion de IVA no puede quedar vacia.";
+    				res=false;
+    				$("#cli_fciva").abrirpopover(mensaje);
+    			}
+    			if(res && $("cli_ftdoc").val()==""){
+    				mensaje="El tipo de Documento no puede quedar vacio.";
+    				res=false;
+    				$("#cli_ftdoc").abrirpopover(mensaje);
+    			}
+    			if(res && $("cli_fndoc").val()==""){
+    				mensaje="El numero de Dcoumento no puede quedar vacio.";
+    				res=false;
+    				$("#cli_fndoc").abrirpopover(mensaje);
+    			}
+    		}
+    		return res;   		
+    	}
 
 	</script>
 	

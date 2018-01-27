@@ -194,6 +194,99 @@ function funciones(nombre,arg1=[]){//devuelve resultados de las funciones declar
 	
 }
 
+$.fn.extend(
+	$.fn.validar = function(validaciones={}){
+		var ret=true;
+		
+		 $(this).each(function(){
+			var mensaje="";
+			if( ($(this).filter(":enabled").prop("tagName")=="INPUT" && $(this).prop("type")!="hidden" ) || $(this).prop("tagName")=="SELECT"){
+				if(validaciones.hasOwnProperty("noVacio") && $(this).val()==""){
+					ret=true; //no puede quedar vacio
+					mensaje="Este campo no puede quedar vacio.";
+				}
+				if(ret && validaciones.hasOwnProperty("largoMinimo") && $(this).val().length<=validaciones.largoMayor){        			
+					ret=true; //largo minimo
+					mensaje="El valor de este campo tiene que ser mayor a "+validaciones.largoMayor+" caracteres.";
+				}
+				if(ret && validaciones.hasOwnProperty("largoMaximo") && $(this).val().length>validaciones.largoMenor){      			
+					ret=true;//largo maximo
+					mensaje="El valor de este campo tiene que ser menor o igual a "+validaciones.largoMenor+" caracteres.";
+				}
+				if(ret && validaciones.hasOwnProperty("esNumero") && $.isNumeric($(this).val())){        			
+					ret=true;//numerica
+					mensaje="En este campo solo se pueden ingresar numeros.";
+				}
+				if(ret && validaciones.hasOwnProperty("noCero") && parseFloat($(this).val())!=0){        			
+					ret=true;//numerica
+					mensaje="En este campo no puede ser cero.";
+				}
+				
+				if(ret){
+					$(this).abrirpopover(mensaje);
+					return false;
+				}
+			}
+			
+		});
+		 
+		return (ret?this:false);
+    }
+);
+
+$.fn.extend(	
+	$.fn.validarData = function(){
+		var ret=true;		
+		$(this).each(function(){
+			ret=$(this).validar($(this).data); //valida pero trae las validaciones desde el data del obj
+			return ret;//si es true sigue con el otro sino corta el ciclo
+		});		
+		return (ret?this:false); //si no se cumplieron todas las validaciones devuelve falso sino
+    }
+);
+
+$.fn.extend(
+	$.fn.abrirpopover = function(mensaje){	
+		if($(this).size()>0){
+			$("input,select").popover("hide");//antes de borrar alguno lo borro
+			$(this).popover({html:true, trigger:"manual"});
+			var popover = $(this).data('bs.popover');
+			popover.config.content = mensaje;
+			$(this).popover('show');
+			$(this).focus(function(){
+				$(this).popover("hide");
+			});
+		}
+		return this;
+    }
+);
+
+$.fn.extend(
+  	$.fn.size = function(){				
+		return ($(this).length);
+    }
+);
+
+$.fn.extend(
+          	$.fn.serializeI = function(){	
+          		var conjunto=$(this);          	
+          		var checkboxes = conjunto.filter('input[type="checkbox"]');
+    			$.each( checkboxes, function( key, value ) {
+    			    if (value.checked === false) {
+    			        value.value = 0;
+    			    }else{
+    			        value.value = 1;
+    			    }
+    			    $(value).attr('type', 'hidden');
+    			});
+    			var disabled = conjunto.filter(':disabled').prop("disabled",false);
+    			var param=$(this).serialize();
+    			checkboxes.attr("type","checkbox");
+    			disabled.prop("disabled",true);
+        		return (param);
+            }
+        );
+
 function stringToBoolean(string){
     switch(string.toLowerCase().trim()){
         case "true": case "yes": case "1": return true;

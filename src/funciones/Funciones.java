@@ -31,6 +31,8 @@ public class Funciones {
 	public Map<String,String> parametros=new HashMap<String,String>();
 	public int compania=0;
 	public  Date hoy = new Date();
+	public static final String Contado="O";
+	public static final String CtaCorrienta="U";
 	/*public String server="";
 	public String puerto="";
 	public String usuario="";
@@ -121,12 +123,22 @@ public class Funciones {
 	}
 
 	
-	public int getMaximo(String tabla,String campo){
-		return this.getMaximo(tabla, campo, "");
+	public int getMaximo(String tabla,String campo,String campoCompa){
+		return this.getMaximo(tabla, campo,campoCompa, "");
 	}
 
-	public int getMaximo(String tabla,String campo, String where){
-		String wheresql=(where.trim().equals("")?"":"where "+where);
+	public int getMaximo(String tabla,String campo,String campoCompa, String where){
+		String wheresql="";
+		if(!campoCompa.equals("")){
+			wheresql=" where "+campoCompa+" = "+String.valueOf(this.compania);
+		}
+		
+		if(!where.equals("")){
+			wheresql+=(wheresql.equals("")?" where ":" and ");
+			wheresql+=where;
+		}
+		
+		
 		int max=0;
 		try {		
 			Connection cn=this.Conectar();
@@ -158,13 +170,21 @@ public class Funciones {
 		return (valor==null?valorDefault:valor);
 	}
 
-	public String GetHTMLOtion(String CampoValue,String CampoTexto,String Tabla,String Where){
+	public String GetHTMLOtion(String CampoValue,String CampoTexto,String Tabla,String campoCompa, String Where){
+		String wheresql="";
+		if(!campoCompa.equals("")){
+			 wheresql=" where "+campoCompa+" = "+String.valueOf(this.compania);
+		}
+		
+		if(!Where.equals("")){
+			wheresql+=(wheresql.equals("")?" where ":" and ");
+			wheresql+=Where;
+		}
 		String html="";
-		Where=(Where.equals("")?"1=1":Where);
 		try{
 			Connection cn=this.Conectar();
 			Statement st=cn.createStatement();
-			ResultSet rs=st.executeQuery("select "+CampoValue+" as campo, "+CampoTexto+" as texto from "+Tabla+" as tabla where "+Where);
+			ResultSet rs=st.executeQuery("select "+CampoValue+" as campo, "+CampoTexto+" as texto from "+Tabla+" as tabla "+wheresql);
 			while( rs.next()){
 				html+="<option value=\""+rs.getString("campo")+"\">"+rs.getString("texto")+"</option>";
 			}
