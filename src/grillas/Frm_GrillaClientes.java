@@ -150,7 +150,7 @@ public class Frm_GrillaClientes extends HttpServlet {
 					+ "	concat(trim(doc_nombre),' ',convert( CASE WHEN trim(cli_fndoc)='' THEN cli_nrdoc ELSE cli_fndoc END,char))  as cli_nrdoc, \n"
 					+ "	cli_plazo,cli_email \n"
 					+ "from  dbClientes \n"
-					+ "	left join dbCondIva on (iva_codig=CASE WHEN trim(cli_fcond)='' THEN cli_condi ELSE cli_fcond END) \n"
+					+ "	left join dbCondIva on (iva_codig=CASE WHEN trim(cli_fciva)='' THEN cli_cliva ELSE cli_fciva END) \n"
 					+ "left join dbTipoDocumentos on ( doc_codig =CASE WHEN trim(cli_fndoc)='' THEN cli_tpdoc ELSE cli_ftdoc END) "
 					+ " WHERE cli_compa="+String.valueOf(fun.compania)+" \n"
 					+ " ORDER BY " + ordenarcampo+ " " +ordenarmetodo;

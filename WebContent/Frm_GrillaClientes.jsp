@@ -146,7 +146,7 @@
 	        	pager:NidGrilla + '_pie',
 	        	sortname:'cli_codig',
 	        	viewrecords:true,
-	        	sortorder:"desc",
+	        	sortorder:"asc",
 	        	hidegrid:false,
 	        	title:false,
 	        	gridComplete:function(){
@@ -175,7 +175,7 @@
 	        	caption:""
 	        });
 	        $(".ui-jqgrid-titlebar").hide();	 
-	        $( window ).resize(function(){  
+	        $( document ).resize(function(){  
 	      	  reSizeGrid("GrillaClientes",($("#Cuerpo").width()-10),($("#Cuerpo").height()-80));
 	      	});
         }

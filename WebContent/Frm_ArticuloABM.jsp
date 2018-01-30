@@ -54,6 +54,7 @@
 				<fieldset>
   					<legend>Datos:</legend>
 					<div class="fila">
+						<%=fun.input("modo","form-control campo","","hidden","")%>
 						<%=fun.input("art_compa","form-control campo","","hidden","")%>
 						<spam class="form-control with-20-00">Nombre</spam>
 						<%=fun.input("art_codig","form-control with-10-00 campo","","number"," maxlength=\"4\"")%>
@@ -66,11 +67,11 @@
 					</div>
 					<div class="fila">
 						<spam class="form-control with-20-00">Neto</spam>	
-						<%=fun.input("art_pneto","form-control with-20-00 campo numero","","text","")%>	
+						<%=fun.input("art_pneto","form-control with-20-00 campo precio","","text","")%>	
 						<spam class="form-control with-20-00" style="padding-left: 10px;">Final</spam>
-						<%=fun.input("art_final","form-control with-20-00 campo numero","","text","")%>
+						<%=fun.input("art_final","form-control with-20-00 campo precio","","text","")%>
 						<spam class="form-control with-10-00" style="padding-left: 10px;">Activo</spam>
-						<%=fun.input("art_activ","form-control with-10-00 campo","","checkbox"," ")%>
+						<%=fun.input("art_activ","form-control with-10-00 campo","margin: 5.5px 0px;","checkbox"," ")%>
 					</div>
 				</fieldset>				
 			</div>
@@ -86,6 +87,7 @@
        		var idGrilla="<%=idGrilla%>";
         	var NidGrilla = "#" + idGrilla;
         	var formulario = $("#<%=idForm%>");
+        	$("#modo",formulario).val("<%=modo%>");
         	formulario.modo="<%=modo%>";
         	<%=Articulo%>
         	Articulo.forEach(function(value,index){	
@@ -96,7 +98,7 @@
         		}	
         	});
         	
-        	$("#art_pneto,#art_final",formulario).priceFormat({
+        	$(".precio",formulario).priceFormat({
         	    clearPrefix: true,
         	    clearSuffix: true,
         	    prefix: '$ ',
@@ -172,12 +174,12 @@
     			res=false;
     			$("#art_marca").abrirpopover(mensaje);
     		}
-    		if(res && $("#art_pneto",formulario).val()==""){
-    			mensaje="El precio neto no puede quedar vacio.";
+    		if(res && $("#art_pneto",formulario).val()=="0.00"){
+    			mensaje="El precio neto no puede ser cero.";
     			res=false;
     			$("#art_pneto").abrirpopover(mensaje);
     		}
-    		if(res && $("#art_final",formulario).val()==""){
+    		if(res && $("#art_final",formulario).val()=="0.00"){
     			mensaje="El precio final no puede quedar vacio.";
     			res=false;
     			$("#art_final").abrirpopover(mensaje);

@@ -305,8 +305,7 @@ public class Funciones {
 				String[] campos= this.getCampos(rs);//devuelve el nombre de las columnas    
 				while (rs.next()){
 					for (int i = 0 ; i <campos.length;i++){	 
-						
-						respuesta+= name + ".set('"+campos[i]+"','"+this.acentos(rs.getString(campos[i]).replaceAll("\n", ""))+"');\n";;	         
+						respuesta+= name + ".set('"+campos[i]+"','"+this.acentos(isNull(rs.getString(campos[i])).replaceAll("\n", ""))+"');\n";;	         
 					}
 				}
 			}		

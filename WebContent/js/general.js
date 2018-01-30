@@ -158,14 +158,34 @@ function reSizeGrid(idGrid,width,height){
 
 $.extend($.fn.fmatter , {
     FormatCliente : function(cellvalue, options, rowdata) {
-    return fillZero(cellvalue,3);
-}
+    	return fillZero(cellvalue,3);
+    }	
 });
 
 $.extend($.fn.fmatter.FormatCliente , {
     unformat : function(cellvalue, options) {
-    return parseInt(cellvalue);
-}
+    	return parseInt(cellvalue);
+    }
+});
+
+$.extend($.fn.fmatter , {
+    FormatActivo : function(cellvalue, options, rowdata) {
+    	if (cellvalue=="1"){
+    		return "<img src=\"img/iconos/glyphicons-153-check.png\" style=\"height: auto;width: 22px;\">";
+    	}else{
+    		return "<img src=\"img/iconos/glyphicons-198-remove-circle.png\" style=\"height: auto;width: 18px;\">";
+    	}
+    }	
+});
+
+$.extend($.fn.fmatter.FormatActivo , {
+    unformat : function(cellvalue, options) {
+    	if (cellvalue=="<img src=\"img/iconos/glyphicons-153-check.png\" style=\"height: auto;width: 22px;\">"){
+    		return "1";
+    	}else{
+    		return "0";
+    	}
+    }
 });
 
 function funciones(nombre,arg1=[]){//devuelve resultados de las funciones declaradas en Funciones.java
@@ -261,6 +281,8 @@ $.fn.extend(
     }
 );
 
+
+
 $.fn.extend(
   	$.fn.size = function(){				
 		return ($(this).length);
@@ -270,7 +292,7 @@ $.fn.extend(
 $.fn.extend(
           	$.fn.serializeI = function(){	
           		var conjunto=$(this);          	
-          		var checkboxes = conjunto.filter('input[type="checkbox"]');
+          		var checkboxes = conjunto.filter('input[type="checkbox"]');          		
     			$.each( checkboxes, function( key, value ) {
     			    if (value.checked === false) {
     			        value.value = 0;
@@ -280,7 +302,11 @@ $.fn.extend(
     			    $(value).attr('type', 'hidden');
     			});
     			var disabled = conjunto.filter(':disabled').prop("disabled",false);
-    			var param=$(this).serialize();
+    			param=conjunto.filter(':not(.precio)').serialize();
+    			$.each(conjunto.filter('.precio'), function( key, value ) {
+    				param += (param==""?"":"&");
+    				param += $(this).attr("id")+"="+$(this).priceToFloat();
+    			});
     			checkboxes.attr("type","checkbox");
     			disabled.prop("disabled",true);
         		return (param);
@@ -301,3 +327,21 @@ function isBoolean(string){
      default: return false;
 	 }
  }
+
+$( document ).ajaxComplete(function( event, xhr, settings){
+	/*console.log("ajax completete");
+	console.log(JSON.stringify(event));
+	console.log(JSON.stringify(xhr));
+	console.log(JSON.stringify(settings));*/
+	
+    switch( 1*xhr.status )
+    {
+         case 301:case 302: //here you do whatever you need to do
+                   //when your php does a redirection
+                   alert("Redirection");
+                   break;
+         case 404: //here you handle the calls to dead pages
+                   alert("Page Not Found");
+                   break;
+    }
+ });

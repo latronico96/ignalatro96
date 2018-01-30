@@ -162,19 +162,7 @@
 	        		error:function(data){        			
 			    		cerrarAlerta();
 	        	    	console.log(data);
-	        		},
-				    complete: function(httpObj, textStatus){
-				        switch( 1*httpObj.status )
-				        {
-				             case 301:case 302: //here you do whatever you need to do
-				                       //when your php does a redirection
-				                       alert("Redirection");
-				                       break;
-				             case 404: //here you handle the calls to dead pages
-				                       alert("Page Not Found");
-				                       break;
-				        }
-				     }
+	        		}
 	        	});				
 			}
         });	
@@ -194,19 +182,7 @@
         		error:function(data){      			
 		    		cerrarAlerta();
         	    	console.log(data);
-			    },
-			    complete: function(httpObj, textStatus){
-			        switch( 1*httpObj.status )
-			        {
-			             case 301:case 302: //here you do whatever you need to do
-			                       //when your php does a redirection
-			                       alert("Redirection");
-			                       break;
-			             case 404: //here you handle the calls to dead pages
-			                       alert("Page Not Found");
-			                       break;
-			        }
-			     }
+			    }
         	});
 			
 		});

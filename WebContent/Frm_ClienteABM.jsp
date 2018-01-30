@@ -54,6 +54,7 @@
 				<fieldset>
   					<legend>Datos:</legend>
 					<div class="fila">
+						<%=fun.input("modo","form-control campo","","hidden","")%>
 						<%=fun.input("cli_compa","form-control campo","","hidden","")%>
 						<spam class="form-control with-20-00">Nombre</spam>
 						<%=fun.input("cli_codig","form-control with-10-00 campo","","number"," maxlength=\"4\"")%>
@@ -143,6 +144,7 @@
        		var idGrilla="<%=idGrilla%>";
         	var NidGrilla = "#" + idGrilla;
         	var formulario = $("#<%=idForm%>");
+        	$("#modo",formulario).val("<%=modo%>");
         	formulario.modo="<%=modo%>";
         	<%=cliente%>
         	Cliente.forEach(function(value,index){	

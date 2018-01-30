@@ -131,12 +131,12 @@
 	        	colNames:['Compania','Cod.','Marca','Articúlo','Precio Neto','Precio Final','Activo'],
 	        	colModel:[
 	        		{name:'art_compa', index:'art_compa', width:0, hidden:true},
-	        		{name:'art_codig', index:'art_codig', width:15, hidden:false,  formatter:'FormatCliente'},
+	        		{name:'art_codig', index:'art_codig', width:15, hidden:false, formatter:'FormatCliente'},
 	        		{name:'mar_nombr', index:'mar_nombr', width:100, hidden:false},
 	        		{name:'art_nombr', index:'art_nombr', width:100,hidden:false},
 	        		{name:'art_pneto', index:'art_pneto', width:60,hidden:false, align:'right'},
 	        		{name:'art_final', index:'art_final', width:60,hidden:false, align:'right'},
-	        		{name:'art_activ', index:'art_activ', width:15,hidden:false}],
+	        		{name:'art_activ', index:'art_activ', width:15,hidden:false, formatter:'FormatActivo'}],
 	        	width: ($("#Cuerpo").width()-10),
 	        	height: ($("#Cuerpo").height()-80),
 	        	rowNum:'10',
@@ -144,7 +144,7 @@
 	        	pager:NidGrilla + '_pie',
 	        	sortname:'art_codig',
 	        	viewrecords:true,
-	        	sortorder:"desc",
+	        	sortorder:"asc",
 	        	hidegrid:false,
 	        	title:false,
 	        	gridComplete:function(){
@@ -173,7 +173,7 @@
 	        	caption:""
 	        });
 	        $(".ui-jqgrid-titlebar").hide();	 
-	        $( window ).resize(function(){  
+	        $( document ).resize(function(){  
 	      	  reSizeGrid("GrillaClientes",($("#Cuerpo").width()-10),($("#Cuerpo").height()-80));
 	      	});
         }

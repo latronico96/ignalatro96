@@ -31,6 +31,7 @@ public class Frm_ArticuloABM extends HttpServlet {
     private Funciones fun = null;
     private String tabla="dbArticulos";
     private String claveCampo="art_codig";
+    private String CompaniaCampo="art_compa";
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -112,17 +113,22 @@ public class Frm_ArticuloABM extends HttpServlet {
 				claveValor=(String) pair.getValue();*/
 			}
 			if (this.claveCampo.equals(pair.getKey())){
-				claveValor=parametros.get((String)pair.getKey());
+				if (parametros.getOrDefault("modo", "ALTA").equals("ALTA")){
+					claveValor=String.valueOf(fun.getMaximo(this.tabla, this.claveCampo, CompaniaCampo)+1);
+					campos+=pair.getKey() ;
+					valores+= fun.PrepararCampo( (String)pair.getKey(), tipos, claveValor );
+				}else{ 
+					claveValor=parametros.get((String)pair.getKey());
+					campos+=pair.getKey() ;
+					valores+= fun.PrepararCampo( (String)pair.getKey(), tipos, parametros.get((String)pair.getKey()) );
+				}
+			}else{
+				campos+=pair.getKey() ;
+				valores+= fun.PrepararCampo( (String)pair.getKey(), tipos, parametros.get((String)pair.getKey()) );
 			}
-			campos+=pair.getKey() ;
-			valores+= fun.PrepararCampo( (String)pair.getKey(), tipos, parametros.get((String)pair.getKey()) );
 		    it.remove(); // avoids a ConcurrentModificationException
 		}
 
-		String delete="delete from "+this.tabla+" where "+this.claveCampo+"='"+claveValor+"'";
-		String insert="insert into "+this.tabla+" ("+campos+") values ("+valores+")";
-		//System.out.println(delete);
-		//System.out.println(insert);
 		
 		response.setContentType("application/json"); 
 	    PrintWriter prt=response.getWriter();
@@ -131,11 +137,22 @@ public class Frm_ArticuloABM extends HttpServlet {
 		try {
 			cn = fun.Conectar();
 			cn.setAutoCommit(false);
-			Statement st = cn.createStatement();			
-			st.executeUpdate(delete);
-			st.executeUpdate(insert);		    
+			
+			if (!parametros.getOrDefault("modo", "ALTA").equals("ALTA")){
+				String delete="delete from "+this.tabla+" where "+CompaniaCampo+"="+fun.compania+" and "+this.claveCampo+"='"+claveValor+"'";
+				Statement stBaja = cn.createStatement();	
+				stBaja.executeUpdate(delete);
+				stBaja.close();
+			}
+			
+			if (!parametros.getOrDefault("modo", "ALTA").equals("BAJA")){
+				String insert="insert into "+this.tabla+" ("+campos+") values ("+valores+")";
+				Statement stAlta = cn.createStatement();	
+				stAlta.executeUpdate(insert);
+				stAlta.close();
+			}		
+			
 			cn.commit();
-			st.close();
 			cn.close();
 			json.put("error","0");  
 			json.put("msg","sin errores se modifico con exito");	

@@ -173,7 +173,7 @@
 	        	caption:""
 	        });
 	        $(".ui-jqgrid-titlebar").hide();	 
-	        $( window ).resize(function(){  
+	        $( document ).resize(function(){  
 	      	  reSizeGrid("GrillaClientes",($("#Cuerpo").width()-10),($("#Cuerpo").height()-80));
 	      	});
         }
