@@ -1,5 +1,5 @@
 <%@page import="java.math.BigInteger"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html; charset=UTF-8;link=index;"
 	pageEncoding="UTF-8"%>
 <%@page import="funciones.Funciones"%>
 <%

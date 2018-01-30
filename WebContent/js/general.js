@@ -327,21 +327,31 @@ function isBoolean(string){
      default: return false;
 	 }
  }
+aux1 = "";
+aux2 = "";
+aux3 = "";
 
 $( document ).ajaxComplete(function( event, xhr, settings){
 	/*console.log("ajax completete");
 	console.log(JSON.stringify(event));
 	console.log(JSON.stringify(xhr));
 	console.log(JSON.stringify(settings));*/
+	aux1 = event;
+	aux2 = xhr;
+	aux3 = settings;
 	
-    switch( 1*xhr.status )
+    switch( xhr.getAllResponseHeaders().indexOf("index") )
     {
-         case 301:case 302: //here you do whatever you need to do
+         case 95: //here you do whatever you need to do
                    //when your php does a redirection
-                   alert("Redirection");
-                   break;
-         case 404: //here you handle the calls to dead pages
-                   alert("Page Not Found");
-                   break;
+        	 location.reload()
+             break;
+         case -1: //here you handle the calls to dead pages
+              //alert("Page Not Found");
+              break;
     }
  });
+
+$.ajaxSetup({
+    dataType: "html"
+	});
