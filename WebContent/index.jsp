@@ -18,6 +18,12 @@
 <script src="js/general.js" charset="UTF-8"></script>
 <script>
 	$(document).ready(function(){
+		$("#frm_login input").on('keyup', function (e) {
+		    if (e.keyCode == 13) {
+		    	$("#frm_login input#btn_Enviar").click();
+		    }
+		});
+		
 	    $("input[type=button]").click(function(){
 		    var formulario = $("#login");
 		    var cancelar = false;

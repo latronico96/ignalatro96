@@ -156,7 +156,7 @@ spam.form-control {
 
 fieldset {
     min-width: 0;
-    padding: 0 10px 15px 0;
+    padding: 0px 4px;
     margin: 0px;
     border: 0;
     min-width: -webkit-min-content;

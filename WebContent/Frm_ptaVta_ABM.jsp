@@ -42,7 +42,7 @@
 
 	<div class="modal" data-tmodal="alerta">
 		<div class="modal-header">
-			<h5 class="modal-title" id="exampleModalLabel">Administración de
+			<h5 class="modal-title">Administración de
 				Puntos de Venta</h5>
 			<button type="button" type="button" class="close"
 				onclick="cerrarFormu('<%=idForm%>');">

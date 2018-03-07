@@ -105,7 +105,7 @@ function cerrarPregunta(funcion=""){//CIERRA Y EJECUTA FUNCION DE CANCELACIÓN E
 function cerrarFormu(formu='',funcion=''){//CIERRA Y EJECUTA FUNCION DE CANCELACIÓN EN MODAL TIPO PREGUNTA
 
 	$("#"+formu).last().remove();
-
+	$("table.ui-jqgrid-btable.ui-common-table",$(".formulario").last()).trigger( 'reloadGrid' );
 	if(funcion!=""){
 		funcion();
 	}
@@ -327,23 +327,12 @@ function isBoolean(string){
      default: return false;
 	 }
  }
-aux1 = "";
-aux2 = "";
-aux3 = "";
 
-$( document ).ajaxComplete(function( event, xhr, settings){
-	/*console.log("ajax completete");
-	console.log(JSON.stringify(event));
-	console.log(JSON.stringify(xhr));
-	console.log(JSON.stringify(settings));*/
-	aux1 = event;
-	aux2 = xhr;
-	aux3 = settings;
-	
+$( document ).ajaxComplete(function( event, xhr, settings){	
     switch( xhr.getAllResponseHeaders().indexOf("index") )
     {
          case 95: //here you do whatever you need to do
-                   //when your php does a redirection
+                   //when does a redirection
         	 location.reload()
              break;
          case -1: //here you handle the calls to dead pages
@@ -355,3 +344,49 @@ $( document ).ajaxComplete(function( event, xhr, settings){
 $.ajaxSetup({
     dataType: "html"
 	});
+
+function HelpCampo(cod,inpuId="",funcionId="",filtExt="",BusqVal="",BusqCam="",pop=false){
+	var FuncionValidacion;
+	var pag="HelpCampo";	
+	var contenedor="";
+	
+	if (funcionId==""){				
+		function FuncionValidacion(row,id){
+			$(inpuId).val(id);
+			$(inpuId).change();
+		}
+	}else{
+		FuncionValidacion=funcionId;
+	}
+	
+	if (contenedor==""){
+		contenedor="bloqueoAlerta";
+	}
+
+	$.ajax({
+	   type:'GET',
+	   url: pag ,
+	   data:{tipo: cod, filtExt: filtExt, BusqVal: BusqVal, BusqCam: BusqCam},
+	   dataType: "text",
+	   success:function(data){	   
+		   var res=data;		   
+		   $("#bloqueoAlerta").html(res); /*alert("se envio");*/
+		   //$("#bloqueoAlerta").css("display","block");
+		   $("#frm_HelpCampo,#bloqueoAlerta").show()
+		   HC_ValCampo=FuncionValidacion;
+	   }
+	});
+
+	
+}
+
+function bloquear(flag){
+	if (flag){
+		document.getElementById('bloqueoAlerta').style.display="block";
+	}
+	else{
+		document.getElementById('bloqueoAlerta').style.display="none";
+		document.getElementById('bloqueoAlerta').innerHTML="";
+		teclaEsc();
+	}
+}
