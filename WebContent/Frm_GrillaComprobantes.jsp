@@ -100,7 +100,7 @@
 	        	cargando();
 				$.ajax({
 					type:'GET',
-					url: 'Frm_ArticulosABM',
+					url: 'Frm_FacturaABM',
 					data: { modo: $(this).data("modo"), cli_codig: cod },
 					success:function(data){     			
 			    		cerrarAlerta();
@@ -146,7 +146,7 @@
 	        	viewrecords:true,
 	        	sortorder:"desc",
 	        	hidegrid:false,
-	        	title:false,
+	        	title:false,	        	
 	        	gridComplete:function(){
 	        		$('tbody [role="row"]').each(function(id, val){
 	        			if(id % 2 == 0){

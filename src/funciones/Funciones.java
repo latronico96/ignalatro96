@@ -724,4 +724,35 @@ public class Funciones {
 	  *					System.out.println("Verify against computed hash: " + compare_computed);
 	  *}	
 		*/
+	
+	public static String llamImg(String tip) {
+		String foto;
+		switch (tip) {
+		case "A":
+			foto = "<img src='img/checkbox-checked.png' style='width: 30%;display:block;margin:auto;'>";
+			break;
+		case "x":
+			foto = " ";
+			break;
+		case "17": // auto nuevo
+			foto = "<img src=\"img/Autos32b.ICO\" style=\"width: 50%;display:block;margin:auto;margin-bottom:-4px;\">";
+			break;
+		case "18": // auto usado
+			foto = "<img src=\"img/AutoUsado.ico\" style=\"width: 50%;display:block;margin:auto;margin-bottom:-4px;\">";
+			break;
+		case "4": // cerrado
+			foto = "<img src=\"img/Ok32.ICO\" style=\"width: 50%;display:block;margin:auto;margin-bottom:-4px;\">";
+			break;
+		case "5": // pendiente
+			foto = "<img src=\"img/about.ICO\" style=\"width: 50%;display:block;margin:auto;margin-bottom:-4px;\">";
+			break;
+		case "6": // resuelto
+			foto = "<img src=\"img/Inactivo.ico\" style=\"width: 50%;display:block;margin:auto;margin-bottom:-4px;\">";
+			break;
+		default:
+			foto = "sin ico\"" + tip + "\"";
+			break;
+		}
+		return foto;
+	}
 }
