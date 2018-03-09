@@ -85,7 +85,6 @@
 		<table id="<%=idGrilla%>"></table>
 		<div id="<%=idGrilla%>_pie"></div>
 	</div>
-</div>
 <script type="text/javascript">
 			
 		var idGrilla="<%=idGrilla%>";

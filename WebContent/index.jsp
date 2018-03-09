@@ -163,13 +163,27 @@
 				class="navbar navbar-expand col navbar-light negro T-blanco rounded">
 			<div class="collapse navbar-collapse" id="navbarNav">
 				<ul class="navbar-nav">
-					<li class="nav-item col"><h4 style="margin-bottom: 2px;">Login</h4><%=fun.input("form", "campo", "", "hidden", "value=\"frm_login\"")%></li>
-					<li class="nav-item col"><spam class="form-control">Usuario</spam></li>
-					<li class="nav-item col"><%=fun.input("usuario", "form-control campo", "", "text", " maxlength=\"45\"")%></li>
-					<li class="nav-item col"><spam class="form-control">contraseña</spam></li>
-					<li class="nav-item col"><%=fun.input("contrasenia", "form-control campo", "", "password", " maxlength=\"60\"")%></li>
-					<li class="nav-item col"><%=fun.input("btn_Enviar", "form-control campo btn float-right", "padding: 2px; margin: 0px;",
-					"button", "value=\"Ingresar\"")%></li>
+					<li class="nav-item col"><h4 style="margin-bottom: 2px;">Login</h4>
+						<input id="form" class="form-control campo" type="hidden" value="frm_login">
+					</li>
+					<li class="nav-item col">
+						<span class="form-control">Usuario</span>
+					</li>
+					<li class="nav-item col">
+						<input id="usuario" class="form-control campo" type="text" maxlength="45">
+					</li>
+					<li class="nav-item col">
+						<span class="form-control">contraseña</span>
+					</li>
+					<li class="nav-item col">
+						<input id="contrasenia" class="form-control campo" type="password" maxlength="60">
+					</li>
+					<li class="nav-item col">
+						<button id="btn_Enviar" class="form-control campo btn float-right" 
+						style="padding: 2px; margin: 0px;" type="button" value="Ingresar">
+							Ingresar
+						</button>
+					</li>
 				</ul>
 			</div>
 			</nav>
@@ -185,42 +199,45 @@
 				<div id="frm_registrar" class="with-50-00">
 					<div class="fila">
 
-						<spam class="form-control with-50-00">Compania</spam>
-						<%=fun.input("form", "campo", "", "hidden", "value=\"frm_registrar\"")%>
-						<%=fun.input("compania", "form-control with-50-00 campo", "", "text", " maxlength=\"45\"")%>
+						<span class="form-control with-50-00">Compania</span>
+						<input id="form" class="campo" type="hidden" value="frm_registrar">
+						<input id="compania" class="form-control with-50-00 campo" type="text" maxlength="45">
 					</div>
 					<div class="fila">
-						<spam class="form-control with-50-00">Razón Social</spam>
-						<%=fun.input("razon", "form-control with-50-00 campo", "", "text", " maxlength=\"45\"")%>
+						<span class="form-control with-50-00">Razón Social</span>
+						<input id="razon" class="form-control with-50-00 campo" type="text" maxlength="45">
 					</div>
 					<div class="fila">
-						<spam class="form-control with-50-00">Abreviatura</spam>
-						<%=fun.input("abrev", "form-control with-50-00 campo", "", "text", " maxlength=\"3\"")%>
+						<span class="form-control with-50-00">Abreviatura</span>
+						<input id="abrev" class="form-control with-50-00 campo" type="text" maxlength="3">
 					</div>
 					<div class="fila">
-						<spam class="form-control with-50-00">Condicion de Iva</spam>
-						<%=fun.select("condIva", "form-control with-50-00 campo", "", "",
-					fun.GetHTMLOtion("iva_codig", "iva_nombr", "dbCondIva", "",""), "")%>
+						<span class="form-control with-50-00">Condicion de Iva</span>
+						<select id="condIva" class="form-control with-50-00 campo">
+							<%=fun.GetHTMLOtion("iva_codig", "iva_nombr", "dbCondIva", "","")%>
+						</select>
 					</div>
 					<div class="fila">
-						<spam class="form-control with-50-00">C.U.I.T.</spam>
-						<%=fun.input("cuit", "form-control with-50-00 campo", "", "text", " maxlength=\"11\"")%>
+						<span class="form-control with-50-00">C.U.I.T.</span>
+						<input id="cuit" class="form-control with-50-00 campo" type="text" maxlength="11">
 					</div>
 					<div class="fila">
-						<spam class="form-control with-50-00">Usuario</spam>
-						<%=fun.input("usuario", "form-control with-50-00 campo", "", "text", " maxlength=\"45\"")%>
+						<span class="form-control with-50-00">Usuario</span>
+						<input id="usuario" class="form-control with-50-00 campo" type="text" maxlength="45">
 					</div>
 					<div class="fila">
-						<spam class="form-control with-50-00">Contraseña</spam>
-						<%=fun.input("contrasenia", "form-control with-50-00 campo", "", "password", " maxlength=\"60\"")%>
+						<span class="form-control with-50-00">Contraseña</span>
+						<input id="contrasenia" class="form-control with-50-00 campo" type="password" maxlength="60">
 					</div>
 					<div class="fila">
-						<spam class="form-control with-50-00">Confirmar Contraseña</spam>
-						<%=fun.input("contrasenia2", "form-control with-50-00 campo", "", "password", " maxlength=\"60\"")%>
+						<span class="form-control with-50-00">Confirmar Contraseña</span>
+						<input id="contrasenia2" class="form-control with-50-00 campo" type="password" maxlength="60">
 					</div>
 					<div class="fila">
-						<%=fun.input("registrarse", "form-control with-50-00 campo btn float-right",
-					"padding: 10px; margin: 3px;", "button", "value=\"Registrarse\"")%>
+						<button id="registrarse" class="form-control with-50-00 campo btn float-right"
+							style="padding: 10px; margin: 3px;" type="button" value="Registrarse">
+							Registrarse
+						</button>
 					</div>
 				</div>
 			</div>

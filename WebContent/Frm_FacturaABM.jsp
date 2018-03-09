@@ -49,7 +49,7 @@
 
 	<div class="modal" data-tmodal="alerta">
 		<div class="modal-header">
-			<h5 class="modal-title" id="exampleModalLabel"><spam id="Titulo"></spam> Factura</h5>
+			<h5 class="modal-title" id="exampleModalLabel"><span id="Titulo"></span> Factura</h5>
 			<button type="button" type="button" class="close"
 				onclick="cerrarFormu('<%=idForm%>');">
 				<span aria-hidden="true">&times;</span>
@@ -58,47 +58,52 @@
 		<div class="modal-body">
 			<div class="d-block">
 				<fieldset>
-					<div class="fila">
-						<%=fun.input("modo","form-control campo","","hidden","")%>
-						<%=fun.input("cmp_compa","form-control campo","","hidden","")%>
-						<%=fun.input("cmp_codig","form-control campo","","hidden","")%>
-						<spam class="form-control with-10-00">Fecha</spam>
-						<%=fun.input("cmp_fecha","form-control with-10-00 campo","","text"," maxlength=\"4\"")%>
-						<spam class="form-control with-10-00">N°</spam>						
-						<% String optionsCondi="<option value=\"A\">A</option>"
-												+"<option value=\"B\">B</option>" 
-												+"<option value=\"C\">C</option>"; 
-						out.println(fun.select("cmp_letra","form-control with-10-00 campo","","",optionsCondi,""));%>
-						<%=fun.select("cmp_ptvta","form-control with-10-00 campo","","",fun.GetHTMLOtion("ptv_codig", "right(concat(\"0000\",ptv_codig),4)", "dbPuntosVentas","ptv_compa", " ptv_activ=1 "),"")%>
-						<%=fun.input("cmp_nroco","form-control with-20-00 campo","","text"," maxlength=\"8\"")%>
+					<div class="fila">						
+						<input id="modo" class="form-control campo" type="hidden">
+						<input id="cmp_compa" class="form-control campo" type="hidden">
+						<input id="cmp_codig" class="form-control campo" type="hidden">					
+						<span class="form-control with-10-00">Fecha</span>
+						<input id="cmp_fecha" class="form-control with-10-00 campo" type="text" maxlength="4">
+						<span class="form-control with-10-00">N°</span>
+						<select id="cmp_letra" class="form-control with-10-00 campo">						
+							<option value="A">A</option>
+							<option value="B">B</option> 
+							<option value="C">C</option>
+						</select>
+						<select id="cmp_ptvta" class="form-control with-10-00 campo">
+							<%=fun.GetHTMLOtion("ptv_codig", "right(concat(\"0000\",ptv_codig),4)", "dbPuntosVentas","ptv_compa", " ptv_activ=1 ")%>
+						</select>
+						<input id="cmp_nroco" class="form-control with-20-00 campo" type="text" maxlength="8">
 					</div>
 				</fieldset>
 				<fieldset>
   					<legend>Cliente</legend>
 					<div class="fila">					
-						<spam class="form-control with-10-00">Nombre</spam>
-						<%=fun.input("cmp_codcl","form-control with-6-30 campo","","text"," maxlength=\"30\"")%>
+						<span class="form-control with-10-00">Nombre</span>
+						<input id="cmp_codcl" class="form-control with-6-30 campo" type="text" maxlength="30">						
 						<button type="button" class="btn blanco form-control with-3-70" id="btn_HcCli">
 							<img src="/img/iconos/glyphicons-28-search.png"	style="height: auto; filter: invert(55%);">
 						</button>
-						<%=fun.input("cli_nombr","form-control with-50-00 campo","","text"," maxlength=\"30\"")%>
-						<spam class="form-control with-5-00">IVA</spam>
-						<%=fun.select("cmp_fciva", "form-control with-25-00 campo", "", "",
-										fun.GetHTMLOtion("iva_codig", "iva_nombr", "dbCondIva", "", ""), "")%>
+						<input id="cli_nombr" class="form-control with-50-00 campo" type="text" maxlength="30">	
+						<span class="form-control with-5-00">IVA</span>
+						<select id="cmp_fciva" class="form-control with-25-00 campo">
+							<%=fun.GetHTMLOtion("iva_codig", "iva_nombr", "dbCondIva", "", "")%>
+						</select>
 					</div>					
 					<div class="fila">
-						<spam class="form-control with-10-00">Telefono</spam>
-						<%=fun.input("cmp_ftele","form-control with-25-00 campo","","text"," maxlength=\"30\"")%>
-						<spam class="form-control with-10-00">Celular</spam>
-						<%=fun.input("cmp_fcelu","form-control with-25-00 campo","","text"," maxlength=\"30\"")%>
-						<spam class="form-control with-5-00">Doc.</spam>
-						<%=fun.select("cmp_ftdoc", "form-control with-10-00 campo", "", "",
-										fun.GetHTMLOtion("doc_codig", "doc_nombre", "dbTipoDocumentos", "", ""), "")%>
-						<%=fun.input("cmp_fndoc","form-control with-15-00 campo","","text"," maxlength=\"11\"")%>
+						<span class="form-control with-10-00">Telefono</span>
+						<input id="cmp_ftele" class="form-control with-25-00 campo" type="text" maxlength="30">
+						<span class="form-control with-10-00">Celular</span>						
+						<input id="cmp_fcelu" class="form-control with-25-00 campo" type="text" maxlength="30">
+						<span class="form-control with-5-00">Doc.</span>
+						<select id="cmp_ftdoc" class="form-control with-10-00 campo">
+							<%=fun.GetHTMLOtion("doc_codig", "doc_nombre", "dbTipoDocumentos", "", "")%>
+						</select>
+						<input id="cmp_fndoc" class="form-control with-15-00 campo" type="text" maxlength="11">						
 					</div>
 					<div class="fila">
-						<spam class="form-control with-10-00">Direción</spam>
-						<%=fun.input("cmp_fdire","form-control with-60-00 campo","","text"," maxlength=\"60\"")%>	
+						<span class="form-control with-10-00">Direción</span>
+						<input id="cmp_fdire" class="form-control with-60-00 campo" type="text" maxlength="60">		
 					</div>
 				</fieldset>
 				<fieldset id="fld_<%=idGrilla %>" >
@@ -135,16 +140,16 @@
 				<fieldset id="fld_totales" class="with-50-00">
   					<legend>Totales</legend>
 					<div class="fila">
-						<%=fun.input("cmp_fdire","form-control with-30-00 campo","","text"," maxlength=\"60\"")%>
-						<spam class="form-control with-30-00">Neto</spam>
+						<input id="cmp_fdire" class="form-control with-30-00 campo" type="text" maxlength="60">
+						<span class="form-control with-30-00">Neto</span>
 					</div>	
 					<div class="fila">
-						<%=fun.input("cmp_fdire","form-control with-30-00 campo","","text"," maxlength=\"60\"")%>
-						<spam class="form-control with-30-00">IVA</spam>
+						<input id="cmp_fdire" class="form-control with-30-00 campo" type="text" maxlength="60">
+						<span class="form-control with-30-00">IVA</span>
 					</div>	
 					<div class="fila">
-						<%=fun.input("cmp_fdire","form-control with-30-00 campo","","text"," maxlength=\"60\"")%>	
-						<spam class="form-control with-30-00">Total</spam>
+						<input id="cmp_fdire" class="form-control with-30-00 campo" type="text" maxlength="60">	
+						<span class="form-control with-30-00">Total</span>
 					</div>
 				</fieldset>
 			</div>
@@ -163,16 +168,16 @@
        	formulario.modo="<%=modo%>";
        	<%=Factura%>
        	stringFrom="<div id=\"form\">\n"+
-		<%out.println(fun.buttonString("btn_rev", "form-control ", "width:20px; height: 18px; padding: 1px;", "button",
-		           					"se apreto", "<img src=\"/img/iconos/glyphicons-208-remove.png\" style=\"width: 16px; \">", ""));%> +
-		           			<%out.println(fun.inputString("ptv_compa", "form-control dato", "width: 0px;", "hidden", "value=\""+String.valueOf(fun.compania)+"\""));%> +		
-		           			<%out.println(fun.inputString("ptv_codig", "form-control dato", "width: 29px;", "text", "placeholder=\"Codigo\""));%> +
-		           			<%out.println(fun.inputString("ptv_nombr", "form-control dato", "width: 225px;", "text",	"placeholder=\"Nombre\""));%> +
-		           			<%out.println(fun.selectString("ptv_tipop",  "form-control dato", "width: 110px;", "", "", ""));%> +
-		           			<%out.println(fun.inputString("ptv_certi", "form-control dato", "width: 225px;", "text",	"placeholder=\"Certificado\""));%> +
-		           			<%out.println(fun.inputString("ptv_activ", "form-control dato", "width: 36px;", "checkbox",	"placeholder=\"activo\""));%> +
-		           			<%out.println(fun.buttonString("btn_act", "form-control ", "width:14px; height: 18px;  padding: 1px;", "button",
-		           					"se apreto", "<img src=\"/img/iconos/check.svg\" style=\"width: 16px; \">", ""));%> +
+							out.println(fun.buttonString("btn_rev", "form-control ", "width:20px; height: 18px; padding: 1px;", "button",
+		           					"se apreto", "<img src=\"/img/iconos/glyphicons-208-remove.png\" style=\"width: 16px; \">", "")) +
+		           			out.println(fun.inputString("ptv_compa", "form-control dato", "width: 0px;", "hidden", "value=\""+String.valueOf(fun.compania)+"\"")) +		
+		           			out.println(fun.inputString("ptv_codig", "form-control dato", "width: 29px;", "text", "placeholder=\"Codigo\"")) +
+		           			out.println(fun.inputString("ptv_nombr", "form-control dato", "width: 225px;", "text",	"placeholder=\"Nombre\"")) +
+		           			out.println(fun.selectString("ptv_tipop",  "form-control dato", "width: 110px;", "", "", ""))+
+		           			out.println(fun.inputString("ptv_certi", "form-control dato", "width: 225px;", "text",	"placeholder=\"Certificado\"")) +
+		           			out.println(fun.inputString("ptv_activ", "form-control dato", "width: 36px;", "checkbox",	"placeholder=\"activo\"")) +
+		           			out.println(fun.buttonString("btn_act", "form-control ", "width:14px; height: 18px;  padding: 1px;", "button",
+		           					"se apreto", "<img src=\"/img/iconos/check.svg\" style=\"width: 16px; \">", "")) +
 		           			"</div>";
         $(document).ready(function(){	 		
         	Factura.forEach(function(value,index){	

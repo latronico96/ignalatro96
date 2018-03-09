@@ -43,7 +43,7 @@
 
 	<div class="modal" data-tmodal="alerta">
 		<div class="modal-header">
-			<h5 class="modal-title" id="exampleModalLabel"><spam id="Titulo"></spam> Artículo</h5>
+			<h5 class="modal-title" id="exampleModalLabel"><span id="Titulo"></span> Artículo</h5>
 			<button type="button" type="button" class="close"
 				onclick="cerrarFormu('<%=idForm%>');">
 				<span aria-hidden="true">&times;</span>
@@ -54,24 +54,25 @@
 				<fieldset>
   					<legend>Datos:</legend>
 					<div class="fila">
-						<%=fun.input("modo","form-control campo","","hidden","")%>
-						<%=fun.input("art_compa","form-control campo","","hidden","")%>
-						<spam class="form-control with-20-00">Nombre</spam>
-						<%=fun.input("art_codig","form-control with-10-00 campo","","number"," maxlength=\"4\"")%>
-						<%=fun.input("art_nombr","form-control with-70-00 campo","","text"," maxlength=\"45\"")%>
+						<input id="modo" class="form-control campo"type="hidden" >
+						<input id="art_compa" class="form-control campo"type="hidden" >						
+						<span class="form-control with-20-00">Nombre</span>
+						<input id="art_codig" class="form-control with-10-00 campo" type="number" maxlength="4">
+						<input id="art_nombr" class="form-control with-70-00 campo" type="text" maxlength="45">
 					</div>
 					<div class="fila">				
-						<spam class="form-control with-20-00">Marca</spam>
-						<%=fun.select("art_marca", "form-control with-80-00 campo", "", "",
-										fun.GetHTMLOtion("mar_codig", "mar_nombr", "dbMarcas", "mar_compa",""), "")%>
+						<span class="form-control with-20-00">Marca</span>
+						<select id="art_marca" class="form-control with-80-00 campo">
+							<%=fun.GetHTMLOtion("mar_codig", "mar_nombr", "dbMarcas", "mar_compa","") %>
+						</select>
 					</div>
 					<div class="fila">
-						<spam class="form-control with-20-00">Neto</spam>	
-						<%=fun.input("art_pneto","form-control with-20-00 campo precio","","text","")%>	
-						<spam class="form-control with-20-00" style="padding-left: 10px;">Final</spam>
-						<%=fun.input("art_final","form-control with-20-00 campo precio","","text","")%>
-						<spam class="form-control with-10-00" style="padding-left: 10px;">Activo</spam>
-						<%=fun.input("art_activ","form-control with-10-00 campo","margin: 5.5px 0px;","checkbox"," ")%>
+						<span class="form-control with-20-00">Neto</span>							
+						<input id="art_pneto" class="form-control with-20-00 campo precio" type="text">	
+						<span class="form-control with-20-00" style="padding-left: 10px;">Final</span>
+						<input id="art_final" class="form-control with-20-00 campo precio" type="text">
+						<span class="form-control with-10-00" style="padding-left: 10px;">Activo</span>
+						<input id="art_activ" class="form-control with-10-00 campo" style="margin: 5.5px 0px;" type="checkbox">
 					</div>
 				</fieldset>				
 			</div>

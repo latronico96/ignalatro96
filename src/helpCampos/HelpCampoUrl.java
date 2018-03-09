@@ -5,7 +5,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import javax.servlet.RequestDispatcher;
@@ -13,13 +12,6 @@ import javax.servlet.ServletException;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.HashMap;
-import java.util.Map;
 
 import funciones.Funciones;
 

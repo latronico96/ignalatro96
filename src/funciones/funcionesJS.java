@@ -119,7 +119,7 @@ public class funcionesJS extends HttpServlet {
 		}
 		String data ="error";
 		try {
-			Class = Class.forName(ClassName);
+			Class = java.lang.Class.forName(ClassName);
 			obj = Class.getConstructor(HttpServletRequest.class).newInstance(request);
 			method = obj.getClass().getMethod(methodName,paramTypes);
 			Object inv = method.invoke(obj, arg);

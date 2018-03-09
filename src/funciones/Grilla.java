@@ -4,7 +4,6 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import org.json.simple.JSONObject;
 
 public abstract class Grilla {
 	protected int indice=0;
@@ -48,7 +47,6 @@ public abstract class Grilla {
 		this.ancho=ancho;
 		this.funcionDblClick=(funcionDblClick.equals("")?this.funcionDblClick:funcionDblClick);
 		this.funcionClick=(funcionClick.equals("")?this.funcionClick:funcionClick);
-		this.functionBeforeRequest=functionBeforeRequest;
 		this.sql=sql;
 		this.divForm="";
 		this.dFSize="";

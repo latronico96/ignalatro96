@@ -62,15 +62,17 @@
 
 	<script type="text/javascript">
 		stringFrom="<div id=\"form\">\n"+
-			<%out.println(fun.buttonString("btn_rev", "form-control ", "width:20px; height: 18px; padding: 1px;", "button",
-					"se apreto", "<img src=\"/img/iconos/glyphicons-208-remove.png\" style=\"width: 16px; \">", ""));%> +
-			<%out.println(fun.inputString("mar_compa", "form-control dato", "width: 0px;", "hidden", "value=\""+String.valueOf(fun.compania)+"\""));%> +		
-			<%out.println(fun.inputString("mar_codig", "form-control dato", "width: 40px;", "text", "placeholder=\"Codigo\""));%> +
-			<%out.println(fun.inputString("mar_nombr", "form-control dato", "width: 531px;", "text",	"placeholder=\"Nombre\" maxlength=\"45\""));%> +
-			<%out.println(fun.inputString("mar_activ", "form-control dato", "width: 71px;", "checkbox",	"placeholder=\"activo\""));%> +
-			<%out.println(fun.buttonString("btn_act", "form-control ", "width:14px; height: 18px;  padding: 1px;", "button",
-					"se apreto", "<img src=\"/img/iconos/check.svg\" style=\"width: 16px; \">", ""));%> +
-			"</div>";
+						"<button id=\"btn_rev\" class=\"form-control \" style=\"width:20px; height: 18px; padding: 1px;\" type=\"button\" value=\"se apreto\">\n"+
+						"	<img src=\"/img/iconos/glyphicons-208-remove.png\" style=\"width: 16px;\" >\n"+
+						"</button>\n"+
+						"<input id=\"mar_compa\" class=\"form-control dato\" style=\"width: 0px;\" type=\"hidden\" value=\"<%fun.compania%>\" >\n"+
+						"<input id=\"mar_codig\" class=\"form-control dato\" style=\"width: 40px;\" type=\"text\" placeholder=\"Codigo\" >\n"+
+						"<input id=\"mar_nombr\" class=\"form-control dato\" style=\"width: 531px;\" type=\"text\" placeholder=\"Nombre\" maxlength=\"45\" >\n"+
+						"<input id=\"mar_activ\" class=\"form-control dato\" style=\"width: 71px;\" type=\"checkbox\" placeholder=\"activo\" >\n"+
+						"<button id=\"btn_act\" class=\"form-control\" style=\"width: 14px; height: 18px;  padding: 1px;\" type=\"button\" value=\"se apreto\" >\n"+
+						"	<img src=\"/img/iconos/check.svg\" style=\"width: 16px; \">\n"+
+						"</button>\n"+
+					"</div>";
 			
 		var idGrilla="<%=idGrilla%>";
         var NidGrilla = "#" + idGrilla;
@@ -168,7 +170,7 @@
 	        		$("#mar_codig",form).prop("disabled",true);
 	        		
 	        		$("#jqgridSearchForm",form).remove();
-	        		$(NidGrilla + "_pie_left",form).prepend(<%out.println(fun.buscadorGrilla("nombre", "ptv_nombr"));%>);
+	        		$(NidGrilla + "_pie_left",form).prepend(<%=fun.buscadorGrilla("nombre", "ptv_nombr")%>);
 	        		$("tr.jqgrow.ui-row-ltr.ui-widget-content",form).first().trigger("click");
 	        		$(NidGrilla,form).focus();
 	        	}, 

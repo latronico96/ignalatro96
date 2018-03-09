@@ -62,18 +62,22 @@
 	</div>
 
 	<script type="text/javascript">
-		stringFrom="<div id=\"form\">\n"+
-			<%out.println(fun.buttonString("btn_rev", "form-control ", "width:20px; height: 18px; padding: 1px;", "button",
-					"se apreto", "<img src=\"/img/iconos/glyphicons-208-remove.png\" style=\"width: 16px; \">", ""));%> +
-			<%out.println(fun.inputString("ptv_compa", "form-control dato", "width: 0px;", "hidden", "value=\""+String.valueOf(fun.compania)+"\""));%> +		
-			<%out.println(fun.inputString("ptv_codig", "form-control dato", "width: 29px;", "text", "placeholder=\"Codigo\""));%> +
-			<%out.println(fun.inputString("ptv_nombr", "form-control dato", "width: 225px;", "text",	"placeholder=\"Nombre\""));%> +
-			<%out.println(fun.selectString("ptv_tipop",  "form-control dato", "width: 110px;", "", tiposPuntos, ""));%> +
-			<%out.println(fun.inputString("ptv_certi", "form-control dato", "width: 225px;", "text",	"placeholder=\"Certificado\""));%> +
-			<%out.println(fun.inputString("ptv_activ", "form-control dato", "width: 36px;", "checkbox",	"placeholder=\"activo\""));%> +
-			<%out.println(fun.buttonString("btn_act", "form-control ", "width:14px; height: 18px;  padding: 1px;", "button",
-					"se apreto", "<img src=\"/img/iconos/check.svg\" style=\"width: 16px; \">", ""));%> +
-			"</div>";
+	stringFrom="<div id=\"form\">\n"+
+					"<button id=\"btn_rev\" class=\"form-control \" style=\"width:20px; height: 18px; padding: 1px;\" type=\"button\" value=\"se apreto\">\n"+
+					"	<img src=\"/img/iconos/glyphicons-208-remove.png\" style=\"width: 16px;\" >\n"+
+					"</button>\n"+
+					"<input id=\"ptv_compa\" class=\"form-control dato\" style=\"width: 0px;\" type=\"hidden\" value=\"<%fun.compania%>\" >\n"+
+					"<input id=\"ptv_codig\" class=\"form-control dato\" style=\"width: 29px;\" type=\"text\" placeholder=\"Codigo\" >\n"+
+					"<input id=\"ptv_nombr\" class=\"form-control dato\" style=\"width: 225px;\" type=\"text\" placeholder=\"Nombre\" >\n"+
+					"<select id=\"ptv_tipop\" class=\"form-control dato\" style=\"width: 110px;\" >\n"+
+					"	<%=tiposPuntos%>\n"+
+					"</select>\n"+
+					"<input id=\"ptv_certi\" class=\"form-control dato\" style=\"width: 225px;\" type=\"text\" placeholder=\"Certificado\" >\n"+
+					"<input id=\"ptv_activ\" class=\"form-control dato\" style=\"width: 36px;\" type=\"checkbox\" placeholder=\"activo\" >\n"+
+					"<button id=\"btn_act\" class=\"form-control\" style=\"width: 14px; height: 18px;  padding: 1px;\" type=\"button\" value=\"se apreto\" >\n"+
+					"	<img src=\"/img/iconos/check.svg\" style=\"width: 16px; \">\n"+
+					"</button>\n"+
+				"</div>";
 			
 		var idGrilla="<%=idGrilla%>";
         var NidGrilla = "#" + idGrilla;
@@ -192,7 +196,7 @@
 	        		$("#ptv_codig",form).prop("disabled",true);
 	        		
 	        		$("#jqgridSearchForm",form).remove();
-	        		$(NidGrilla + "_pie_left",form).prepend(<%out.println(fun.buscadorGrilla("nombre", "ptv_nombr"));%>);
+	        		$(NidGrilla + "_pie_left",form).prepend(<%=fun.buscadorGrilla("nombre", "ptv_nombr")%>);
 	        		$("tr.jqgrow.ui-row-ltr.ui-widget-content",form).first().trigger("click");
 	        		$(NidGrilla,form).focus();
 	        	}, 

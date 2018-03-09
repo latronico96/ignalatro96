@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,7 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.simple.JSONObject;
 
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -47,9 +47,9 @@ public class Frm_marcas_ABM extends HttpServlet {
 		String valores="";
 		String claveValor="";
 		Map<String,String> parametros=fun.parametrosAMap(request);
-	    Iterator it = parametros.entrySet().iterator();
+		Iterator<Entry<String, String>> it = parametros.entrySet().iterator();
 		while (it.hasNext()) {
-			Map.Entry pair = (Map.Entry)it.next();
+			Map.Entry<String, String> pair = (Map.Entry<String, String>)it.next();
 			if (!campos.equals("")){ 
 				campos+=",";
 				valores+=",";

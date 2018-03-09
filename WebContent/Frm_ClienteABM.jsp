@@ -43,7 +43,7 @@
 
 	<div class="modal" data-tmodal="alerta">
 		<div class="modal-header">
-			<h5 class="modal-title" id="exampleModalLabel"><spam id="Titulo"></spam> Cliente</h5>
+			<h5 class="modal-title" id="exampleModalLabel"><span id="Titulo"></span> Cliente</h5>
 			<button type="button" type="button" class="close"
 				onclick="cerrarFormu('<%=idForm%>');">
 				<span aria-hidden="true">&times;</span>
@@ -54,81 +54,87 @@
 				<fieldset>
   					<legend>Datos:</legend>
 					<div class="fila">
-						<%=fun.input("modo","form-control campo","","hidden","")%>
-						<%=fun.input("cli_compa","form-control campo","","hidden","")%>
-						<spam class="form-control with-20-00">Nombre</spam>
-						<%=fun.input("cli_codig","form-control with-10-00 campo","","number"," maxlength=\"4\"")%>
-						<%=fun.input("cli_nombr","form-control with-70-00 campo","","text"," maxlength=\"45\"")%>
+						<input id="modo" class="form-control campo" type="hidden">
+						<input id="cli_compa" class="form-control campo" type="hidden">
+						<span class="form-control with-20-00">Nombre</span>
+						<input id="cli_codig" class="form-control with-10-00 campo" type="number" maxlength="4">
+						<input id="cli_nombr" class="form-control with-70-00 campo" type="text" maxlength="45">
 					</div>
 					<div class="fila">
-						<spam class="form-control with-20-00">Telefono</spam>
-						<%=fun.input("cli_telef","form-control with-30-00 campo","","text"," maxlength=\"30\"")%>
-						<spam class="form-control with-20-00">Celular</spam>
-						<%=fun.input("cli_celul","form-control with-30-00 campo","","text"," maxlength=\"30\"")%>
+						<span class="form-control with-20-00">Telefono</span>
+						<input id="cli_telef" class="form-control with-30-00 campo" type="text" maxlength="30">
+						<span class="form-control with-20-00">Celular</span>
+						<input id="cli_celul" class="form-control with-30-00 campo" type="text" maxlength="30">
 					</div>
 					<div class="fila">
-						<spam class="form-control with-20-00">Direción</spam>
-						<%=fun.input("cli_direc","form-control with-80-00 campo","","text"," maxlength=\"60\"")%>
+						<span class="form-control with-20-00">Direción</span>
+						<input id="cli_direc" class="form-control with-80-00 campo" type="text" maxlength="60">
 					</div>
 					<div class="fila">				
-						<spam class="form-control with-20-00">Cond. de IVA</spam>
-						<%=fun.select("cli_cliva", "form-control with-80-00 campo", "", "",
-										fun.GetHTMLOtion("iva_codig", "iva_nombr", "dbCondIva","", ""), "")%>
+						<span class="form-control with-20-00">Cond. de IVA</span>
+						<select id="cli_cliva" class="form-control with-80-00 campo">
+							<%=fun.GetHTMLOtion("iva_codig", "iva_nombr", "dbCondIva","", "")%>
+						</select>
 					</div>
 					<div class="fila">
-						<spam class="form-control with-20-00">Tipo de Doc.</spam>
-						<%=fun.select("cli_tpdoc", "form-control with-30-00 campo", "", "",
-										fun.GetHTMLOtion("doc_codig", "doc_nombre", "dbTipoDocumentos","", ""), "")%>		
-						<spam class="form-control with-20-00">Nro. Doc.</spam>
-						<%=fun.input("cli_nrdoc","form-control with-30-00 campo","","text"," maxlength=\"11\"")%>
+						<span class="form-control with-20-00">Tipo de Doc.</span>
+						<select id="cli_tpdoc" class="form-control with-30-00 campo">
+							<%=fun.GetHTMLOtion("doc_codig", "doc_nombre", "dbTipoDocumentos","", "")%>
+						</select>		
+						<span class="form-control with-20-00">Nro. Doc.</span>
+						<input id="cli_nrdoc" class="form-control with-30-00 campo" type="text" maxlength="11">
 					</div>
 					<div class="fila">				
-						<spam class="form-control with-20-00">Mail</spam>
-						<%=fun.input("cli_email","form-control with-80-00 campo","","text"," maxlength=\"80\"")%>
+						<span class="form-control with-20-00">Mail</span>						
+						<input id="cli_email" class="form-control with-80-00 campo" type="text" maxlength="80">
 					</div><div class="fila">
-						<spam class="form-control with-20-00">CBU</spam>
-						<%=fun.input("cli_nrocbu","form-control with-30-00 campo","","text"," maxlength=\"22\"")%>
-						<spam class="form-control with-17-00">Cond. de pagos</spam>
-						<% String optionsCondi="<option value=\""+fun.Contado+"\">Contado</option>"
-												+"<option value=\""+fun.CtaCorrienta+"\">Cta. Corriente</option>"; 
-						out.println(fun.select("cli_condi","form-control with-18-00 campo","","",optionsCondi,""));%>	
-						<spam class="form-control with-10-00">Plazo</spam>
-						<%=fun.input("cli_plazo","form-control with-5-00 campo","","text"," maxlength=\"2\"")%>
+						<span class="form-control with-20-00">CBU</span>
+						<input id="cli_nrocbu" class="form-control with-30-00 campo" type="text" maxlength="22">
+						<span class="form-control with-17-00">Cond. de pagos</span>
+						<select id="cli_condi" class="form-control with-18-00 campo">
+							<%="<option value=\""+Funciones.Contado+"\">Contado</option><option value=\""+Funciones.CtaCorrienta+"\">Cta. Corriente</option>"%>	
+						</select>					
+						<span class="form-control with-10-00">Plazo</span>
+						<input id="cli_plazo" class="form-control with-5-00 campo" type="text" maxlength="2">
 					</div>
 					<div class="fila">			
-						<spam class="form-control with-30-00">Facturar a otra persona</spam>	
-						<%=fun.input("cli_fac","form-control with-5-00 campo","margin: 6.5px 0px;","checkbox","")%>	
-						<spam class="form-control with-50-00">Datos bancarios verificados 01/12/2017 (IJL)</spam>
-							<%=fun.button("cli_veri", "form-control with-15-00 campo", "", "button", "veri", "verificar","")%>
+						<span class="form-control with-30-00">Facturar a otra persona</span>	
+						<input id="cli_fac" class="form-control with-5-00 campo" type="checkbox" style="margin: 6.5px 0px;">
+						<span class="form-control with-50-00">Datos bancarios verificados 01/12/2017 (IJL)</span>
+						<button id="cli_veri" class="form-control with-15-00 campo" type="button" value="veri" >
+							verificar
+						</button>
 					</div>
 				</fieldset>
 				<fieldset id="facturacion">
 	  				<legend>Datos de Facturación:</legend>
 					<div class="fila">
-						<spam class="form-control with-20-00">Razon Social</spam>
-						<%=fun.input("cli_fnomb","form-control with-80-00 campo","","text"," maxlength=\"45\"")%>
+						<span class="form-control with-20-00">Razon Social</span>
+						<input id="cli_fnomb" class="form-control with-80-00 campo" type="text" maxlength="45">
 					</div>
 					<div class="fila">
-						<spam class="form-control with-20-00">Telefono</spam>
-						<%=fun.input("cli_ftele","form-control with-30-00 campo","","text"," maxlength=\"30\"")%>
-						<spam class="form-control with-20-00">Celular</spam>
-						<%=fun.input("cli_fcelu","form-control with-30-00 campo","","text"," maxlength=\"30\"")%>
+						<span class="form-control with-20-00">Telefono</span>
+						<input id="cli_ftele" class="form-control with-30-00 campo" type="text" maxlength="30">
+						<span class="form-control with-20-00">Celular</span>
+						<input id="cli_fcelu" class="form-control with-30-00 campo" type="text" maxlength="30">
 					</div>
 					<div class="fila">
-						<spam class="form-control with-20-00">Direción</spam>
-						<%=fun.input("cli_fdire","form-control with-80-00 campo","","text"," maxlength=\"60\"")%>	
+						<span class="form-control with-20-00">Direción</span>
+						<input id="cli_fdire" class="form-control with-80-00 campo" type="text" maxlength="60">	
 					</div>
 					<div class="fila">			
-						<spam class="form-control with-20-00">Cond. de IVA</spam>
-						<%=fun.select("cli_fciva", "form-control with-80-00 campo", "", "",
-										fun.GetHTMLOtion("iva_codig", "iva_nombr", "dbCondIva", "", ""), "")%>
+						<span class="form-control with-20-00">Cond. de IVA</span>
+						<select id="cli_fciva" class="form-control with-80-00 campo">
+							<%=fun.GetHTMLOtion("iva_codig", "iva_nombr", "dbCondIva","", "")%>
+						</select>
 					</div>
 					<div class="fila">
-						<spam class="form-control with-20-00">Tipo de Doc.</spam>
-						<%=fun.select("cli_ftdoc", "form-control with-30-00 campo", "", "",
-										fun.GetHTMLOtion("doc_codig", "doc_nombre", "dbTipoDocumentos", "", ""), "")%>
-						<spam class="form-control with-20-00">Nro. Doc.</spam>
-						<%=fun.input("cli_fndoc","form-control with-30-00 campo","","text"," maxlength=\"11\"")%>
+						<span class="form-control with-20-00">Tipo de Doc.</span>
+						<select id="cli_ftdoc" class="form-control with-30-00 campo">
+							<%=fun.GetHTMLOtion("doc_codig", "doc_nombre", "dbTipoDocumentos","", "")%>
+						</select>	
+						<span class="form-control with-20-00">Nro. Doc.</span>
+						<input id="cli_fndoc" class="form-control with-30-00 campo" type="text" maxlength="11">
 					</div>
 				</fieldset>
 			</div>

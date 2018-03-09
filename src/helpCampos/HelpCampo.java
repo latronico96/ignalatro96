@@ -1,15 +1,7 @@
 package helpCampos;
 
-import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
-import java.util.HashMap;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import funciones.Funciones;

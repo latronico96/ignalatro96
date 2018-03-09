@@ -13,8 +13,6 @@ import java.sql.SQLException;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.Hashtable;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -425,7 +423,7 @@ public class Funciones {
 	}
 
 
-	public String input(String id,String classe,String style, String tipo, String extra){
+	/*public String input(String id,String classe,String style, String tipo, String extra){
 		return ("<input id=\""+id+"\" name=\""+id+"\" class=\""+classe+"\" style=\""+style+"\" type=\""+tipo+"\" "+extra+" />");
 	}
 
@@ -442,7 +440,7 @@ public class Funciones {
 	}
 
 	public String button(String id,String classe,String style, String tipo, String value,String html,String extra){
-		return "<button id=\""+id+"\" name=\""+id+"\" class=\""+classe+"\" style=\""+style+"\" type=\""+tipo+"\" "
+		return "<button id=\""+id+"\" name=\""+id+"\" class=\""+classe+"\" "+style+"\" type=\""+tipo+"\" "
 				+ "value=\""+value+"\" "+extra+" >"	+ html + "</button>";
 	}
 
@@ -456,13 +454,15 @@ public class Funciones {
 
 	public String selectString(String id,String classe,String style,  String value,String options,String extra){
 		return  "\""+select(id,classe,style,value,options,extra).replaceAll("\"", "\\\\\"")+"\"";
-	}
+	}*/
 	
 
 	public String buscadorGrilla(String SearchBy,String field){
 		return "\""+("<div id=\"jqgridSearchForm\">"
-				+ this.input("jqgridSearInput", "form-control with-85-00 noPadding" , "margin: 1px calc(1% - 1px);" , "text", "data-field=\"field\" placeholder=\""+SearchBy+"\"")
-				+ this.button("btn_act",  "form-control with-9-00 noPadding", "height: 18.5px; margin: 1px calc(1% - 1px);", "button", "se apreto", "<img src=\"/img/iconos/glyphicons-28-search.png\" style=\"height: 18px;width: auto;\">", "") 
+				//+ this.input("jqgridSearInput", "form-control with-85-00 noPadding" , "margin: 1px calc(1% - 1px);" , "text", "data-field=\"field\" placeholder=\""+SearchBy+"\"")
+				+ 	"<button id=\"btn_act\" class=\"form-control with-9-00 noPadding\"style=\"height: 18.5px; margin: 1px calc(1% - 1px);\"  type=\"button\" value=\"se apreto\">"
+				+	"	<img src=\"/img/iconos/glyphicons-28-search.png\" style=\"height: 18px;width: auto;\">" 
+				+	"</button>"
 				+ "</div>").replaceAll("\"", "\\\\\"")+"\"";
 
 	}

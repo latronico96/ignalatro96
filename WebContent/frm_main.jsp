@@ -124,11 +124,11 @@
 					<!-- table id="GrillaCuerpo"></table>
 					<div id="GrillaCuerpo_pie"></div-->
 					<div class="fila">
-						<input tupe="text" id="cli_codig">
+						<input type="text" id="cli_codig">
 						<button type="button" class="btn btn-primary" id="btn_confirmar">
 							<img src="/img/iconos/glyphicons-28-search.png"	style="width: auto; filter: invert(55%);">
 						</button>
-						<input tupe="text" id="cli_nombr">
+						<input type="text" id="cli_nombr">
 					</div>
 				</div>
 			</div>
