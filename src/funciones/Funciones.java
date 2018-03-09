@@ -27,7 +27,6 @@ import org.json.simple.JSONObject;
 public class Funciones {
 	private int codigoHash=12;
 	public Map<String,String> parametros=new HashMap<String,String>();
-	public int compania=0;
 	public  Date hoy = new Date();
 	public static final String Contado="O";
 	public static final String CtaCorrienta="U";
@@ -43,8 +42,6 @@ public class Funciones {
 	
 	public Funciones(HttpServletRequest request){
 		this.CargarConfiguracion();
-		compania =  getCompania(request);
-
 	}
 
 	private void CargarConfiguracion(){
@@ -121,28 +118,18 @@ public class Funciones {
 	}
 
 	
-	public int getMaximo(String tabla,String campo,String campoCompa){
-		return this.getMaximo(tabla, campo,campoCompa, "");
+	public int getMaximo(String tabla,String campo){
+		return this.getMaximo(tabla, campo, "");
 	}
 
-	public int getMaximo(String tabla,String campo,String campoCompa, String where){
-		String wheresql="";
-		if(!campoCompa.equals("")){
-			wheresql=" where "+campoCompa+" = "+String.valueOf(this.compania);
-		}
-		
-		if(!where.equals("")){
-			wheresql+=(wheresql.equals("")?" where ":" and ");
-			wheresql+=where;
-		}
-		
+	public int getMaximo(String tabla,String campo, String where){
 		
 		int max=0;
 		try {		
 			Connection cn=this.Conectar();
 			Statement st;
 			st = cn.createStatement();		
-			String sql="select ifnull(max("+campo+"),0) as maximo from "+tabla+wheresql;
+			String sql="select ifnull(max("+campo+"),0) as maximo from "+tabla+where;
 			ResultSet rs=st.executeQuery(sql);
 			if (rs.next()){
 				max=(rs.getString("maximo")==null?0:rs.getInt("maximo"));
@@ -168,21 +155,13 @@ public class Funciones {
 		return (valor==null?valorDefault:valor);
 	}
 
-	public String GetHTMLOtion(String CampoValue,String CampoTexto,String Tabla,String campoCompa, String Where){
-		String wheresql="";
-		if(!campoCompa.equals("")){
-			 wheresql=" where "+campoCompa+" = "+String.valueOf(this.compania);
-		}
-		
-		if(!Where.equals("")){
-			wheresql+=(wheresql.equals("")?" where ":" and ");
-			wheresql+=Where;
-		}
+	public String GetHTMLOtion(String CampoValue,String CampoTexto,String Tabla , String where){
+
 		String html="";
 		try{
 			Connection cn=this.Conectar();
 			Statement st=cn.createStatement();
-			ResultSet rs=st.executeQuery("select "+CampoValue+" as campo, "+CampoTexto+" as texto from "+Tabla+" as tabla "+wheresql);
+			ResultSet rs=st.executeQuery("select "+CampoValue+" as campo, "+CampoTexto+" as texto from "+Tabla+" as tabla "+where);
 			while( rs.next()){
 				html+="<option value=\""+rs.getString("campo")+"\">"+rs.getString("texto")+"</option>";
 			}
