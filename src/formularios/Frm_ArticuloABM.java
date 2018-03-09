@@ -31,7 +31,6 @@ public class Frm_ArticuloABM extends HttpServlet {
     private Funciones fun = null;
     private String tabla="dbArticulos";
     private String claveCampo="art_codig";
-    private String CompaniaCampo="art_compa";
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -56,9 +55,8 @@ public class Frm_ArticuloABM extends HttpServlet {
 		JSONObject obj=new JSONObject();
 		switch (modo) {
 		case "ALTA":
-			String cli_codi=String.valueOf(fun.getMaximo(tabla,claveCampo,"art_compa")+1);
+			String cli_codi=String.valueOf(fun.getMaximo(tabla,claveCampo)+1);
 			obj.put("art_codig", fun.fillZero( cli_codi, 4));
-			obj.put("art_compa", fun.compania);			
 			respuesta=fun.JSONObjectToJavaScriptMap("Articulo", obj);
 			break;
 		case "BAJA":case "MODI": case "CONS":
@@ -68,9 +66,8 @@ public class Frm_ArticuloABM extends HttpServlet {
 				PreparedStatement pst=cn.prepareStatement(
 						"select *  "
 						+ "from "+tabla+" "
-						+ " where "+claveCampo+"= ? and art_compa = ? ");
+						+ " where "+claveCampo+"= ?  ");
 				pst.setInt(1, cod);
-				pst.setInt(2, fun.compania);
 				ResultSet rs= pst.executeQuery();
 				respuesta=fun.ResultSetToJavaScriptMap("Articulo", rs);
 			} catch (ClassNotFoundException | SQLException e) {
@@ -114,7 +111,7 @@ public class Frm_ArticuloABM extends HttpServlet {
 			}
 			if (this.claveCampo.equals(pair.getKey())){
 				if (parametros.getOrDefault("modo", "ALTA").equals("ALTA")){
-					claveValor=String.valueOf(fun.getMaximo(this.tabla, this.claveCampo, CompaniaCampo)+1);
+					claveValor=String.valueOf(fun.getMaximo(this.tabla, this.claveCampo)+1);
 					campos+=pair.getKey() ;
 					valores+= fun.PrepararCampo( (String)pair.getKey(), tipos, claveValor );
 				}else{ 
@@ -139,7 +136,7 @@ public class Frm_ArticuloABM extends HttpServlet {
 			cn.setAutoCommit(false);
 			
 			if (!parametros.getOrDefault("modo", "ALTA").equals("ALTA")){
-				String delete="delete from "+this.tabla+" where "+CompaniaCampo+"="+fun.compania+" and "+this.claveCampo+"='"+claveValor+"'";
+				String delete="delete from "+this.tabla+" where "+this.claveCampo+"='"+claveValor+"'";
 				Statement stBaja = cn.createStatement();	
 				stBaja.executeUpdate(delete);
 				stBaja.close();

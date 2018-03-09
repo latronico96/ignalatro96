@@ -128,9 +128,8 @@
 	        	url: <%=URL%>,
 	        	datatype:"json",
 	        	mtype:'GET', 
-	        	colNames:['Compania','Cod.','Fecha','Comprobante','Cliente','Total'],
+	        	colNames:['Cod.','Fecha','Comprobante','Cliente','Total'],
 	        	colModel:[
-	        		{name:'rec_compa', index:'rec_compa', width:0, hidden:true},
 	        		{name:'rec_codig', index:'rec_codig', width:15, hidden:false, hidden:true},
 	        		{name:'rec_fecha', index:'rec_fecha', width:100, hidden:false},
 	        		{name:'rec_compo', index:'rec_compo', width:100, hidden:false},

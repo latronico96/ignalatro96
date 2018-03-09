@@ -127,9 +127,8 @@
 	        	url: <%=URL%>,
 	        	datatype:"json",
 	        	mtype:'GET', 
-	        	colNames:['Compania','Cod.','Marca','Articúlo','Precio Neto','Precio Final','Activo'],
+	        	colNames:['Cod.','Marca','Articúlo','Precio Neto','Precio Final','Activo'],
 	        	colModel:[
-	        		{name:'art_compa', index:'art_compa', width:0, hidden:true},
 	        		{name:'art_codig', index:'art_codig', width:15, hidden:false, formatter:'FormatCliente'},
 	        		{name:'mar_nombr', index:'mar_nombr', width:100, hidden:false},
 	        		{name:'art_nombr', index:'art_nombr', width:100,hidden:false},

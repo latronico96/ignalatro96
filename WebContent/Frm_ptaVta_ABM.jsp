@@ -66,7 +66,6 @@
 					"<button id=\"btn_rev\" class=\"form-control \" style=\"width:20px; height: 18px; padding: 1px;\" type=\"button\" value=\"se apreto\">\n"+
 					"	<img src=\"/img/iconos/glyphicons-208-remove.png\" style=\"width: 16px;\" >\n"+
 					"</button>\n"+
-					"<input id=\"ptv_compa\" class=\"form-control dato\" style=\"width: 0px;\" type=\"hidden\" value=\"<%fun.compania%>\" >\n"+
 					"<input id=\"ptv_codig\" class=\"form-control dato\" style=\"width: 29px;\" type=\"text\" placeholder=\"Codigo\" >\n"+
 					"<input id=\"ptv_nombr\" class=\"form-control dato\" style=\"width: 225px;\" type=\"text\" placeholder=\"Nombre\" >\n"+
 					"<select id=\"ptv_tipop\" class=\"form-control dato\" style=\"width: 110px;\" >\n"+
@@ -117,10 +116,8 @@
 	        	url: <%=URL%>,
 	        	datatype:"json",
 	        	mtype:'POST', 
-	        	colNames:['compania','Cod.', 'Nombre', 'Tipo', 'Certificado', 'Act.' ],
+	        	colNames:['Cod.', 'Nombre', 'Tipo', 'Certificado', 'Act.' ],
 	        	colModel:[
-
-	        		{name:'ptv_compa', index:'ptv_compa', width:0, hidden:true},
 	        		{name:'ptv_codig', index:'ptv_codig', width:50,  formatter:'FormatCliente'},
 	        		{name:'ptv_nombr', index:'ptv_nombr', width:200},
 	        		{name:'ptv_tipop', index:'ptv_tipop', width:100},

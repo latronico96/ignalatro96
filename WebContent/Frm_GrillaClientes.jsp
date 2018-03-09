@@ -127,9 +127,8 @@
 	        	url: <%=URL%>,
 	        	datatype:"json",
 	        	mtype:'GET', 
-	        	colNames:['Compania','Cod.','Nombre','Telefono','Celular','Direcion','IVA','Documento','Plazo'],
+	        	colNames:['Cod.','Nombre','Telefono','Celular','Direcion','IVA','Documento','Plazo'],
 	        	colModel:[
-	        		{name:'cli_compa', index:'cli_compa', width:100, hidden:true},
 	        		{name:'cli_codig', index:'cli_codig', width:30, hidden:false,  formatter:'FormatCliente'},
 	        		{name:'cli_nombr', index:'cli_nombr', width:100, hidden:false},
 	        		{name:'cli_telef', index:'cli_telef', width:60,hidden:false},

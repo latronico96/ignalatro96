@@ -28,7 +28,6 @@ public class Frm_marcas_ABM extends HttpServlet {
     private Funciones fun = null;
     private String tabla="dbMarcas";
     private String claveCampo="mar_codig";
-    private String claveCompa="mar_compa";
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -67,7 +66,7 @@ public class Frm_marcas_ABM extends HttpServlet {
 		    it.remove(); // avoids a ConcurrentModificationException
 		}
 
-		String delete="delete from "+this.tabla+" where "+this.claveCompa+"="+String.valueOf(fun.compania)+" and "+this.claveCampo+"='"+claveValor+"'";
+		String delete="delete from "+this.tabla+" where "+this.claveCampo+"='"+claveValor+"'";
 		String insert="insert into "+this.tabla+" ("+campos+") values ("+valores+")";
 		    System.out.println(delete);
 		    System.out.println(insert);
@@ -221,7 +220,6 @@ public class Frm_marcas_ABM extends HttpServlet {
 		try{			    
 			// the sql server url		          
 			String sql="Select * from "+tabla+" "
-					+ "where "+this.claveCompa+"="+String.valueOf(fun.compania)
 					+ " ORDER BY " + ordenarcampo+ " " +ordenarmetodo;
 			JSONObject jsonGrilla=fun.Grilla(sql,empieza,termina,pagina,rp);	 		   
 			prt.print(jsonGrilla.toString());

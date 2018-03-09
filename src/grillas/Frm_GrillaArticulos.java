@@ -141,10 +141,9 @@ public class Frm_GrillaArticulos extends HttpServlet {
 		try{			    
 			// the sql server url		          
 			String sql=
-					"select  art_compa,art_codig,mar_nombr,art_nombr,art_pneto,art_final,art_activ \n"
+					"select  art_codig,mar_nombr,art_nombr,art_pneto,art_final,art_activ \n"
 					+ "	from dbArticulos \n"
-					+ "		left join dbMarcas on (art_marca=mar_codig and art_compa=mar_compa) \n"
-					+ " Where art_compa="+String.valueOf(fun.compania)+" \n"				
+					+ "		left join dbMarcas on (art_marca=mar_codig) \n"				
 					+ " ORDER BY " + ordenarcampo+ " " +ordenarmetodo;
 			JSONObject jsonGrilla=fun.Grilla(sql,empieza,termina,pagina,rp);	 		   
 			prt.print(jsonGrilla.toString());

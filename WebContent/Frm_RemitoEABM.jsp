@@ -60,7 +60,6 @@
 				<fieldset>
 					<div class="fila">						
 						<input id="modo" class="form-control campo" type="hidden">
-						<input id="cmp_compa" class="form-control campo" type="hidden">
 						<input id="cmp_codig" class="form-control campo" type="hidden">					
 						<span class="form-control with-10-00">Fecha</span>
 						<input id="cmp_fecha" class="form-control with-10-00 campo" type="text" maxlength="4">
@@ -71,7 +70,7 @@
 							<option value="C">C</option>
 						</select>
 						<select id="cmp_ptvta" class="form-control with-10-00 campo">
-							<%=fun.GetHTMLOtion("ptv_codig", "right(concat(\"0000\",ptv_codig),4)", "dbPuntosVentas","ptv_compa", " ptv_activ=1 ")%>
+							<%=fun.GetHTMLOtion("ptv_codig", "right(concat(\"0000\",ptv_codig),4)", "dbPuntosVentas", " ptv_activ=1 ")%>
 						</select>
 						<input id="cmp_nroco" class="form-control with-20-00 campo" type="text" maxlength="8">
 					</div>
@@ -88,7 +87,7 @@
 						<input id="cli_nombr" class="form-control with-50-00 campo" type="text" maxlength="30">	
 						<span class="form-control with-5-00">IVA</span>
 						<select id="cmp_fciva" class="form-control with-25-00 campo">
-							<%=fun.GetHTMLOtion("iva_codig", "iva_nombr", "dbCondIva", "", "")%>
+							<%=fun.GetHTMLOtion("iva_codig", "iva_nombr", "dbCondIva", "")%>
 						</select>
 					</div>					
 					<div class="fila">
@@ -98,7 +97,7 @@
 						<input id="cmp_fcelu" class="form-control with-25-00 campo" type="text" maxlength="30">
 						<span class="form-control with-5-00">Doc.</span>
 						<select id="cmp_ftdoc" class="form-control with-10-00 campo">
-							<%=fun.GetHTMLOtion("doc_codig", "doc_nombre", "dbTipoDocumentos", "", "")%>
+							<%=fun.GetHTMLOtion("doc_codig", "doc_nombre", "dbTipoDocumentos", "")%>
 						</select>
 						<input id="cmp_fndoc" class="form-control with-15-00 campo" type="text" maxlength="11">						
 					</div>
@@ -171,8 +170,7 @@
        	<%=Remito%>
        	stringFrom="<div id=\"form\">\n"+
 							out.println(fun.buttonString("btn_rev", "form-control ", "width:20px; height: 18px; padding: 1px;", "button",
-		           					"se apreto", "<img src=\"/img/iconos/glyphicons-208-remove.png\" style=\"width: 16px; \">", "")) +
-		           			out.println(fun.inputString("ptv_compa", "form-control dato", "width: 0px;", "hidden", "value=\""+String.valueOf(fun.compania)+"\"")) +		
+		           					"se apreto", "<img src=\"/img/iconos/glyphicons-208-remove.png\" style=\"width: 16px; \">", "")) +	
 		           			out.println(fun.inputString("ptv_codig", "form-control dato", "width: 29px;", "text", "placeholder=\"Codigo\"")) +
 		           			out.println(fun.inputString("ptv_nombr", "form-control dato", "width: 225px;", "text",	"placeholder=\"Nombre\"")) +
 		           			out.println(fun.selectString("ptv_tipop",  "form-control dato", "width: 110px;", "", "", ""))+
@@ -252,9 +250,8 @@
 	        $(NidGrilla).jqGrid({
 	        	datatype : "jsonstring",
 	        	mtype:'GET', 
-	        	colNames:['Compania','cód','Cant.','Cod.','Nombre','Precio','Precio','Total','Total'],
+	        	colNames:['cód','Cant.','Cod.','Nombre','Precio','Precio','Total','Total'],
 	        	colModel:[
-	        		{name:'cmd_compa', index:'cmd_compa', width:0, hidden:true},
 	        		{name:'cmd_codig', index:'cmd_codig', width:0, hidden:true},
 	        		{name:'cmd_canti', index:'cmd_canti', width:10, hidden:false, align:'right'},
 	        		{name:'cmd_artic', index:'cmd_artic', width:20, hidden:false},

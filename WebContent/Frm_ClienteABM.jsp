@@ -55,7 +55,6 @@
   					<legend>Datos:</legend>
 					<div class="fila">
 						<input id="modo" class="form-control campo" type="hidden">
-						<input id="cli_compa" class="form-control campo" type="hidden">
 						<span class="form-control with-20-00">Nombre</span>
 						<input id="cli_codig" class="form-control with-10-00 campo" type="number" maxlength="4">
 						<input id="cli_nombr" class="form-control with-70-00 campo" type="text" maxlength="45">
@@ -73,13 +72,13 @@
 					<div class="fila">				
 						<span class="form-control with-20-00">Cond. de IVA</span>
 						<select id="cli_cliva" class="form-control with-80-00 campo">
-							<%=fun.GetHTMLOtion("iva_codig", "iva_nombr", "dbCondIva","", "")%>
+							<%=fun.GetHTMLOtion("iva_codig", "iva_nombr", "dbCondIva", "")%>
 						</select>
 					</div>
 					<div class="fila">
 						<span class="form-control with-20-00">Tipo de Doc.</span>
 						<select id="cli_tpdoc" class="form-control with-30-00 campo">
-							<%=fun.GetHTMLOtion("doc_codig", "doc_nombre", "dbTipoDocumentos","", "")%>
+							<%=fun.GetHTMLOtion("doc_codig", "doc_nombre", "dbTipoDocumentos", "")%>
 						</select>		
 						<span class="form-control with-20-00">Nro. Doc.</span>
 						<input id="cli_nrdoc" class="form-control with-30-00 campo" type="text" maxlength="11">
@@ -125,13 +124,13 @@
 					<div class="fila">			
 						<span class="form-control with-20-00">Cond. de IVA</span>
 						<select id="cli_fciva" class="form-control with-80-00 campo">
-							<%=fun.GetHTMLOtion("iva_codig", "iva_nombr", "dbCondIva","", "")%>
+							<%=fun.GetHTMLOtion("iva_codig", "iva_nombr", "dbCondIva", "")%>
 						</select>
 					</div>
 					<div class="fila">
 						<span class="form-control with-20-00">Tipo de Doc.</span>
 						<select id="cli_ftdoc" class="form-control with-30-00 campo">
-							<%=fun.GetHTMLOtion("doc_codig", "doc_nombre", "dbTipoDocumentos","", "")%>
+							<%=fun.GetHTMLOtion("doc_codig", "doc_nombre", "dbTipoDocumentos","")%>
 						</select>	
 						<span class="form-control with-20-00">Nro. Doc.</span>
 						<input id="cli_fndoc" class="form-control with-30-00 campo" type="text" maxlength="11">

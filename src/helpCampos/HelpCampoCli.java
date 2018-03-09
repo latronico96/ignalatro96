@@ -48,7 +48,7 @@ public class HelpCampoCli extends HelpCampo {
 		
 		 try {// the sql server url		          
 			 consulta=
-						"select cli_compa, cli_codig, \n"
+						"select  cli_codig, \n"
 						+ "	CASE WHEN trim(cli_fnomb)='' THEN cli_nombr ELSE cli_fnomb END as cli_nombr,\n"
 						+ "	CASE WHEN trim(cli_ftele)='' THEN cli_telef ELSE cli_ftele END as cli_telef, \n"
 						+ "	CASE WHEN trim(cli_fcelu)='' THEN cli_celul ELSE cli_fcelu END as cli_celul, \n"
@@ -75,8 +75,7 @@ public class HelpCampoCli extends HelpCampo {
 		Map<String,String> colum = new HashMap<String, String>();
 		
 		// campo a mostrar en cada columna 
-		String col=	"{name:'cli_compa', index:'cli_compa', width:100, hidden:true},\n"
-				+	"{name:'cli_codig', index:'cli_codig', width:30, hidden:false,  formatter:'FormatCliente'},\n"
+		String col=	"{name:'cli_codig', index:'cli_codig', width:30, hidden:false,  formatter:'FormatCliente'},\n"
 				+	"{name:'cli_nombr', index:'cli_nombr', width:100, hidden:false},\n"
 				+	"{name:'cli_telef', index:'cli_telef', width:60,hidden:false},\n"
 				+	"{name:'cli_celul', index:'cli_celul', width:60,hidden:false},\n"
@@ -87,7 +86,7 @@ public class HelpCampoCli extends HelpCampo {
 		colum.put("colum",col);
 		
 		// Campo con nombres de cada columna
-		String name="'Compania','Cod.','Nombre','Telefono','Celular','Direcion','IVA','Documento','Plazo'";
+		String name="'Cod.','Nombre','Telefono','Celular','Direcion','IVA','Documento','Plazo'";
 		colum.put("names",name);
 		
 		// campo a mostrar en cada columna 
@@ -124,10 +123,7 @@ public class HelpCampoCli extends HelpCampo {
 	@Override
 	public String getFiltro() {
 		String filtro = this.getSentenciaWhere();
-		
-		filtro=(filtro.equals("")?" where ":" and ");
-		filtro+= "cli_compa="+String.valueOf(fun.compania)+" ";
-		
+	
 		
 	    if(!(busquedaValor == null || busquedaValor.length() == 0)){
 	    	filtro=(filtro.equals("")?" where ":" and ");

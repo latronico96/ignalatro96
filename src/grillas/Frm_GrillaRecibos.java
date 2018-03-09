@@ -146,12 +146,11 @@ public class Frm_GrillaRecibos extends HttpServlet {
 			}
 			
 			String sql=
-					"select rec_compa, rec_codig, \n"	
+					"select rec_codig, \n"	
 					+ "		DATE_FORMAT(rec_fecha,'%d/%m/%Y') as rec_fecha, \n"	
 					+ " concat(rec_letra,' ', rec_ptvta,' ',rec_nroco) as rec_compo,cli_nombr,rec_impor  \n"	
 					+ " from dbRecibos \n"	
 					+ " 	left join dbClientes on (rec_codcl=cli_codig)  \n"	
-					+ " where rec_compa="+String.valueOf(fun.compania)+" \n"	
 					+ " ORDER BY " + ordenarcampo+ " " +ordenarmetodo;
 			JSONObject jsonGrilla=fun.Grilla(sql,empieza,termina,pagina,rp);	 		   
 			prt.print(jsonGrilla.toString());

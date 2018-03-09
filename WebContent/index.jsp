@@ -49,62 +49,6 @@
 			    }
 			    
 		    }else{
-			    formulario = $("#frm_registrar");
-			    $("*", formulario).popover('hide');
-			    if(!cancelar && $("#compania", formulario).val() == ""){
-				    mensaje = "La compania no puede quedar vacia.";
-				    cancelar = true;
-				    objeto = $("#compania", formulario);
-				    $("#compania", formulario).focus();
-			    }
-			    if(!cancelar && $("#razon", formulario).val() == ""){
-				    mensaje = "La razon social no puede quedar vacia.";
-				    cancelar = true;
-				    objeto = $("#razon", formulario);
-				    $("#razon", formulario).focus();
-			    }
-			    if(!cancelar && $("#abrev", formulario).val() == ""){
-				    mensaje = "La abreviatura no puede quedar vacia.";
-				    cancelar = true;
-				    objeto = $("#abrev", formulario);
-				    $("#abrev", formulario).focus();
-			    }
-			    if(!cancelar && $("#condIva", formulario).val() == ""){
-				    mensaje = "La condIva no puede quedar vacia.";
-				    cancelar = true;
-				    objeto = $("#condIva", formulario);
-				    $("#condIva", formulario).focus();
-			    }
-			    if(!cancelar && $("#cuit", formulario).val() == ""){
-				    mensaje = "El cuit no puede quedar vacio.";
-				    cancelar = true;
-				    objeto = $("#cuit", formulario);
-				    $("#cuit", formulario).focus();
-			    }
-			    if(!cancelar && $("#usuario", formulario).val() == ""){
-				    mensaje = "El usuario no puede quedar vacio.";
-				    cancelar = true;
-				    objeto = $("#usuario", formulario);
-				    $("#usuario", formulario).focus();
-			    }
-			    if(!cancelar && $("#contrasenia", formulario).val() == ""){
-				    mensaje = "La contraseña no puede quedar vacia.";
-				    cancelar = true;
-				    objeto = $("#contrasenia", formulario);
-				    $("#contrasenia", formulario).focus();
-			    }
-			    if(!cancelar && $("#contrasenia2", formulario).val() == ""){
-				    mensaje = "La contraseña no puede quedar vacia.";
-				    cancelar = true;
-				    objeto = $("#contrasenia2", formulario);
-				    $("#contrasenia2", formulario).focus();
-			    }
-			    if(!cancelar && $("#contrasenia2", formulario).val() != $("#contrasenia", formulario).val()){
-				    mensaje = "Las contraseñas deben coinsidir";
-				    cancelar = true;
-				    objeto = $("#contrasenia2", formulario);
-				    $("#contrasenia2", formulario).focus();
-			    }
 			    
 		    }
 		    parametros = $(".campo", formulario).serialize();
@@ -198,12 +142,6 @@
 				</div>
 				<div id="frm_registrar" class="with-50-00">
 					<div class="fila">
-
-						<span class="form-control with-50-00">Compania</span>
-						<input id="form" class="campo" type="hidden" value="frm_registrar">
-						<input id="compania" class="form-control with-50-00 campo" type="text" maxlength="45">
-					</div>
-					<div class="fila">
 						<span class="form-control with-50-00">Razón Social</span>
 						<input id="razon" class="form-control with-50-00 campo" type="text" maxlength="45">
 					</div>
@@ -214,7 +152,7 @@
 					<div class="fila">
 						<span class="form-control with-50-00">Condicion de Iva</span>
 						<select id="condIva" class="form-control with-50-00 campo">
-							<%=fun.GetHTMLOtion("iva_codig", "iva_nombr", "dbCondIva", "","")%>
+							<%=fun.GetHTMLOtion("iva_codig", "iva_nombr", "dbCondIva", "")%>
 						</select>
 					</div>
 					<div class="fila">

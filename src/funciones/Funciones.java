@@ -83,10 +83,6 @@ public class Funciones {
 		return String.valueOf( request.getSession().getAttribute("usu_usuar"));
 	}
 	
-	public int getCompania(HttpServletRequest request){
-		Object compa= request.getSession().getAttribute("usu_compa");	
-		return (compa==null?0:Integer.parseUnsignedInt((String) compa) );
-	}
 	public String getCodUsuario(HttpServletRequest request){
 		return String.valueOf( request.getSession().getAttribute("usu_usuar"));
 	}
@@ -400,40 +396,6 @@ public class Funciones {
 	public String Ahora(String tipo){
 		return this.FormatDate(this.Ahora(), tipo);		
 	}
-
-
-	/*public String input(String id,String classe,String style, String tipo, String extra){
-		return ("<input id=\""+id+"\" name=\""+id+"\" class=\""+classe+"\" style=\""+style+"\" type=\""+tipo+"\" "+extra+" />");
-	}
-
-	public String inputString(String id,String classe,String style, String tipo, String extra){
-		return "\""+input(id,classe,style,tipo,extra).replaceAll("\"", "\\\\\"")+"\"";
-	}
-
-	public String input(String id,String classe,String style, String tipo){
-		return input(id,classe,style,tipo,"");
-	}
-
-	public String inputString(String id,String classe,String style, String tipo){
-		return inputString(id,classe,style,tipo,"");
-	}
-
-	public String button(String id,String classe,String style, String tipo, String value,String html,String extra){
-		return "<button id=\""+id+"\" name=\""+id+"\" class=\""+classe+"\" "+style+"\" type=\""+tipo+"\" "
-				+ "value=\""+value+"\" "+extra+" >"	+ html + "</button>";
-	}
-
-	public String buttonString(String id,String classe,String style, String tipo, String value,String html,String extra){
-		return  "\""+button(id,classe,style, tipo, value,html, extra).replaceAll("\"", "\\\\\"")+"\"";
-	}
-	
-	public String select(String id,String classe,String style,  String value,String options,String extra){
-		return "<select id=\""+id+"\" name=\""+id+"\" class=\""+classe+"\" style=\""+style+"\" value=\""+value+"\" "+extra+" >"	+ options + "</select>";
-	}
-
-	public String selectString(String id,String classe,String style,  String value,String options,String extra){
-		return  "\""+select(id,classe,style,value,options,extra).replaceAll("\"", "\\\\\"")+"\"";
-	}*/
 	
 
 	public String buscadorGrilla(String SearchBy,String field){
@@ -496,11 +458,10 @@ public class Funciones {
 	}
 
 
-	public  void crearsesion(HttpServletRequest request, String compa, String codig, String nombr) {
+	public  void crearsesion(HttpServletRequest request, String codig, String nombr) {
 
 		HttpSession sesion = request.getSession();
 		sesion.setAttribute("seccionActiva", "1");
-		sesion.setAttribute("usu_compa", compa);
 		sesion.setAttribute("usu_usuar", codig);
 		sesion.setAttribute("usu_nombr", nombr);
 		sesion.setMaxInactiveInterval(Integer.parseInt(this.parametros.get("TIMEOUT")));
@@ -569,19 +530,7 @@ public class Funciones {
 		}
 		return res;
 	}
-	
-	public void Verificar(Connection cn, String tipo, int codus, int codig) throws SQLException,Exception  {
-		String sqlinsert="insert into (vba_compa,vba_tipov,vba_codig,vba_codus,vba_fecha) values "
-									+ "(?,?,?,?,?)";
-		PreparedStatement pr=cn.prepareStatement(sqlinsert);
-		pr.setInt(0, this.compania);
-		pr.setString(1, tipo);
-		pr.setInt(2, codig);
-		pr.setInt(3, codus);
-		pr.setDate(4, new java.sql.Date(this.hoy.getTime()));
-		pr.executeQuery();	
-	}
-	
+		
 	public static void out(Object obj){
 		if (true){
 			System.out.println(obj);

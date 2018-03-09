@@ -47,9 +47,9 @@ public class HelpCampoArt extends HelpCampo {
 		String consulta = "";
 		
 		 try {// the sql server url		          
-			 consulta="select  art_compa,art_codig,mar_nombr,art_nombr,art_pneto,art_final,art_activ \n"
+			 consulta="select  art_codig,mar_nombr,art_nombr,art_pneto,art_final,art_activ \n"
 						+ "	from dbArticulos \n"
-						+ "		left join dbMarcas on (art_marca=mar_codig and art_compa=mar_compa) \n"
+						+ "		left join dbMarcas on (art_marca=mar_codig) \n"
 						+ " "+this.getFiltro()+" \n"				
 						+ " ORDER BY " + this.getOrdenarCampo()+ " " +this.getOrdenarMetodo();				
 
@@ -66,8 +66,7 @@ public class HelpCampoArt extends HelpCampo {
 		Map<String,String> colum = new HashMap<String, String>();
 		
 		// campo a mostrar en cada columna 
-		String col=	"{name:'art_compa', index:'art_compa', width:0, hidden:true}, \n"
-				+ 	"{name:'art_codig', index:'art_codig', width:20, hidden:false, formatter:'FormatCliente'},\n"
+		String col=	"{name:'art_codig', index:'art_codig', width:20, hidden:false, formatter:'FormatCliente'},\n"
 				+ 	"{name:'mar_nombr', index:'mar_nombr', width:70, hidden:false},\n"
 				+ 	"{name:'art_nombr', index:'art_nombr', width:70,hidden:false},\n"
 				+ 	"{name:'art_pneto', index:'art_pneto', width:60,hidden:false, align:'right'},\n"
@@ -76,7 +75,7 @@ public class HelpCampoArt extends HelpCampo {
 		colum.put("colum",col);
 		
 		// Campo con nombres de cada columna
-		String name="'Compania','Cod.','Marca','Articúlo','Precio Neto','Precio Final','Act.'";
+		String name="'Cod.','Marca','Articúlo','Precio Neto','Precio Final','Act.'";
 		colum.put("names",name);
 		
 		// campo a mostrar en cada columna 
@@ -113,10 +112,7 @@ public class HelpCampoArt extends HelpCampo {
 	@Override
 	public String getFiltro() {
 		String filtro = this.getSentenciaWhere();
-		
-		filtro=(filtro.equals("")?" where ":" and ");
-		filtro+= "art_compa="+String.valueOf(fun.compania)+" \n ";
-		
+
 		
 	    if(!(busquedaValor == null || busquedaValor.length() == 0)){
 	    	filtro=(filtro.equals("")?" where ":" and ");

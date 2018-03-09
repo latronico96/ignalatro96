@@ -54,8 +54,7 @@
 				<fieldset>
   					<legend>Datos:</legend>
 					<div class="fila">
-						<input id="modo" class="form-control campo"type="hidden" >
-						<input id="art_compa" class="form-control campo"type="hidden" >						
+						<input id="modo" class="form-control campo"type="hidden" >					
 						<span class="form-control with-20-00">Nombre</span>
 						<input id="art_codig" class="form-control with-10-00 campo" type="number" maxlength="4">
 						<input id="art_nombr" class="form-control with-70-00 campo" type="text" maxlength="45">
@@ -63,7 +62,7 @@
 					<div class="fila">				
 						<span class="form-control with-20-00">Marca</span>
 						<select id="art_marca" class="form-control with-80-00 campo">
-							<%=fun.GetHTMLOtion("mar_codig", "mar_nombr", "dbMarcas", "mar_compa","") %>
+							<%=fun.GetHTMLOtion("mar_codig", "mar_nombr", "dbMarcas","") %>
 						</select>
 					</div>
 					<div class="fila">

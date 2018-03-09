@@ -146,7 +146,7 @@ public class Frm_GrillaComprobantes extends HttpServlet {
 			}
 			
 			String sql=
-					"select cmp_compa, cmp_codig,"
+					"select cmp_codig,"
 					+ "		DATE_FORMAT(cmp_fecha,'%d/%m/%Y') as cmp_fecha,"
 					+ "case cmp_tipco when 'F' then 'Fac' \n"
 					+ "					when 'C' then 'N/C' \n"
@@ -154,8 +154,7 @@ public class Frm_GrillaComprobantes extends HttpServlet {
 					+ "					else 'Otros' end  as cmp_tipco, \n"
 					+ " concat(cmp_letra,' ', cmp_ptvta,' ',cmp_nroco) as cmp_compo,cli_nombr,cmp_impor  \n"
 					+ " from dbComprobantes \n"
-					+ "	left join dbClientes on (cmp_codcl=cli_codig) \n"
-					+ " where cmp_compa="+String.valueOf(fun.compania)+" \n"				
+					+ "	left join dbClientes on (cmp_codcl=cli_codig) \n"			
 					+ " ORDER BY " + ordenarcampo+ " " +ordenarmetodo;
 			JSONObject jsonGrilla=fun.Grilla(sql,empieza,termina,pagina,rp);	 		   
 			prt.print(jsonGrilla.toString());

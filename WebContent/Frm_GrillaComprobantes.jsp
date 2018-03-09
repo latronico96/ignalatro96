@@ -127,9 +127,8 @@
 	        	url: <%=URL%>,
 	        	datatype:"json",
 	        	mtype:'GET', 
-	        	colNames:['Compania','Cod.','Tipo','Fecha','Comprobante','Cliente','Total'],
+	        	colNames:['Cod.','Tipo','Fecha','Comprobante','Cliente','Total'],
 	        	colModel:[
-	        		{name:'cmp_compa', index:'cmp_compa', width:0, hidden:true},
 	        		{name:'cmp_codig', index:'cmp_codig', width:15, hidden:false, hidden:true},
 	        		{name:'cmp_tipco', index:'cmp_tipco', width:20, hidden:false},
 	        		{name:'cmp_fecha', index:'cmp_fecha', width:40, hidden:false},

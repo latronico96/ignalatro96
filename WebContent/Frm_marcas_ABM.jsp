@@ -65,7 +65,6 @@
 						"<button id=\"btn_rev\" class=\"form-control \" style=\"width:20px; height: 18px; padding: 1px;\" type=\"button\" value=\"se apreto\">\n"+
 						"	<img src=\"/img/iconos/glyphicons-208-remove.png\" style=\"width: 16px;\" >\n"+
 						"</button>\n"+
-						"<input id=\"mar_compa\" class=\"form-control dato\" style=\"width: 0px;\" type=\"hidden\" value=\"<%fun.compania%>\" >\n"+
 						"<input id=\"mar_codig\" class=\"form-control dato\" style=\"width: 40px;\" type=\"text\" placeholder=\"Codigo\" >\n"+
 						"<input id=\"mar_nombr\" class=\"form-control dato\" style=\"width: 531px;\" type=\"text\" placeholder=\"Nombre\" maxlength=\"45\" >\n"+
 						"<input id=\"mar_activ\" class=\"form-control dato\" style=\"width: 71px;\" type=\"checkbox\" placeholder=\"activo\" >\n"+
@@ -100,11 +99,9 @@
 	        	url: <%=URL%>,
 	        	datatype:"json",
 	        	mtype:'POST', 
-	        	colNames:['compania','Cod.', 'Nombre', 'Act.'],
+	        	colNames:['Cod.', 'Nombre', 'Act.'],
 	        	colModel:[
-
-	        		{name:'mar_compa', index:'mar_compa', width:0, hidden:true},
-	        		{name:'mar_codig', index:'mar_codig', width:10,  formatter:'FormatCliente'},
+					{name:'mar_codig', index:'mar_codig', width:10,  formatter:'FormatCliente'},
 	        		{name:'mar_nombr', index:'mar_nombr', width:80},
 	        		{name:'mar_activ', index:'mar_activ', width:10}
 	        		],
@@ -128,7 +125,7 @@
 	        		$(".ui-jqgrid-bdiv",form).prepend(stringFrom);
 	        		$("#btn_rev",form).unbind("click").click(function(){
 	        			$(".dato",form).val("");
-		        		$("#mar_compa",form).val(Math.max(...$(NidGrilla).jqGrid('getCol', 'mar_codig', false).concat([0]))+1);   	
+		        		$("#mar_codig",form).val(Math.max(...$(NidGrilla).jqGrid('getCol', 'mar_codig', false).concat([0]))+1);   	
 		        		$("#mar_activ",form).prop("checked",true);
 	        		});	        		        		
 	        		$("#btn_act",form).unbind("click").click(function(){

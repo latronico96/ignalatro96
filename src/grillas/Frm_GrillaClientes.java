@@ -141,7 +141,7 @@ public class Frm_GrillaClientes extends HttpServlet {
 		try{			    
 			// the sql server url		          
 			String sql=
-					"select cli_compa, cli_codig, \n"
+					"select cli_codig, \n"
 					+ "	CASE WHEN trim(cli_fnomb)='' THEN cli_nombr ELSE cli_fnomb END as cli_nombr,\n"
 					+ "	CASE WHEN trim(cli_ftele)='' THEN cli_telef ELSE cli_ftele END as cli_telef, \n"
 					+ "	CASE WHEN trim(cli_fcelu)='' THEN cli_celul ELSE cli_fcelu END as cli_celul, \n"
@@ -152,7 +152,6 @@ public class Frm_GrillaClientes extends HttpServlet {
 					+ "from  dbClientes \n"
 					+ "	left join dbCondIva on (iva_codig=CASE WHEN trim(cli_fciva)='' THEN cli_cliva ELSE cli_fciva END) \n"
 					+ "left join dbTipoDocumentos on ( doc_codig =CASE WHEN trim(cli_fndoc)='' THEN cli_tpdoc ELSE cli_ftdoc END) "
-					+ " WHERE cli_compa="+String.valueOf(fun.compania)+" \n"
 					+ " ORDER BY " + ordenarcampo+ " " +ordenarmetodo;
 			JSONObject jsonGrilla=fun.Grilla(sql,empieza,termina,pagina,rp);	 		   
 			prt.print(jsonGrilla.toString());
