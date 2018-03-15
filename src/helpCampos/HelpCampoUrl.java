@@ -49,6 +49,10 @@ static final int ID_USA  = 18; //Autos usados
 				hc = new HelpCampoArt(fun,req,null,ordenarcampo,ordenarmetodo,pagina,rows,
 						search_campo, search_oper, search_valor,BusquedaValor,BusquedaCampo,filtExt);
 				break;
+			case "PRV":
+				hc = new HelpCampoPrv(fun,req,null,ordenarcampo,ordenarmetodo,pagina,rows,
+						search_campo, search_oper, search_valor,BusquedaValor,BusquedaCampo,filtExt);
+				break;
 		}
 
     	PrintWriter prt=res.getWriter();
@@ -57,7 +61,7 @@ static final int ID_USA  = 18; //Autos usados
 			JSONObject jsonGrilla=hc.getJsonGrilla(); 		   
 			prt.print(jsonGrilla.toString());
 		}catch(Exception e){
-	    	 System.err.println("Got an exception! ");
+	    	 e.printStackTrace();
 		     System.err.println(e.getMessage());
 		     prt.println(e.getMessage());		   
 	     }
@@ -76,6 +80,9 @@ static final int ID_USA  = 18; //Autos usados
 				 break;
 			case "ART":
 				hc = new HelpCampoArt(fun, request);
+				break;
+			case "PRV":
+				hc = new HelpCampoPrv(fun, request);
 				break;
 		}
 

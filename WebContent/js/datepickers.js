@@ -8275,7 +8275,8 @@ $.extend(Datepicker.prototype, {
 		if (!inst.inline) {
 			showAnim = $.datepicker._get(inst, "showAnim");
 			duration = $.datepicker._get(inst, "duration");
-			inst.dpDiv.zIndex($(input).zIndex()+200);
+			//inst.dpDiv.zIndex($(input).zIndex()+200);
+			inst.dpDiv.css( "zIndex", parseInt($(input).css( "zIndex"))+200 );
 			$.datepicker._datepickerShowing = true;
 
 			if ( $.effects && $.effects.effect[ showAnim ] ) {

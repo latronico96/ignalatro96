@@ -69,7 +69,7 @@ public class Frm_logeo extends HttpServlet {
 				cn=fun.Conectar();
 				cn.setAutoCommit(false);
 				Statement st =cn.createStatement();
-				String sql="select usu_usuar,usu_nombr from dbusuarios where usu_nombr='"+parametros.get("usuario")+"'";
+				String sql="select usu_usuar,usu_nombr from dbusuarios where usu_vence>now() and usu_nombr='"+parametros.get("usuario")+"'";
 				ResultSet rs=st.executeQuery(sql);				
 				if(rs.next()){
 					////System.out.println(fun.valClave(rs.getString("usu_usuar"), pass));
@@ -142,7 +142,7 @@ public class Frm_logeo extends HttpServlet {
 		
 		
 		response.setContentType("application/json"); 
-		v.println(jsonok.toString());
+		v.print(jsonok.toString());
 	}
 
 	/**

@@ -49,7 +49,7 @@
 	</style>
 	<div class="fila negro T-blanco rounded" style="height: 40px;padding: 4px 10px;">
 		<div class="tool">
-			<h3 style="margin: 0px;">Comprovantes de Venta</h3>
+			<h3 style="margin: 0px;">Comprobantes de Venta</h3>
 		</div>			
 		<div class="tool tool-boton" data-modo="CONS">
 			<img src="/img/iconos/glyphicons-28-search.png"
@@ -99,7 +99,7 @@
 	        	cargando();
 				$.ajax({
 					type:'GET',
-					url: 'Frm_FacturaABM',
+					url: 'Frm_RemitoEABM',
 					data: { modo: $(this).data("modo"), cli_codig: cod },
 					success:function(data){     			
 			    		cerrarAlerta();
@@ -146,15 +146,44 @@
 	        	hidegrid:false,
 	        	title:false,	        	
 	        	gridComplete:function(){
+
+		        	
 	        		$('tbody [role="row"]').each(function(id, val){
 	        			if(id % 2 == 0){
 	        				$(NidGrilla + ' #' + id).css('background-color', 'rgb(224, 224, 224)');
 	        			}
 	        		});
-	        		$("#jqgridSearchForm").remove();
-	        		$(NidGrilla + "_pie_left").prepend(<%out.println(fun.buscadorGrilla("nombre", "cli_nombr"));%>);
-	        		$("tr.jqgrow.ui-row-ltr.ui-widget-content").first().trigger("click");
-	        		$(NidGrilla).focus();
+	        		
+	        		if ($(NidGrilla + "_pie_left #jqgridSearchForm").length<=0){
+						$("#jqgridSearchForm").remove();
+						$(NidGrilla + "_pie_left").prepend(<% out.print(fun.buscadorGrilla(" Nombre", "cli_nombr")); %>);
+						$(NidGrilla + "_pie_left #jqgridSearInput").bind('keydown', function(e) {			
+							switch (e.which) {				
+								case 13:
+									$(NidGrilla).jqGrid('setGridParam',
+									   { postData : { 
+									     	BusquedaValor : $(NidGrilla + "_pie_left #jqgridSearInput").val(),
+									     	BusquedaCampo : $(NidGrilla + "_pie_left #jqgridSearInput").data("field")
+									   } 
+									}).trigger(	"reloadGrid");						    
+									break;				
+							}
+						});
+						      
+						$(NidGrilla + "_pie_left #jqgridSearInput").click( function() {			
+							$(NidGrilla).jqGrid('setGridParam',
+							   { postData : { 
+							     	BusquedaValor : $(NidGrilla + "_pie_left #jqgridSearInput").val(),
+							     	BusquedaCampo : $(NidGrilla + "_pie_left #jqgridSearInput").data("field")
+							   } 
+							}).trigger(	"reloadGrid");
+						});
+	        		}	        		
+	        		
+	        		if (!$(NidGrilla + "_pie_left #jqgridSearInput").is(":focus")) {
+		        		$("tr.jqgrow.ui-row-ltr.ui-widget-content").first().trigger("click");
+		        		$(NidGrilla).focus();	        			 
+	        		}
 	        	}, 
 	        	ondblClickRow:function(id){
 	        		var ret = $(NidGrilla).jqGrid('getRowData', id);

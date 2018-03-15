@@ -1,6 +1,10 @@
 package funciones;
 
 import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.FieldPosition;
+import java.text.ParseException;
+import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.io.IOException;
 import java.io.InputStream;
@@ -90,7 +94,12 @@ public class Funciones {
 	public Connection Conectar() throws SQLException,SQLException, ClassNotFoundException {
 
 		Connection conexion=null;
-		conexion=ConectarPrivate();
+		try{
+			conexion=ConectarPrivate();
+		}catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}		
 
 		if (conexion==null){
 			conexion=ConectarPrivate();
@@ -143,16 +152,17 @@ public class Funciones {
 		return String.valueOf(getMaximo( tabla, campo,  where));
 	}
 
-	public String isNull(String valor){
-		return this.isNull(valor,"");
+	public static String isNull(String valor){
+		return Funciones.isNull(valor,"");
 	}
 
-	public String isNull(String valor,String valorDefault){
+	public static String isNull(String valor,String valorDefault){
 		return (valor==null?valorDefault:valor);
 	}
 
 	public String GetHTMLOtion(String CampoValue,String CampoTexto,String Tabla , String where){
 
+		where=(where.trim().equals("")?"":" where ")+where;
 		String html="";
 		try{
 			Connection cn=this.Conectar();
@@ -160,6 +170,29 @@ public class Funciones {
 			ResultSet rs=st.executeQuery("select "+CampoValue+" as campo, "+CampoTexto+" as texto from "+Tabla+" as tabla "+where);
 			while( rs.next()){
 				html+="<option value=\""+rs.getString("campo")+"\">"+rs.getString("texto")+"</option>";
+			}
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+
+		return html;
+	}
+	
+	public String GetHTMLOtionList(String CampoValue,String CampoTexto,String Tabla ){
+		return this.GetHTMLOtionList(CampoValue, CampoTexto, Tabla, "" );
+	}
+	
+	public String GetHTMLOtionList(String CampoValue,String CampoTexto,String Tabla , String where){
+
+		where=(where.trim().equals("")?"":" where ")+where;
+		String html="";
+		try{
+			Connection cn=this.Conectar();
+			Statement st=cn.createStatement();
+			ResultSet rs=st.executeQuery("select "+CampoValue+" as campo, "+CampoTexto+" as texto from "+Tabla+" as tabla "+where);
+			while( rs.next()){
+				html+="<option data-id='"+rs.getString("campo")+"' value='"+rs.getString("texto")+"'>"+rs.getString("texto")+"</option>";
 			}
 		}
 		catch(Exception e){
@@ -177,7 +210,7 @@ public class Funciones {
 		while (rsmd.getColumnCount()>i)
 		{
 			i++;
-			campos[i-1]=rsmd.getColumnName(i);
+			campos[i-1]=rsmd.getColumnLabel(i);
 		}
 		return campos;
 	}
@@ -242,7 +275,7 @@ public class Funciones {
 				while (rs.next()){
 					objAux= new JSONObject();
 					for (int i = 0 ; i <vec.length;i++){	       
-						objAux.put(vec[i], this.acentos(rs.getString(vec[i]).replaceAll("\n", "")));	         
+						objAux.put(vec[i], this.acentos( this.isNull(rs.getString(vec[i])).replaceAll("\n", "")));	         
 					}
 					json.add(objAux);
 				}
@@ -349,7 +382,7 @@ public class Funciones {
 	}
 
 	public Map<String,String> getTipos(String tabla){
-		Map<String,String> tipos=new HashMap();
+		Map<String,String> tipos=new HashMap<String, String>();
 		Connection cn;
 		try {
 			cn = this.Conectar();
@@ -369,15 +402,31 @@ public class Funciones {
 		return tipos;
 	}
 
-	public String PrepararCampo(String campo,Map<String,String> tipos,String valor){
+	public static String PrepararCampo(String campo,Map<String,String> tipos,String valor) {
 		String comillas="'";
-		Boolean esTexto=(tipos.get(campo.toLowerCase()).toLowerCase().startsWith("varchar") || 
-						tipos.get(campo.toLowerCase()).toLowerCase().startsWith("datetime") ||
-						tipos.get(campo.toLowerCase()).toLowerCase().startsWith("char"));
-		return (esTexto?comillas+valor+comillas:valor);
+		if(Funciones.isNull(valor).equals("") || Funciones.isNull(valor).toLowerCase().trim().equals("null") ){
+			return "null";
+		}else if(tipos.getOrDefault(campo.toLowerCase(),"varchar").toLowerCase().startsWith("date")){
+			DateFormat entrada = new SimpleDateFormat("dd/MM/yyyy");
+			Date date = new Date();
+			try {
+				date = entrada.parse(valor);
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			SimpleDateFormat salida = new SimpleDateFormat("yyyy-MM-dd");
+			return comillas+salida.format(date)+comillas;
+		}else{
+			Boolean esTexto= 
+					(tipos.getOrDefault(campo.toLowerCase(),"varchar").toLowerCase().startsWith("varchar") || 
+						tipos.getOrDefault(campo.toLowerCase(),"varchar").toLowerCase().startsWith("datetime") ||
+						tipos.getOrDefault(campo.toLowerCase(),"varchar").toLowerCase().startsWith("char"));
+			return (esTexto?comillas+valor+comillas:valor);
+		}
 	} 
 	
-	public  String FormatDate(Date fecha, String tipo) {
+	public  static String FormatDate(Date fecha, String tipo) {
 		if(fecha==null){
 			return "";
 		}else{
@@ -400,8 +449,8 @@ public class Funciones {
 
 	public String buscadorGrilla(String SearchBy,String field){
 		return "\""+("<div id=\"jqgridSearchForm\">"
-				//+ this.input("jqgridSearInput", "form-control with-85-00 noPadding" , "margin: 1px calc(1% - 1px);" , "text", "data-field=\"field\" placeholder=\""+SearchBy+"\"")
-				+ 	"<button id=\"btn_act\" class=\"form-control with-9-00 noPadding\"style=\"height: 18.5px; margin: 1px calc(1% - 1px);\"  type=\"button\" value=\"se apreto\">"
+				+ 	"<input id=\"jqgridSearInput\" class=\"form-control with-85-00 noPadding\" style=\"margin: 1px calc(1% - 1px);\" type=\"text\" data-field=\""+field+"\" placeholder=\""+SearchBy+"\" >"
+				+ 	"<button id=\"jqgridSearButton\" class=\"form-control with-9-00 noPadding\"style=\"height: 18.5px; margin: 1px calc(1% - 1px);\"  type=\"button\" value=\"se apreto\">"
 				+	"	<img src=\"/img/iconos/glyphicons-28-search.png\" style=\"height: 18px;width: auto;\">" 
 				+	"</button>"
 				+ "</div>").replaceAll("\"", "\\\\\"")+"\"";
@@ -567,15 +616,26 @@ public class Funciones {
 				tabla="dbClientes";
 				campo="cli_codig";
 				break;
-			case "EMP":
-				tabla="dbempleados";
-				campo="emp_codig";
-				id=this.fillZero(id, 4);
+			case "PRV":
+				tabla="dbproveedores";
+				campo="prv_codig";
 				break;
-			case "HCL":
-				tabla="dbHistClinicas";
-				campo="hcl_nrohc";
-				id=this.fillZero(id, 5);
+			case "ART":
+				sql="select  art_codig,art_marca,mar_nombr,art_nombr,art_codbr,art_costo,art_pmeno,art_pmayo,art_activ, \n"
+						+ "		concat('<div class=\"',case when stk_canti<art_stmin then 'T-rojo' else 'T-verde' end,'\">',stk_canti,'</div>') as art_cstok  \n"
+						+ "	from dbArticulos \n"
+						+ "		left join dbMarcas on (art_marca=mar_codig) \n"
+						+ "		left join stockhoy on (stk_artic=art_codig) \n"	
+						+ " where art_codig="+id+" \n";
+				break;
+			case "ARTB":
+				sql="select  art_codig,art_marca,mar_nombr,art_nombr,art_codbr,art_costo,art_pmeno,art_pmayo,art_activ, \n"
+						+ "		concat('<div class=\"',case when stk_canti<art_stmin then 'T-rojo' else 'T-verde' end,'\">',stk_canti,'</div>') as art_cstok \n"
+						+ "	from dbArticulos \n"
+						+ "		left join dbMarcas on (art_marca=mar_codig) \n"	
+						+ "		left join stockhoy on (stk_artic=art_codig) \n"	
+						+ " where art_codbr='"+this.fillZero(id,13)+"' \n";
+				break;
 		}
 		
 		JSONObject obj=new JSONObject();
@@ -585,16 +645,10 @@ public class Funciones {
 			Connection conexion =this.Conectar();
 			Statement st = conexion.createStatement();
 			ResultSet rs = null;
-			
-			switch (cod) {
-			case "ATETUR": case "PATTUR": case "PATOTR": case "CLILEG": case "EMPTUR": case "TITLEG":
-				rs = st.executeQuery(sql);
-				break;
-			default:
-				rs = st.executeQuery("select * from "+tabla+" where "+campo+"="+id+"");
-				break;
+			if(sql.equals("")){
+				sql="select * from "+tabla+" where "+campo+"="+id+"";
 			}
-			
+			rs = st.executeQuery(sql);
 			if(rs.next()){				
 				err="0";
 				String[] vec= this.getCampos(rs);//devuelve el nombre de las columnas
@@ -614,10 +668,15 @@ public class Funciones {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			err="2";
+			jsonGen.put("error",err); 
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			err="2";
+			jsonGen.put("error",err); 
 		}
+		
 		return jsonGen.toString();
 		
 	}
@@ -682,5 +741,47 @@ public class Funciones {
 			break;
 		}
 		return foto;
+	}
+	
+	public String NuevoUsuario(String usuario,String Constrasema){
+		String coUs=String.valueOf(1+this.getMaximo("dbusuarios", "usu_usuar"));
+		String insertUsu="insert into dbusuarios (usu_usuar,usu_nombr,usu_vence) values "
+				+ "("+coUs+",'"+usuario+"',DATE_ADD(NOW(), INTERVAL 2 MONTH) )";
+		String insertContra="insert into dbcontrasenias (uco_codus,uco_fecve,uco_contra) values "
+				+ "("+coUs+",DATE_ADD(NOW(), INTERVAL 2 MONTH),'"+this.hashPassword(Constrasema)+"' )";
+		String error="0";
+		Connection cn=null;
+		try{
+			cn=this.Conectar();
+			cn.setAutoCommit(false);
+			
+			Statement st=cn.createStatement();
+		    st.executeUpdate(insertUsu);			    
+		    st.close();
+		    
+		    st=cn.createStatement();
+		    st.executeUpdate(insertContra);			    
+		    st.close();		    
+
+			cn.commit();
+			cn.close();
+		}catch(SQLException e){
+			error="1";
+			try {
+                System.err.print("Transaction is being rolled back");
+                if(cn!=null){
+                	cn.rollback();
+                	cn.close();
+                }
+            } catch(SQLException excep) {
+            	excep.printStackTrace();
+            }
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			error="1";
+			e.printStackTrace();
+		}
+		return error;
 	}
 }

@@ -127,13 +127,15 @@
 	        	url: <%=URL%>,
 	        	datatype:"json",
 	        	mtype:'GET', 
-	        	colNames:['Cod.','Marca','Articúlo','Precio Neto','Precio Final','Activo'],
+	        	colNames:['Cod.','Marca','Articúlo','Cod. Barra','Costo','P. Menor','P. Mayor','Activo'],
 	        	colModel:[
-	        		{name:'art_codig', index:'art_codig', width:15, hidden:false, formatter:'FormatCliente'},
+	        		{name:'art_codig', index:'art_codig', width:15, hidden:false, formatter:'FormatClient'},
 	        		{name:'mar_nombr', index:'mar_nombr', width:100, hidden:false},
 	        		{name:'art_nombr', index:'art_nombr', width:100,hidden:false},
-	        		{name:'art_pneto', index:'art_pneto', width:60,hidden:false, align:'right'},
-	        		{name:'art_final', index:'art_final', width:60,hidden:false, align:'right'},
+	        		{name:'art_codbr', index:'art_codbr', width:80,hidden:false,},
+	        		{name:'art_costo', index:'art_costo', width:60,hidden:false, align:'right'},
+	        		{name:'art_pmeno', index:'art_pmeno', width:60,hidden:false, align:'right'},
+	        		{name:'art_pmayo', index:'art_pmayo', width:60,hidden:false, align:'right'},
 	        		{name:'art_activ', index:'art_activ', width:15,hidden:false, formatter:'FormatActivo'}],
 	        	width: ($("#Cuerpo").width()-10),
 	        	height: ($("#Cuerpo").height()-80),
@@ -146,15 +148,43 @@
 	        	hidegrid:false,
 	        	title:false,
 	        	gridComplete:function(){
+	        			        	
 	        		$('tbody [role="row"]').each(function(id, val){
 	        			if(id % 2 == 0){
 	        				$(NidGrilla + ' #' + id).css('background-color', 'rgb(224, 224, 224)');
 	        			}
 	        		});
-	        		$("#jqgridSearchForm").remove();
-	        		$(NidGrilla + "_pie_left").prepend(<%out.println(fun.buscadorGrilla("nombre", "art_nombr"));%>);
-	        		$("tr.jqgrow.ui-row-ltr.ui-widget-content").first().trigger("click");
-	        		$(NidGrilla).focus();
+	        		
+	        		if ($(NidGrilla + "_pie_left #jqgridSearchForm").length<=0){
+						$("#jqgridSearchForm").remove();
+						$(NidGrilla + "_pie_left").prepend(<% out.print(fun.buscadorGrilla(" Nombre", "art_nombr")); %>);
+						$(NidGrilla + "_pie_left #jqgridSearInput").bind('keydown', function(e) {			
+							switch (e.which) {				
+								case 13:
+									$(NidGrilla).jqGrid('setGridParam',
+									   { postData : { 
+									     	BusquedaValor : $(NidGrilla + "_pie_left #jqgridSearInput").val(),
+									     	BusquedaCampo : $(NidGrilla + "_pie_left #jqgridSearInput").data("field")
+									   } 
+									}).trigger(	"reloadGrid");						    
+									break;				
+							}
+						});
+						      
+						$(NidGrilla + "_pie_left #jqgridSearInput").click( function() {			
+							$(NidGrilla).jqGrid('setGridParam',
+							   { postData : { 
+							     	BusquedaValor : $(NidGrilla + "_pie_left #jqgridSearInput").val(),
+							     	BusquedaCampo : $(NidGrilla + "_pie_left #jqgridSearInput").data("field")
+							   } 
+							}).trigger(	"reloadGrid");
+						});
+	        		}	        		
+	        		
+	        		if (!$(NidGrilla + "_pie_left #jqgridSearInput").is(":focus")) {
+		        		$("tr.jqgrow.ui-row-ltr.ui-widget-content").first().trigger("click");
+		        		$(NidGrilla).focus();	        			 
+	        		}
 	        	}, 
 	        	ondblClickRow:function(id){
 	        		var ret = $(NidGrilla).jqGrid('getRowData', id);
@@ -168,12 +198,21 @@
 	        	    	$(elem).css("text-align", (x.p.colModel[index].align===undefined? "left" : x.p.colModel[index].align));
 	        	    });
 	        	},
-	        	caption:""
+	        	caption:"",
+	        	postData : {
+			     	BusquedaValor : $(NidGrilla + "_pie_left #jqgridSearInput").val(),
+			     	BusquedaCampo : $(NidGrilla + "_pie_left #jqgridSearInput").data("field")	
+	    		} 
 	        });
 	        $(".ui-jqgrid-titlebar").hide();	 
 	        $( document ).resize(function(){  
 	      	  reSizeGrid("GrillaClientes",($("#Cuerpo").width()-10),($("#Cuerpo").height()-80));
 	      	});
+	        
+	        
+	       
+	        
+	        
         }
 	</script>
 </div>

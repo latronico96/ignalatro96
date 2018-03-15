@@ -151,10 +151,11 @@ public class Frm_GrillaComprobantes extends HttpServlet {
 					+ "case cmp_tipco when 'F' then 'Fac' \n"
 					+ "					when 'C' then 'N/C' \n"
 					+ "					when 'D' then 'N/D' \n"
-					+ "					else 'Otros' end  as cmp_tipco, \n"
+					+ "					else 'Otros' end  as cmp_tipco,  \n"
 					+ " concat(cmp_letra,' ', cmp_ptvta,' ',cmp_nroco) as cmp_compo,cli_nombr,cmp_impor  \n"
 					+ " from dbComprobantes \n"
-					+ "	left join dbClientes on (cmp_codcl=cli_codig) \n"			
+					+ "	left join dbClientes on (cmp_codcl=cli_codig) \n"	
+					+ filtro
 					+ " ORDER BY " + ordenarcampo+ " " +ordenarmetodo;
 			JSONObject jsonGrilla=fun.Grilla(sql,empieza,termina,pagina,rp);	 		   
 			prt.print(jsonGrilla.toString());

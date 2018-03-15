@@ -6,7 +6,7 @@
 	String idGrilla = "Frm_ptaVta_ABM_Grilla";
 	String idForm = "Frm_ptaVta_ABM";
 	String URL = "'./Frm_ptaVta_ABM'";
-	String tiposPuntos="<option value=\"E\">Electronico</option><option value=\"M\">Manual</option>";
+	String tiposPuntos="<option value=\\\"E\\\">Electronico</option><option value=\\\"M\\\">Manual</option>";
 %>
 
 <div id="<%=idForm%>" data-popup="true" class="backmodal formulario">
@@ -118,7 +118,7 @@
 	        	mtype:'POST', 
 	        	colNames:['Cod.', 'Nombre', 'Tipo', 'Certificado', 'Act.' ],
 	        	colModel:[
-	        		{name:'ptv_codig', index:'ptv_codig', width:50,  formatter:'FormatCliente'},
+	        		{name:'ptv_codig', index:'ptv_codig', width:50,  formatter:'FormatClient'},
 	        		{name:'ptv_nombr', index:'ptv_nombr', width:200},
 	        		{name:'ptv_tipop', index:'ptv_tipop', width:100},
 	        		{name:'ptv_certi', index:'ptv_certi', width:200},

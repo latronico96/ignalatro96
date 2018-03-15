@@ -28,9 +28,9 @@
 				<div class="collapse navbar-collapse" id="navbarNav">
 					<ul class="navbar-nav">
 						<li class="nav-item">
-							<h3 class="col-12 negro T-blanco rounded-bottom">Facturacion Electronica</h3>
+							<h3 class="col-12 negro T-blanco rounded-bottom">Latron</h3>
 						</li>
-						<li class="nav-item dropdown">
+						<!--li class="nav-item dropdown">
 							<a class="nav-link dropdown-toggle" id="archivo" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 								Archivo
 							</a>
@@ -78,6 +78,16 @@
 								<div class="dropdown-divider"></div>
 								<a class="dropdown-item" id="acercaDe">Acerca de</a>
 							</div>
+						</li-->
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle" id="configuracion" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								Artículos
+							</a>
+							<div class="dropdown-menu" aria-labelledby="configuracion">
+								<a class="dropdown-item" id="marcas" data-url="Frm_marcas_ABM.jsp" data-form="Frm_marcas_ABM">Marcas</a>
+								<a class="dropdown-item" id="marcas" data-url="Frm_Articulos_CargaRapida.jsp" data-form="Frm_Articulos_CargaRapida">Carga Rapida</a>
+
+							</div>
 						</li>
 						<li class="nav-item" id="salir">
 							<a class="nav-link" href="Frm_logeo">Salir</a>
@@ -93,6 +103,11 @@
 				<div class="list-group" id="list-tab" role="tablist">
 					<div id="accordion" role="tablist">
 						<div class="card">
+							<div class="card-header" role="tab" id="Prv" data-url="Frm_GrillaProveedores.jsp" data-form="Frm_GrillaProveedores">
+								<h5 class="mb-0">
+									<a class="collapsed" href="javascript:void(0)">Proveedores</a>
+								</h5>
+							</div>
 							<div class="card-header" role="tab" id="Cli" data-url="Frm_GrillaClientes.jsp" data-form="Frm_GrillaClientes">
 								<h5 class="mb-0">
 									<a class="collapsed" href="javascript:void(0)">Clientes</a>
@@ -103,14 +118,14 @@
 									<a class="collapsed" href="javascript:void(0)">Artículos</a>
 								</h5>
 							</div>
-							<div class="card-header" role="tab" id="Cmp" data-url="Frm_GrillaComprobantes.jsp" data-form="Frm_GrillaComprobantes">
+							<div class="d-none card-header" role="tab" id="Cmp" data-url="Frm_GrillaComprobantes.jsp" data-form="Frm_GrillaComprobantes">
 								<h5 class="mb-0">
 									<a class="collapsed" href="javascript:void(0)">Cmp. de venta</a>
 								</h5>
 							</div>
-							<div class="card-header" role="tab" id="Rec" data-url="Frm_GrillaRecibos.jsp" data-form="Frm_GrillaRecibos">
+							<div class="card-header" role="tab" id="Rem" data-url="Frm_GrillaRemitos.jsp" data-form="Frm_GrillaRemitos">
 								<h5 class="mb-0">
-									<a class="collapsed" href="javascript:void(0)">Recibos</a>
+									<a class="collapsed" href="javascript:void(0)">Remitos</a>
 								</h5>
 							</div>
 						</div>
@@ -122,14 +137,14 @@
 			<div class="col-10 noPadding-left">
 				<div class="tab-content rounded" id="Cuerpo">
 					<!-- table id="GrillaCuerpo"></table>
-					<div id="GrillaCuerpo_pie"></div-->
+					<div id="GrillaCuerpo_pie"></div>
 					<div class="fila">
 						<input type="text" id="cli_codig">
-						<button type="button" class="btn btn-primary" id="btn_confirmar">
+						<button type="button" class="btn btn-primary" id="btn_confirmar" onclick="HelpCampo('ART','#cli_codig')">
 							<img src="/img/iconos/glyphicons-28-search.png"	style="width: auto; filter: invert(55%);">
 						</button>
 						<input type="text" id="cli_nombr">
-					</div>
+					</div-->
 				</div>
 			</div>
 			<!-- fin cuerpo -->
@@ -148,53 +163,57 @@
 	</div>
 	
 	<section id="bloqueoAlerta" class="backmodal"></section><!-- div para mensajes emergentes (al final para que este arriba de todos los formularios -->
-</body>
-</html>
-<script>
-	$(document).ready(function(){
-		$(".dropdown .dropdown-item").click(function(){
+
+	<script>
+		$(document).ready(function(){
+			$(".dropdown .dropdown-item").click(function(){
+				
+				var item=$(this);	
+				if(item.data().hasOwnProperty("url")){
+			    	cargando();
+					$.ajax({
+						type:'GET',
+						url: item.data("url"),		
+						success: function(data) {
+				    		cerrarAlerta();
+				    		//if($(data).data("popup")=="true"){
+								$(document.body).prepend($(data));	
+								$(".modal").draggable();
+								$('#'+item.data("form")).show();  			    			
+				    		/*}else{
+								$("#Cuerpo").html($(data));
+				    		}  */    				
+		        		}, 
+		        		error:function(data){        			
+				    		cerrarAlerta();
+		        	    	console.log(data);
+		        		}
+		        	});				
+				}
+	        });	
 			
-			var item=$(this);	
-			if(item.data().hasOwnProperty("url")){
+			$(".card-header").click( function(){
 		    	cargando();
+				var boton=$(this);
 				$.ajax({
 					type:'GET',
-					url: item.data("url"),		
+					url: boton.data('url'), 
 					success: function(data) {
 			    		cerrarAlerta();
-						$(document.body).prepend($(data));
-						$(".modal").draggable();
-						$('#'+item.data("form")).show();  	      				
+						$("#Cuerpo").html($(data));
+						$(boton.data('form')).show();   	       			
 	        		}, 
-	        		error:function(data){        			
+	        		error:function(data){      			
 			    		cerrarAlerta();
 	        	    	console.log(data);
-	        		}
-	        	});				
-			}
-        });	
-		
-		$(".card-header").click( function(){
-	    	cargando();
-			var boton=$(this);
-			$.ajax({
-				type:'GET',
-				url: boton.data('url'), 
-				success: function(data) {
-		    		cerrarAlerta();
-					$("#Cuerpo").html($(data));
-					$(".modal").draggable();
-					$(boton.data('form')).show();   	       			
-        		}, 
-        		error:function(data){      			
-		    		cerrarAlerta();
-        	    	console.log(data);
-			    }
-        	});
+				    }
+	        	});
+				
+			});
+			$("#Rem").click();
 			
 		});
-		
-	});
-</script>
-
+	</script>
+</body>
+</html>
 

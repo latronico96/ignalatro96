@@ -88,7 +88,7 @@ span.form-control {
     width: 100%;
     padding: 1px 3px;
     /*margin: 5px auto;*/
-    font-size: 15px;
+    font-size: 15px !important;
     line-height: unset;
     border: 1px solid #ced4da;
     border-radius: .25rem;

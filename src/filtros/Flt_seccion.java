@@ -12,6 +12,10 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
 import funciones.Funciones;
 
 /**
@@ -29,6 +33,7 @@ public class Flt_seccion implements Filter {
 	public static final String inicio="/frm_main.jsp";
 	public static final String ind="index.jsp";
 	public static final String index="/index.jsp";	
+	public static final String funcionesURL="/funciones";	
 	/**
 	 * Default constructor. 
 	 */
@@ -99,8 +104,21 @@ public class Flt_seccion implements Filter {
 							httpResponse.sendRedirect(inicio);
 						}								
 					}					
-				}else{				
-					if (sesion.getRequestURI().equals(index)){ 
+				}else{			
+					String methodName ="";
+					String js=Funciones.isNull(request.getParameter("js"));
+					if(!js.equals("")){
+						JSONObject jsObj;
+						try {
+							jsObj = (JSONObject) new JSONParser().parse(js);
+							methodName = (String)jsObj.get("nombre");
+						} catch (ParseException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+					
+					if (sesion.getRequestURI().equals(index) ||		methodName.equals("NuevoUsuario") ){ 
 						chain.doFilter(request, response);
 					}else{
 						httpResponse.sendRedirect(index);

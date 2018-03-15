@@ -101,7 +101,7 @@
 	        	mtype:'POST', 
 	        	colNames:['Cod.', 'Nombre', 'Act.'],
 	        	colModel:[
-					{name:'mar_codig', index:'mar_codig', width:10,  formatter:'FormatCliente'},
+					{name:'mar_codig', index:'mar_codig', width:10,  formatter:'FormatClient'},
 	        		{name:'mar_nombr', index:'mar_nombr', width:80},
 	        		{name:'mar_activ', index:'mar_activ', width:10}
 	        		],
@@ -143,7 +143,7 @@
 		        			cargando();
 		        			$.ajax({
 		        				dataType:'json',
-		        				data:$('.dato').serialize(),
+		        				data:$('.dato').serializeI(),
 		        				type:'GET',
 		        				url:  <%=URL%>,
 		        				success:function(data){

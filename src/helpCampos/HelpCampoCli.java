@@ -37,6 +37,7 @@ public class HelpCampoCli extends HelpCampo {
 		this.fun=func;
 		
 		this.campo = "cli_codig";
+		this.setOrdenarCampo(campo);
 		this.ordenarMetodo = "asc";
 		this.pagina = "1";
 		this.cntRows = "10";			
@@ -46,21 +47,20 @@ public class HelpCampoCli extends HelpCampo {
 	public String getTabla (){
 		String consulta = "";
 		
-		 try {// the sql server url		          
-			 consulta=
-						"select  cli_codig, \n"
-						+ "	CASE WHEN trim(cli_fnomb)='' THEN cli_nombr ELSE cli_fnomb END as cli_nombr,\n"
-						+ "	CASE WHEN trim(cli_ftele)='' THEN cli_telef ELSE cli_ftele END as cli_telef, \n"
-						+ "	CASE WHEN trim(cli_fcelu)='' THEN cli_celul ELSE cli_fcelu END as cli_celul, \n"
-						+ "	CASE WHEN trim(cli_fdire)='' THEN cli_direc ELSE cli_fdire END as cli_direc, \n"
-						+ "	iva_nombr, \n"
-						+ "	concat(trim(doc_nombre),' ',convert( CASE WHEN trim(cli_fndoc)='' THEN cli_nrdoc ELSE cli_fndoc END,char))  as cli_nrdoc, \n"
+		 try {// the sql server url	
+			consulta="select cli_codig, \n"
+						+ "	CASE WHEN trim(ifnull(cli_fnomb,''))='' THEN cli_nombr ELSE cli_fnomb END as cli_nombr,\n"
+						+ "	CASE WHEN trim(ifnull(cli_ftele,''))='' THEN cli_telef ELSE cli_ftele END as cli_telef, \n"
+						+ "	CASE WHEN trim(ifnull(cli_fcelu,''))='' THEN cli_celul ELSE cli_fcelu END as cli_celul, \n"
+						+ "	CASE WHEN trim(ifnull(cli_fdire,''))='' THEN cli_direc ELSE cli_fdire END as cli_direc, \n"
+						+ "	iva_nombr,cli_cliva,cli_tpdoc,cli_condi, \n"
+						+ "	convert( CASE WHEN trim(ifnull(cli_fndoc,''))='' THEN cli_nrdoc ELSE cli_fndoc END,char)  as cli_nrdoc, \n"
 						+ "	cli_plazo,cli_email \n"
 						+ "from  dbClientes \n"
-						+ "	left join dbCondIva on (iva_codig=CASE WHEN trim(cli_fciva)='' THEN cli_cliva ELSE cli_fciva END) \n"
-						+ "left join dbTipoDocumentos on ( doc_codig =CASE WHEN trim(cli_fndoc)='' THEN cli_tpdoc ELSE cli_ftdoc END) "
+						+ "	left join dbCondIva on (iva_codig=CASE WHEN trim(ifnull(cli_fciva,''))='' THEN cli_cliva ELSE cli_fciva END) \n"
+						+ "left join dbTipoDocumentos on ( doc_codig =CASE WHEN trim(ifnull(cli_fndoc,''))='' THEN cli_tpdoc ELSE cli_ftdoc END) "
 						+ "  "+this.getFiltro() +"\n"
-						+ " ORDER BY "+ this.getOrdenarCampo() +" "+  this.getOrdenarMetodo();				
+								+ " ORDER BY "+ this.getOrdenarCampo() +" "+  this.getOrdenarMetodo();	
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -75,18 +75,21 @@ public class HelpCampoCli extends HelpCampo {
 		Map<String,String> colum = new HashMap<String, String>();
 		
 		// campo a mostrar en cada columna 
-		String col=	"{name:'cli_codig', index:'cli_codig', width:30, hidden:false,  formatter:'FormatCliente'},\n"
+		String col=	"{name:'cli_codig', index:'cli_codig', width:30, hidden:false,  formatter:'FormatClient'},\n"
 				+	"{name:'cli_nombr', index:'cli_nombr', width:100, hidden:false},\n"
 				+	"{name:'cli_telef', index:'cli_telef', width:60,hidden:false},\n"
 				+	"{name:'cli_celul', index:'cli_celul', width:60,hidden:false},\n"
 				+	"{name:'cli_direc', index:'cli_direc', width:100,hidden:false},\n"
+				+	"{name:'cli_cliva', index:'cli_cliva', width:0, hidden:true},\n"
 				+	"{name:'iva_nombr', index:'iva_nombr', width:60,hidden:false},\n"
+				+	"{name:'cli_tpdoc', index:'cli_tpdoc', width:0,hidden:true},\n"
 				+	"{name:'cli_nrdoc', index:'cli_nrdoc', width:80,hidden:false},\n"
+				+	"{name:'cli_condi', index:'cli_condi', width:0,hidden:true},\n"
 				+	"{name:'cli_plazo', index:'cli_plazo', width:20,hidden:false, align:'right'}";
 		colum.put("colum",col);
 		
 		// Campo con nombres de cada columna
-		String name="'Cod.','Nombre','Telefono','Celular','Direcion','IVA','Documento','Plazo'";
+		String name="'Cod.','Nombre','Telefono','Celular','Direcion','','IVA', '', 'Documento', '', 'Plazo'";
 		colum.put("names",name);
 		
 		// campo a mostrar en cada columna 

@@ -55,21 +55,29 @@
   					<legend>Datos:</legend>
 					<div class="fila">
 						<input id="modo" class="form-control campo"type="hidden" >					
-						<span class="form-control with-20-00">Nombre</span>
+						<span class="form-control with-10-00">Nombre</span>
 						<input id="art_codig" class="form-control with-10-00 campo" type="number" maxlength="4">
 						<input id="art_nombr" class="form-control with-70-00 campo" type="text" maxlength="45">
 					</div>
 					<div class="fila">				
-						<span class="form-control with-20-00">Marca</span>
-						<select id="art_marca" class="form-control with-80-00 campo">
+						<span class="form-control with-10-00">Marca</span>
+						<select id="art_marca" class="form-control with-20-00 campo">
 							<%=fun.GetHTMLOtion("mar_codig", "mar_nombr", "dbMarcas","") %>
 						</select>
+						<span class="form-control with-10-00">C. Barra</span>
+						<input id="art_codbr" class="form-control with-20-00 campo" type="text" maxlength="13">
+						<span class="form-control with-10-00">Stk. min</span>
+						<input id="art_stmin" class="form-control with-20-00 campo" type="text" maxlength="7">
 					</div>
 					<div class="fila">
-						<span class="form-control with-20-00">Neto</span>							
-						<input id="art_pneto" class="form-control with-20-00 campo precio" type="text">	
-						<span class="form-control with-20-00" style="padding-left: 10px;">Final</span>
-						<input id="art_final" class="form-control with-20-00 campo precio" type="text">
+						<span class="form-control with-10-00">Costo</span>							
+						<input id="art_costo" class="form-control with-20-00 campo precio" type="text">	
+						<span class="form-control with-10-00">$ Menor</span>							
+						<input id="art_pmeno" class="form-control with-20-00 campo precio" type="text">	
+						<span class="form-control with-10-00" >$ Mayor</span>
+						<input id="art_pmayo" class="form-control with-20-00 campo precio" type="text">
+					</div>
+					<div class="fila">
 						<span class="form-control with-10-00" style="padding-left: 10px;">Activo</span>
 						<input id="art_activ" class="form-control with-10-00 campo" style="margin: 5.5px 0px;" type="checkbox">
 					</div>
@@ -114,9 +122,13 @@
 	        	case "CONS":
 	        		modoTitulo="Consultar";	  
 	        		$("#btn_confirmar",formulario).hide();
+	        		$("input.campo",formulario).prop("readonly",true);
+	        		$("select.campo",formulario).prop("disabled",true);
 		        break;
 	        	case "BAJA":
 	        		modoTitulo="Eliminar";	
+	        		$("input.campo",formulario).prop("readonly",true);
+	        		$("select.campo",formulario).prop("disabled",true);
 		        break;
 	        	case "MODI":
 	        		modoTitulo="Modificar";	        
@@ -130,6 +142,10 @@
         	$(".modal",formulario).draggable();
     		$("#btn_confirmar",formulario).html(modoTitulo);
         	formulario.show();   
+        	
+        	$("#art_codbr",formulario).unbind("change").change(function(){ 
+        		$(this).val(fillZero($(this).val().toString().trim(), 13));
+        	});
    	
         	
         	$("#btn_confirmar",formulario).unbind("click").click(function(){
@@ -164,6 +180,8 @@
     		var formulario = $("#<%=idForm%>");    		
     		var res=true;
     		
+    		$("#art_codbr",formulario).val(fillZero($("#art_codbr",formulario).val().toString().trim(), 13));
+    		
     		if(res && $("#art_nombr",formulario).val()==""){
     			mensaje="El nombre no puede quedar vacio.";
     			res=false;
@@ -174,15 +192,20 @@
     			res=false;
     			$("#art_marca").abrirpopover(mensaje);
     		}
-    		if(res && $("#art_pneto",formulario).val()=="0.00"){
-    			mensaje="El precio neto no puede ser cero.";
+    		if(res && $("#art_costo",formulario).val()=="0.00"){
+    			mensaje="El costo neto no puede ser cero.";
     			res=false;
     			$("#art_pneto").abrirpopover(mensaje);
     		}
-    		if(res && $("#art_final",formulario).val()=="0.00"){
-    			mensaje="El precio final no puede quedar vacio.";
+    		if(res && $("#art_pmayo",formulario).val()=="0.00"){
+    			mensaje="El precio al mayor neto no puede ser cero.";
     			res=false;
-    			$("#art_final").abrirpopover(mensaje);
+    			$("#art_pmayo").abrirpopover(mensaje);
+    		}
+    		if(res && $("#art_pmeno",formulario).val()=="0.00"){
+    			mensaje="El precio al menor no puede quedar vacio.";
+    			res=false;
+    			$("#art_pmeno").abrirpopover(mensaje);
     		}
     		return res;   		
     	}

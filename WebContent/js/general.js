@@ -1,26 +1,26 @@
 $(document).bind('keydown',function(e){
-		
-		switch (e.which) {
-			case 27: //[ESC]
-				teclaEsc();
+	
+	switch (e.which) {
+		case 27: //[ESC]
+			teclaEsc();
 			break;
-		}
-	    
-	});
+	}
+	
+});
 
 function cargando(){
 	abrirAlerta("","","Cargando...","");
 }
-function abrirAlerta(tipo,msg,titulo="",cfocus=""){//ABRE MODAL ALERTA DE TIPOS (ERROR-NOTIFICACIÓN)
-
+function abrirAlerta(tipo,msg="",titulo="",cfocus=""){//ABRE MODAL ALERTA DE TIPOS (ERROR-NOTIFICACIÓN)
+	
 	if(titulo==""){	
 		switch (tipo) {
 			case "ERR":
 				titulo="Error";
-			break;
+				break;
 			case "NOT":
 				titulo="Atención";
-			break;
+				break;
 		}
 	}
 	
@@ -29,34 +29,34 @@ function abrirAlerta(tipo,msg,titulo="",cfocus=""){//ABRE MODAL ALERTA DE TIPOS 
 	}
 	
 	$("#bloqueoAlerta").html(
-		'<div class="modal modal-alerta" data-tmodal="alerta"> '+
-		' 	<div class="modal-head"> '+
-		' 		<h5 class="modal-title">'+titulo+'</h5> '+
-		' 		<button type="button" class="close" onclick="cerrarAlerta('+cfocus+');"> '+
-		' 			<span aria-hidden="true" >x</span> '+
-		' 		</button> '+
-		' 	</div> '+msg+
-		' 	<div class="modal-foot"> '+
-		' 		<button id="btnCerrarAlerta" type="button" class="btn btn-gris" onclick="cerrarAlerta('+cfocus+');">Cerrar</button> '+
-		' 	</div> '+
-		'</div>'
+	                         '<div class="modal modal-alerta" data-tmodal="alerta"> '+
+	                         ' 	<div class="modal-head"> '+
+	                         ' 		<h5 class="modal-title">'+titulo+'</h5> '+
+	                         ' 		<button type="button" class="close" onclick="cerrarAlerta('+cfocus+');"> '+
+	                         ' 			<span aria-hidden="true" >x</span> '+
+	                         ' 		</button> '+
+	                         ' 	</div> '+msg+
+	                         ' 	<div class="modal-foot"> '+
+	                         ' 		<button id="btnCerrarAlerta" type="button" class="btn btn-gris" onclick="cerrarAlerta('+cfocus+');">Cerrar</button> '+
+	                         ' 	</div> '+
+	                         '</div>'
 	);
-
-    $(".modal").draggable();
+	
+	$(".modal").draggable();
 	$("#bloqueoAlerta").show();
-
+	
 }
 
 function cerrarAlerta(cfocus=""){//CIERRA MODAL ALERTA EJECUTANDO FOCUS
-
+	
 	$("#bloqueoAlerta [data-tmodal='alerta']").last().remove();
-
+	
 	if(cfocus!=""){
 		$(cfocus).focus();
 	}
-
+	
 	$("#bloqueoAlerta").hide();
-
+	
 }
 
 function abrirPregunta(preg,funcionOk,funcionNo=""){//ABRE MODAL DE TIPO PREGUNTA (FUNCION CONFIRMACION,CANCELACION)
@@ -72,55 +72,56 @@ function abrirPregunta(preg,funcionOk,funcionNo=""){//ABRE MODAL DE TIPO PREGUNT
 	}
 	
 	$("#bloqueoAlerta").html(
-		'<div class="modal modal-pregunta" data-tmodal="pregunta"> '+
-		'	<div class="modal-head"> '+
-		'		<h5 class="modal-title">Seguro que...</h5> '+
-		'	</div> '+
-		'	<div class="modal-body"> '+
-		'		¿'+preg+'? '+
-		'	</div> '+
-		'	<div class="modal-foot"> '+
-		'		<button type="button" class="btn btn-azul" onclick="okPregunta('+funcionOk+');">Confirmar</button> '+
-		'		<button id="btnCerrarPregunta" type="button" class="btn btn-gris" onclick="cerrarPregunta('+funcionNo+');">Cancelar</button> '+
-		'	</div> '+
-		'</div>'
+	                         '<div class="modal modal-pregunta" data-tmodal="pregunta"> '+
+	                         '	<div class="modal-head"> '+
+	                         '		<h5 class="modal-title">Seguro que...</h5> '+
+	                         '	</div> '+
+	                         '	<div class="modal-body"> '+
+	                         '		¿'+preg+'? '+
+	                         '	</div> '+
+	                         '	<div class="modal-foot"> '+
+	                         '		<button type="button" class="btn btn-azul" onclick="okPregunta('+funcionOk+');">Confirmar</button> '+
+	                         '		<button id="btnCerrarPregunta" type="button" class="btn btn-gris" onclick="cerrarPregunta('+funcionNo+');">Cancelar</button> '+
+	                         '	</div> '+
+	                         '</div>'
 	);
-
-    $(".modal").draggable();
+	
+	$(".modal").draggable();
 	$("#bloqueoAlerta").show();
-
+	
 }
 
 function cerrarPregunta(funcion=""){//CIERRA Y EJECUTA FUNCION DE CANCELACIÓN EN MODAL TIPO PREGUNTA
-
+	
 	$("#bloqueoAlerta [data-tmodal='pregunta']").last().remove();
 	$("#bloqueoAlerta").hide();
-
+	
 	if(funcion!=""){
 		funcion();
 	}
-
+	
 }
 
 function cerrarFormu(formu='',funcion=''){//CIERRA Y EJECUTA FUNCION DE CANCELACIÓN EN MODAL TIPO PREGUNTA
-
+	
 	$("#"+formu).last().remove();
+	$(".popover").popover("hide");
 	$("table.ui-jqgrid-btable.ui-common-table",$(".formulario").last()).trigger( 'reloadGrid' );
 	if(funcion!=""){
 		funcion();
 	}
-
+	
 }
 
 function okPregunta(funcion=""){//CIERRA Y EJECUTA FUNCION DE CONFIRMACIÓN EN MODAL TIPO PREGUNTA
-
+	
 	$("#bloqueoAlerta [data-tmodal='pregunta']").last().remove();
 	$("#bloqueoAlerta").hide();
-
+	
 	if(funcion!=""){
 		funcion();
 	}
-
+	
 }
 
 function teclaEsc(){//CIERRA EN ORDEN: MODAL (ALERTA-PREGUNTA-LOADING); FORMULARIOS
@@ -147,9 +148,9 @@ function teclaEsc(){//CIERRA EN ORDEN: MODAL (ALERTA-PREGUNTA-LOADING); FORMULAR
 	return ok;
 }
 function fillZero(str, max) {
-	  str = str.toString();
-	  return str.length < max ? fillZero("0" + str, max) : str;
-	}
+	str = str.toString();
+	return (str.length < max ? fillZero("0" + str, max) : str);
+}
 
 
 function reSizeGrid(idGrid,width,height){
@@ -157,40 +158,40 @@ function reSizeGrid(idGrid,width,height){
 }
 
 $.extend($.fn.fmatter , {
-    FormatCliente : function(cellvalue, options, rowdata) {
-    	return fillZero(cellvalue,3);
-    }	
+	FormatClient : function(cellvalue, options, rowdata) {
+		return fillZero(cellvalue,4);
+	}	
 });
 
-$.extend($.fn.fmatter.FormatCliente , {
-    unformat : function(cellvalue, options) {
-    	return parseInt(cellvalue);
-    }
+$.extend($.fn.fmatter.FormatClient , {
+	unformat : function(cellvalue, options) {
+		return parseInt(cellvalue);
+	}
 });
 
 $.extend($.fn.fmatter , {
-    FormatActivo : function(cellvalue, options, rowdata) {
-    	if (cellvalue=="1"){
-    		return "<img src=\"img/iconos/glyphicons-153-check.png\" style=\"height: auto;width: 22px;\">";
-    	}else{
-    		return "<img src=\"img/iconos/glyphicons-198-remove-circle.png\" style=\"height: auto;width: 18px;\">";
-    	}
-    }	
+	FormatActivo : function(cellvalue, options, rowdata) {
+		if (cellvalue=="1"){
+			return "<img src=\"img/iconos/glyphicons-153-check.png\" style=\"height: auto;width: 22px;\">";
+		}else{
+			return "<img src=\"img/iconos/glyphicons-198-remove-circle.png\" style=\"height: auto;width: 18px;\">";
+		}
+	}	
 });
 
 $.extend($.fn.fmatter.FormatActivo , {
-    unformat : function(cellvalue, options) {
-    	if (cellvalue=="<img src=\"img/iconos/glyphicons-153-check.png\" style=\"height: auto;width: 22px;\">"){
-    		return "1";
-    	}else{
-    		return "0";
-    	}
-    }
+	unformat : function(cellvalue, options) {
+		if (cellvalue=="<img src=\"img/iconos/glyphicons-153-check.png\" style=\"height: auto;width: 22px;\">"){
+			return "1";
+		}else{
+			return "0";
+		}
+	}
 });
 
-function funciones(nombre,arg1=[]){//devuelve resultados de las funciones declaradas en Funciones.java
+function funciones(nombre,arg1=[],funcionSuccess=''){//devuelve resultados de las funciones declaradas en Funciones.java
 	//Declarar los parametros de la funcion como:
-	// var arg =['["valor"','"tipo"','"valor"','"tipo"...]']; en el orden que se los declara en las funciones
+	// var arg =['valor','tipo','valor','tipo']; en el orden que se los declara en las funciones
 	//Con alguno de los siguientes tipos : 
 	// int, String, boolean, HttpServletRequest, double, float, long
 	//Despues llamar a la funcion:
@@ -203,10 +204,13 @@ function funciones(nombre,arg1=[]){//devuelve resultados de las funciones declar
 		data:{js:js},
 		success: function(data){
 			if (isBoolean(data.trim())){
-			 x = stringToBoolean(data.trim());
-			 }else{
-				 x = data.trim();
-			 }
+				x = stringToBoolean(data.trim());
+			}else{
+				x = data.trim();
+			}
+			if(funcionSuccess!=''){
+				funcionSuccess();
+			}
 		},	
 		async:false
 	});
@@ -214,84 +218,101 @@ function funciones(nombre,arg1=[]){//devuelve resultados de las funciones declar
 	
 }
 
+function valyget(cod,id,funcionSuccess=''){
+	return funciones("ValyGet",[cod,'String',id.toString(),'String'],funcionSuccess);
+}
+
+function NuevoUsuario(usu,con){	
+	return funciones("NuevoUsuario",[usu,'String',con,'String']);
+}
+
 $.fn.extend(
-	$.fn.validar = function(validaciones={}){
-		var ret=true;
-		
-		 $(this).each(function(){
-			var mensaje="";
-			if( ($(this).filter(":enabled").prop("tagName")=="INPUT" && $(this).prop("type")!="hidden" ) || $(this).prop("tagName")=="SELECT"){
-				if(validaciones.hasOwnProperty("noVacio") && $(this).val()==""){
-					ret=true; //no puede quedar vacio
-					mensaje="Este campo no puede quedar vacio.";
-				}
-				if(ret && validaciones.hasOwnProperty("largoMinimo") && $(this).val().length<=validaciones.largoMayor){        			
-					ret=true; //largo minimo
-					mensaje="El valor de este campo tiene que ser mayor a "+validaciones.largoMayor+" caracteres.";
-				}
-				if(ret && validaciones.hasOwnProperty("largoMaximo") && $(this).val().length>validaciones.largoMenor){      			
-					ret=true;//largo maximo
-					mensaje="El valor de este campo tiene que ser menor o igual a "+validaciones.largoMenor+" caracteres.";
-				}
-				if(ret && validaciones.hasOwnProperty("esNumero") && $.isNumeric($(this).val())){        			
-					ret=true;//numerica
-					mensaje="En este campo solo se pueden ingresar numeros.";
-				}
-				if(ret && validaciones.hasOwnProperty("noCero") && parseFloat($(this).val())!=0){        			
-					ret=true;//numerica
-					mensaje="En este campo no puede ser cero.";
-				}
-				
-				if(ret){
-					$(this).abrirpopover(mensaje);
-					return false;
-				}
-			}
-			
-		});
-		 
-		return (ret?this:false);
-    }
+            $.fn.validar = function(validaciones={}){
+            	var ret=true;
+            	
+            	$(this).each(function(){
+            		var mensaje="";
+            		if( ($(this).filter(":enabled").prop("tagName")=="INPUT" && $(this).prop("type")!="hidden" ) || $(this).prop("tagName")=="SELECT"){
+            			if(validaciones.hasOwnProperty("noVacio") && $(this).val()==""){
+            				ret=true; //no puede quedar vacio
+            				mensaje="Este campo no puede quedar vacio.";
+            			}
+            			if(ret && validaciones.hasOwnProperty("largoMinimo") && $(this).val().length<=validaciones.largoMayor){        			
+            				ret=true; //largo minimo
+            				mensaje="El valor de este campo tiene que ser mayor a "+validaciones.largoMayor+" caracteres.";
+            			}
+            			if(ret && validaciones.hasOwnProperty("largoMaximo") && $(this).val().length>validaciones.largoMenor){      			
+            				ret=true;//largo maximo
+            				mensaje="El valor de este campo tiene que ser menor o igual a "+validaciones.largoMenor+" caracteres.";
+            			}
+            			if(ret && validaciones.hasOwnProperty("esNumero") && $.isNumeric($(this).val())){        			
+            				ret=true;//numerica
+            				mensaje="En este campo solo se pueden ingresar numeros.";
+            			}
+            			if(ret && validaciones.hasOwnProperty("noCero") && parseFloat($(this).val())!=0){        			
+            				ret=true;//numerica
+            				mensaje="En este campo no puede ser cero.";
+            			}
+            			
+            			if(ret){
+            				$(this).abrirpopover(mensaje);
+            				return false;
+            			}
+            		}
+            		
+            	});
+            	
+            	return (ret?this:false);
+            }
 );
 
 $.fn.extend(	
-	$.fn.validarData = function(){
-		var ret=true;		
-		$(this).each(function(){
-			ret=$(this).validar($(this).data); //valida pero trae las validaciones desde el data del obj
-			return ret;//si es true sigue con el otro sino corta el ciclo
-		});		
-		return (ret?this:false); //si no se cumplieron todas las validaciones devuelve falso sino
-    }
+            $.fn.validarData = function(){
+            	var ret=true;		
+            	$(this).each(function(){
+            		ret=$(this).validar($(this).data); //valida pero trae las validaciones desde el data del obj
+            		return ret;//si es true sigue con el otro sino corta el ciclo
+            	});		
+            	return (ret?this:false); //si no se cumplieron todas las validaciones devuelve falso sino
+            }
 );
 
 $.fn.extend(
-	$.fn.abrirpopover = function(mensaje){	
-		if($(this).size()>0){
-			$("input,select").popover("hide");//antes de borrar alguno lo borro
-			$(this).popover({html:true, trigger:"manual"});
-			var popover = $(this).data('bs.popover');
-			popover.config.content = mensaje;
-			$(this).popover('show');
-			$(this).focus(function(){
-				$(this).popover("hide");
-			});
-		}
-		return this;
-    }
+            $.fn.abrirpopover = function(mensaje){	
+            	if($(this).size()>0){
+            		$(".popover").popover("hide");//antes de borrar alguno lo borro
+            		$(this).popover({html:true, trigger:"manual"});
+            		var popover = $(this).data('bs.popover');
+            		popover.config.content = mensaje;
+            		$(this).popover('show');
+            		$(this).focus(function(){
+            			$(this).popover("hide");
+            		});
+            	}
+            	return this;
+            }
 );
 
 
 
 $.fn.extend(
-  	$.fn.size = function(){				
-		return ($(this).length);
-    }
+            $.fn.size = function(){				
+            	return ($(this).length);
+            }
 );
 
 $.fn.extend(
-          	$.fn.serializeI = function(){	
-          		var conjunto=$(this);          	
+            $.fn.serializeI = function(){	
+            	var conjunto=$(this); 
+            	result = new Object();
+            	conjunto.each(function(){
+            		if(this.type=="checkbox"){
+            			result[$(this).attr('id')]=(this.checked?1:0);            		
+            		}else{
+            			result[$(this).attr('id')]=$(this).val();            			
+            		}            		
+            	});
+            	/*
           		var checkboxes = conjunto.filter('input[type="checkbox"]');          		
     			$.each( checkboxes, function( key, value ) {
     			    if (value.checked === false) {
@@ -308,42 +329,42 @@ $.fn.extend(
     				param += $(this).attr("id")+"="+$(this).priceToFloat();
     			});
     			checkboxes.attr("type","checkbox");
-    			disabled.prop("disabled",true);
-        		return (param);
+    			disabled.prop("disabled",true);*/
+            	return ((result));
             }
-        );
+);
 
 function stringToBoolean(string){
-    switch(string.toLowerCase().trim()){
-        case "true": case "yes": case "1": return true;
-        case "false": case "no": case "0": case null: return false;
-        default: return Boolean(string);
-    }
+	switch(string.toLowerCase().trim()){
+		case "true": case "yes": case "1": return true;
+		case "false": case "no": case "0": case null: return false;
+		default: return Boolean(string);
+	}
 }
 function isBoolean(string){
-	 switch(string.toLowerCase().trim()){
-     case "true":  return true;
-     case "false":  return true;
-     default: return false;
-	 }
- }
+	switch(string.toLowerCase().trim()){
+		case "true":  return true;
+		case "false":  return true;
+		default: return false;
+	}
+}
 
 $( document ).ajaxComplete(function( event, xhr, settings){	
-    switch( xhr.getAllResponseHeaders().indexOf("index") )
-    {
-         case 95: //here you do whatever you need to do
-                   //when does a redirection
-        	 location.reload()
-             break;
-         case -1: //here you handle the calls to dead pages
-              //alert("Page Not Found");
-              break;
-    }
- });
+	switch( xhr.getAllResponseHeaders().indexOf("index") )
+	{
+		case 95: //here you do whatever you need to do
+			//when does a redirection
+			location.reload()
+			break;
+		case -1: //here you handle the calls to dead pages
+			//alert("Page Not Found");
+			break;
+	}
+});
 
 $.ajaxSetup({
-    dataType: "html"
-	});
+	dataType: "html"
+});
 
 function HelpCampo(cod,inpuId="",funcionId="",filtExt="",BusqVal="",BusqCam="",pop=false){
 	var FuncionValidacion;
@@ -362,21 +383,21 @@ function HelpCampo(cod,inpuId="",funcionId="",filtExt="",BusqVal="",BusqCam="",p
 	if (contenedor==""){
 		contenedor="bloqueoAlerta";
 	}
-
+	
 	$.ajax({
-	   type:'GET',
-	   url: pag ,
-	   data:{tipo: cod, filtExt: filtExt, BusqVal: BusqVal, BusqCam: BusqCam},
-	   dataType: "text",
-	   success:function(data){	   
-		   var res=data;		   
-		   $("#bloqueoAlerta").html(res); /*alert("se envio");*/
-		   //$("#bloqueoAlerta").css("display","block");
-		   $("#frm_HelpCampo,#bloqueoAlerta").show()
-		   HC_ValCampo=FuncionValidacion;
-	   }
+		type:'GET',
+		url: pag ,
+		data:{tipo: cod, filtExt: filtExt, BusqVal: BusqVal, BusqCam: BusqCam},
+		dataType: "text",
+		success:function(data){	   
+			var res=data;		   
+			$("#bloqueoAlerta").html(res); /*alert("se envio");*/
+			//$("#bloqueoAlerta").css("display","block");
+			$("#frm_HelpCampo,#bloqueoAlerta").show()
+			HC_ValCampo=FuncionValidacion;
+		}
 	});
-
+	
 	
 }
 
@@ -389,4 +410,61 @@ function bloquear(flag){
 		document.getElementById('bloqueoAlerta').innerHTML="";
 		teclaEsc();
 	}
+}
+
+$.maxZIndex = $.fn.maxZIndex = function(opt) {
+    /// <summary>
+    /// Returns the max zOrder in the document (no parameter)
+    /// Sets max zOrder by passing a non-zero number
+    /// which gets added to the highest zOrder.
+    /// </summary>    
+    /// <param name="opt" type="object">
+    /// inc: increment value, 
+    /// group: selector for zIndex elements to find max for
+    /// </param>
+    /// <returns type="jQuery" />
+    var def = { inc: 10, group: "*" };
+    $.extend(def, opt);
+    var zmax = 0;
+    $(def.group).each(function() {
+        var cur = parseInt($(this).css('z-index'));
+        zmax = cur > zmax ? cur : zmax;
+    });
+    if (!this.jquery)
+        return zmax;
+
+    return this.each(function() {
+        zmax += def.inc;
+        $(this).css("z-index", zmax);
+    });
+}
+
+function round(num, decimales = 2) {
+    var signo = (num >= 0 ? 1 : -1);
+    num = num * signo;
+    if (decimales === 0) //con 0 decimales
+        return signo * Math.round(num);
+    // round(x * 10 ^ decimales)
+    num = num.toString().split('e');
+    num = Math.round(+(num[0] + 'e' + (num[1] ? (+num[1] + decimales) : decimales)));
+    // x * 10 ^ (-decimales)
+    num = num.toString().split('e');
+    
+    return signo * (num[0] + 'e' + (num[1] ? (+num[1] - decimales) : -decimales));
+}
+
+function number_format(amount, decimals) {
+    amount += ''; // por si pasan un numero en vez de un string
+    amount = parseFloat(amount.replace(/[^0-9\.]/g, '')); // elimino cualquier cosa que no sea numero o punto
+    decimals = decimals || 0; // por si la variable no fue fue pasada
+    // si no es un numero o es igual a cero retorno el mismo cero
+    if (isNaN(amount) || amount === 0) 
+        return parseFloat(0).toFixed(decimals);
+    // si es mayor o menor que cero retorno el valor formateado como numero
+    amount = '' + amount.toFixed(decimals);
+    var amount_parts = amount.split('.'),
+        regexp = /(\d+)(\d{3})/;
+    while (regexp.test(amount_parts[0]))
+        amount_parts[0] = amount_parts[0].replace(regexp, '$1' + ',' + '$2');
+    return amount_parts.join('.').replace(/[^0-9\.]/g, '');
 }

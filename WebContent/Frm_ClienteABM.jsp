@@ -87,8 +87,8 @@
 						<span class="form-control with-20-00">Mail</span>						
 						<input id="cli_email" class="form-control with-80-00 campo" type="text" maxlength="80">
 					</div><div class="fila">
-						<span class="form-control with-20-00">CBU</span>
-						<input id="cli_nrocbu" class="form-control with-30-00 campo" type="text" maxlength="22">
+						<!-- span class="form-control with-20-00">CBU</span>
+						<input id="cli_nrocbu" class="form-control with-30-00 campo" type="text" maxlength="22"-->
 						<span class="form-control with-17-00">Cond. de pagos</span>
 						<select id="cli_condi" class="form-control with-18-00 campo">
 							<%="<option value=\""+Funciones.Contado+"\">Contado</option><option value=\""+Funciones.CtaCorrienta+"\">Cta. Corriente</option>"%>	
@@ -96,16 +96,16 @@
 						<span class="form-control with-10-00">Plazo</span>
 						<input id="cli_plazo" class="form-control with-5-00 campo" type="text" maxlength="2">
 					</div>
-					<div class="fila">			
+					<!-- div class="fila">			
 						<span class="form-control with-30-00">Facturar a otra persona</span>	
 						<input id="cli_fac" class="form-control with-5-00 campo" type="checkbox" style="margin: 6.5px 0px;">
 						<span class="form-control with-50-00">Datos bancarios verificados 01/12/2017 (IJL)</span>
 						<button id="cli_veri" class="form-control with-15-00 campo" type="button" value="veri" >
 							verificar
 						</button>
-					</div>
+					</div-->
 				</fieldset>
-				<fieldset id="facturacion">
+				<!-- fieldset id="facturacion">
 	  				<legend>Datos de Facturación:</legend>
 					<div class="fila">
 						<span class="form-control with-20-00">Razon Social</span>
@@ -135,7 +135,7 @@
 						<span class="form-control with-20-00">Nro. Doc.</span>
 						<input id="cli_fndoc" class="form-control with-30-00 campo" type="text" maxlength="11">
 					</div>
-				</fieldset>
+				</fieldset-->
 			</div>
 		</div>
 		<div class="modal-footer">
@@ -172,9 +172,13 @@
 	        	case "CONS":
 	        		modoTitulo="Consultar";	  
 	        		$("#btn_confirmar",formulario).hide();
+	        		$("input.campo",formulario).prop("readonly",true);
+	        		$("select.campo",formulario).prop("disabled",true);
 		        break;
 	        	case "BAJA":
 	        		modoTitulo="Eliminar";	
+	        		$("input.campo",formulario).prop("readonly",true);
+	        		$("select.campo",formulario).prop("disabled",true);
 		        break;
 	        	case "MODI":
 	        		modoTitulo="Modificar";	        
@@ -204,12 +208,12 @@
         		if (validarCli()){
         			cargando();
 				    $.ajax({
-				    	dataType:'json',
-				    	data: $(".campo", formulario).serialize(),
+				    	data: $(".campo", formulario).serializeI(),
 				    	type:'POST',
 				    	url:"/<%=idForm%>", 
 				    	success:function(data){		
 				    		cerrarAlerta();//mensaje cargando
+				    		data=JSON.parse(data);
 					    	if(data.error !=0){
 						    	abrirAlerta("ERR", data.msg);//hubo  un error
 					    	}else{
@@ -290,7 +294,7 @@
     			$("#cli_plazo").abrirpopover(mensaje);
     		}
 
-    		if(res && $("cli_fnomb").val()==""){
+    		if(false && res && $("cli_fnomb").val()==""){
     			if(res && $("cli_ftele").val()==""){
     				mensaje="El telefono no puede quedar vacio.";
     				res=false;

@@ -142,16 +142,17 @@ public class Frm_GrillaClientes extends HttpServlet {
 			// the sql server url		          
 			String sql=
 					"select cli_codig, \n"
-					+ "	CASE WHEN trim(cli_fnomb)='' THEN cli_nombr ELSE cli_fnomb END as cli_nombr,\n"
-					+ "	CASE WHEN trim(cli_ftele)='' THEN cli_telef ELSE cli_ftele END as cli_telef, \n"
-					+ "	CASE WHEN trim(cli_fcelu)='' THEN cli_celul ELSE cli_fcelu END as cli_celul, \n"
-					+ "	CASE WHEN trim(cli_fdire)='' THEN cli_direc ELSE cli_fdire END as cli_direc, \n"
+					+ "	CASE WHEN trim(ifnull(cli_fnomb,''))='' THEN cli_nombr ELSE cli_fnomb END as cli_nombr,\n"
+					+ "	CASE WHEN trim(ifnull(cli_ftele,''))='' THEN cli_telef ELSE cli_ftele END as cli_telef, \n"
+					+ "	CASE WHEN trim(ifnull(cli_fcelu,''))='' THEN cli_celul ELSE cli_fcelu END as cli_celul, \n"
+					+ "	CASE WHEN trim(ifnull(cli_fdire,''))='' THEN cli_direc ELSE cli_fdire END as cli_direc, \n"
 					+ "	iva_nombr, \n"
-					+ "	concat(trim(doc_nombre),' ',convert( CASE WHEN trim(cli_fndoc)='' THEN cli_nrdoc ELSE cli_fndoc END,char))  as cli_nrdoc, \n"
+					+ "	concat(trim(doc_nombre),' ',convert( CASE WHEN trim(ifnull(cli_fndoc,''))='' THEN cli_nrdoc ELSE cli_fndoc END,char))  as cli_nrdoc, \n"
 					+ "	cli_plazo,cli_email \n"
 					+ "from  dbClientes \n"
-					+ "	left join dbCondIva on (iva_codig=CASE WHEN trim(cli_fciva)='' THEN cli_cliva ELSE cli_fciva END) \n"
-					+ "left join dbTipoDocumentos on ( doc_codig =CASE WHEN trim(cli_fndoc)='' THEN cli_tpdoc ELSE cli_ftdoc END) "
+					+ "	left join dbCondIva on (iva_codig=CASE WHEN trim(ifnull(cli_fciva,''))='' THEN cli_cliva ELSE cli_fciva END) \n"
+					+ "left join dbTipoDocumentos on ( doc_codig =CASE WHEN trim(ifnull(cli_fndoc,''))='' THEN cli_tpdoc ELSE cli_ftdoc END) "
+					+ filtro
 					+ " ORDER BY " + ordenarcampo+ " " +ordenarmetodo;
 			JSONObject jsonGrilla=fun.Grilla(sql,empieza,termina,pagina,rp);	 		   
 			prt.print(jsonGrilla.toString());

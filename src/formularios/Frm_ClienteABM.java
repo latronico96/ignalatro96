@@ -112,7 +112,7 @@ public class Frm_ClienteABM extends HttpServlet {
 			}
 			if (this.claveCampo.equals(pair.getKey())){
 				if (parametros.getOrDefault("modo", "ALTA").equals("ALTA")){
-					claveValor=String.valueOf(fun.getMaximo(this.tabla, this.claveCampo));
+					claveValor=String.valueOf(fun.getMaximo(this.tabla, this.claveCampo)+1);
 					campos+=pair.getKey() ;
 					valores+= fun.PrepararCampo( (String)pair.getKey(), tipos, claveValor );
 				}else{ 

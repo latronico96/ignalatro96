@@ -37,6 +37,7 @@ public class HelpCampoArt extends HelpCampo {
 		this.fun=func;
 		
 		this.campo = "art_codig";
+		this.setOrdenarCampo(campo);
 		this.ordenarMetodo = "asc";
 		this.pagina = "1";
 		this.cntRows = "10";			
@@ -46,11 +47,13 @@ public class HelpCampoArt extends HelpCampo {
 	public String getTabla (){
 		String consulta = "";
 		
-		 try {// the sql server url		          
-			 consulta="select  art_codig,mar_nombr,art_nombr,art_pneto,art_final,art_activ \n"
+		 try {// the sql server url		   
+			 consulta=	"select  art_codig,art_marca,mar_nombr,art_nombr,art_codbr,art_costo,art_pmeno,art_pmayo,art_activ , \n"
+						+ "		concat('<div class=\"',case when stk_canti<art_stmin then 'T-rojo' else 'T-verde' end,'\">',stk_canti,'</div>') as art_cstok  \n"
 						+ "	from dbArticulos \n"
-						+ "		left join dbMarcas on (art_marca=mar_codig) \n"
-						+ " "+this.getFiltro()+" \n"				
+						+ "		left join dbMarcas on (art_marca=mar_codig) \n"	
+						+ "		left join stockhoy on (stk_artic=art_codig) \n"	
+						+ " "+this.getFiltro()+" \n"			
 						+ " ORDER BY " + this.getOrdenarCampo()+ " " +this.getOrdenarMetodo();				
 
 		} catch (Exception e) {
@@ -66,16 +69,19 @@ public class HelpCampoArt extends HelpCampo {
 		Map<String,String> colum = new HashMap<String, String>();
 		
 		// campo a mostrar en cada columna 
-		String col=	"{name:'art_codig', index:'art_codig', width:20, hidden:false, formatter:'FormatCliente'},\n"
+		String col=	"{name:'art_codig', index:'art_codig', width:20, hidden:false, formatter:'FormatClient'},\n"			
+				+ 	"{name:'art_marca', index:'art_marca', width:0, hidden:true},\n"
 				+ 	"{name:'mar_nombr', index:'mar_nombr', width:70, hidden:false},\n"
 				+ 	"{name:'art_nombr', index:'art_nombr', width:70,hidden:false},\n"
-				+ 	"{name:'art_pneto', index:'art_pneto', width:60,hidden:false, align:'right'},\n"
-				+ 	"{name:'art_final', index:'art_final', width:60,hidden:false, align:'right'},\n"
+				+ 	"{name:'art_codbr', index:'art_codbr', width:40,hidden:false},\n"
+				+ 	"{name:'art_costo', index:'art_costo', width:60,hidden:false, align:'right'},\n"
+				+ 	"{name:'art_pmeno', index:'art_pmeno', width:60,hidden:false, align:'right'},\n"
+				+ 	"{name:'art_pmayo', index:'art_pmayo', width:60,hidden:false, align:'right'},\n"
 				+ 	"{name:'art_activ', index:'art_activ', width:15,hidden:false, formatter:'FormatActivo'}";
 		colum.put("colum",col);
 		
 		// Campo con nombres de cada columna
-		String name="'Cod.','Marca','Articúlo','Precio Neto','Precio Final','Act.'";
+		String name="'Cod.','Cod marca','Marca','Articúlo','Cod. Barras','Costo','P. Menor','P. Mayor','Act.'";
 		colum.put("names",name);
 		
 		// campo a mostrar en cada columna 

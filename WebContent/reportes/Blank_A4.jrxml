@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.5.1.final using JasperReports Library version 6.5.1  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Codigos de Barras" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7c14ec03-5c82-4e66-a07f-9f0c47b0a441">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="mangueras"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.report.description" value="pruba de codgio de barras"/>
+	<queryString>
+		<![CDATA[SELECT  CONVERT(@N := @N +1, CHAR(7)) AS integers1,
+CONVERT(@N := @N +1, CHAR(7)) AS integers2,
+CONVERT(@N := @N +1, CHAR(7)) AS integers3,
+CONVERT(@N := @N +1, CHAR(7)) AS integers4,
+CONVERT(@N := @N +1, CHAR(7)) AS integers5,
+CONVERT(@N := @N +1, CHAR(7)) AS integers6
+FROM mysql.help_relation , (SELECT @N:=1000000) dum LIMIT 120;]]>
+	</queryString>
+	<field name="integers1" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="integers1"/>
+	</field>
+	<field name="integers2" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="integers2"/>
+	</field>
+	<field name="integers3" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="integers3"/>
+	</field>
+	<field name="integers4" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="integers4"/>
+	</field>
+	<field name="integers5" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="integers5"/>
+	</field>
+	<field name="integers6" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="integers6"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="39" splitType="Stretch">
+			<frame>
+				<reportElement x="0" y="0" width="90" height="39" uuid="4314b051-955e-4d8d-872f-4782500b3aca"/>
+				<box topPadding="4">
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<componentElement>
+					<reportElement key="" mode="Transparent" x="0" y="0" width="90" height="30" uuid="05d2c6ff-ce51-4678-aa2a-072c5434a5a6"/>
+					<jr:EAN8 xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+						<jr:codeExpression><![CDATA[$F{integers1}]]></jr:codeExpression>
+					</jr:EAN8>
+				</componentElement>
+			</frame>
+			<frame>
+				<reportElement x="90" y="0" width="90" height="39" uuid="9d294628-100b-4bd3-a266-7ed714238c01"/>
+				<box topPadding="4">
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<componentElement>
+					<reportElement key="" mode="Transparent" x="0" y="0" width="90" height="30" uuid="72ff830d-ca24-40bd-9c97-b914fa0987f8"/>
+					<jr:EAN8 xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+						<jr:codeExpression><![CDATA[$F{integers2}]]></jr:codeExpression>
+					</jr:EAN8>
+				</componentElement>
+			</frame>
+			<frame>
+				<reportElement x="360" y="0" width="90" height="39" uuid="3d13fb00-e399-4e02-9012-1abe05c786a7"/>
+				<box topPadding="4">
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<componentElement>
+					<reportElement key="" mode="Transparent" x="0" y="0" width="90" height="30" uuid="a8e03f07-1fd4-44fd-b08f-c9b28b1be822"/>
+					<jr:EAN8 xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+						<jr:codeExpression><![CDATA[$F{integers3}]]></jr:codeExpression>
+					</jr:EAN8>
+				</componentElement>
+			</frame>
+			<frame>
+				<reportElement x="270" y="0" width="90" height="39" uuid="ddde9aed-397e-49a3-8f24-71f2658c89d8"/>
+				<box topPadding="4" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<componentElement>
+					<reportElement key="" mode="Transparent" x="0" y="0" width="90" height="30" uuid="36b110b8-65d7-4b22-a11f-484b0102c26b"/>
+					<jr:EAN8 xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+						<jr:codeExpression><![CDATA[$F{integers4}]]></jr:codeExpression>
+					</jr:EAN8>
+				</componentElement>
+			</frame>
+			<frame>
+				<reportElement x="180" y="0" width="90" height="39" uuid="28a23f17-553c-4fa0-b876-27f48e603930"/>
+				<box topPadding="4" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<componentElement>
+					<reportElement key="" mode="Transparent" x="0" y="0" width="90" height="30" uuid="dbfd1010-9560-4810-85c4-04a380923f74"/>
+					<jr:EAN8 xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+						<jr:codeExpression><![CDATA[$F{integers5}]]></jr:codeExpression>
+					</jr:EAN8>
+				</componentElement>
+			</frame>
+			<frame>
+				<reportElement x="450" y="0" width="90" height="39" uuid="20369653-0bb3-401e-b017-f295cc99ce9a"/>
+				<box topPadding="4" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<componentElement>
+					<reportElement key="" mode="Transparent" x="0" y="0" width="90" height="30" uuid="51fd20ce-4f7b-4599-9660-b776ffe6c1d9"/>
+					<jr:EAN8 xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+						<jr:codeExpression><![CDATA[$F{integers6}]]></jr:codeExpression>
+					</jr:EAN8>
+				</componentElement>
+			</frame>
+		</band>
+	</detail>
+</jasperReport>
