@@ -136,7 +136,7 @@ span.form-control {
 }
 
 .card-header {
-	background-color: #4f4f4f;
+    background-color: #2a6992;
 }
 
 .card-header h5 a {
@@ -180,4 +180,10 @@ legend {
 
 input[type="radio"].form-control, input[type="checkbox"].form-control {
     margin: auto 0px;
+}
+.navbar-expand .navbar-nav .nav-link {
+
+    padding-right: 1.5rem;
+    padding-left: 1.5rem;
+
 }

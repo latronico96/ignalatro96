@@ -422,7 +422,13 @@ public class Funciones {
 					(tipos.getOrDefault(campo.toLowerCase(),"varchar").toLowerCase().startsWith("varchar") || 
 						tipos.getOrDefault(campo.toLowerCase(),"varchar").toLowerCase().startsWith("datetime") ||
 						tipos.getOrDefault(campo.toLowerCase(),"varchar").toLowerCase().startsWith("char"));
-			return (esTexto?comillas+valor+comillas:valor);
+			if(esTexto){
+				return (comillas+valor+comillas);
+				
+			}else{
+				return (valor.replaceAll(",", ""));
+				
+			}
 		}
 	} 
 	

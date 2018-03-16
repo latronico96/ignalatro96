@@ -95,7 +95,7 @@
 			<div class="collapse navbar-collapse" id="navbarNav">
 				<ul class="navbar-nav">
 					<li class="nav-item">
-						<h3 class="col-12 negro T-blanco rounded-bottom">Latron</h3>
+						<h3 class="col-12 negro T-blanco rounded-bottom" style="font-weight: bold;text-shadow: 2px 2px #324731;">Latronic</h3>
 					</li>
 				</ul>
 			</div>

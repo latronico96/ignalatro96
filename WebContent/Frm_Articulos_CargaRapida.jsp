@@ -143,6 +143,8 @@
 	        		$("#form",form).remove();
 	        		$(".ui-jqgrid-bdiv",form).prepend(stringFrom);     
 	        		
+	        		$(listaMarca).html(funciones("GetHTMLOtionList",["mar_codig","String","mar_nombr","String","dbmarcas","String"]));
+	        		
 	        		$('#mar_nombr',form).change(function(){
 	        	        var clave=$("#listaMarca option[value='" + $('#mar_nombr',form).val() + "']",form).attr('data-id');
 	        	        clave=(clave==undefined,"",clave);

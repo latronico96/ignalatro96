@@ -28,7 +28,7 @@
 				<div class="collapse navbar-collapse" id="navbarNav">
 					<ul class="navbar-nav">
 						<li class="nav-item">
-							<h3 class="col-12 negro T-blanco rounded-bottom">Latron</h3>
+							<h3 class="col-12 negro T-blanco rounded-bottom" style="font-weight: bold;text-shadow: 2px 2px #324731;">Latronic</h3>
 						</li>
 						<!--li class="nav-item dropdown">
 							<a class="nav-link dropdown-toggle" id="archivo" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -89,6 +89,26 @@
 
 							</div>
 						</li>
+						<li class="nav-item">
+							<a class="nav-link" onclick="$('#Prv').click()">
+								Proveedores
+							</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link"  onclick="$('#Cli').click()">
+								Clientes
+							</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link"  onclick="$('#Art').click()">
+								Artículos
+							</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link"  onclick="$('#Rem').click()">
+								Remitos
+							</a>
+						</li>
 						<li class="nav-item" id="salir">
 							<a class="nav-link" href="Frm_logeo">Salir</a>
 						</li>
@@ -99,8 +119,8 @@
 		<!-- fin  Barra de menus -->
 		<div class="row justify-content-between">
 			<!-- Barra Lateral -->
-			<div class="col-2 noPadding-right">
-				<div class="list-group" id="list-tab" role="tablist">
+			<div class="fila">
+				<div class="list-group d-none" id="list-tab" role="tablist">
 					<div id="accordion" role="tablist">
 						<div class="card">
 							<div class="card-header" role="tab" id="Prv" data-url="Frm_GrillaProveedores.jsp" data-form="Frm_GrillaProveedores">
@@ -131,10 +151,10 @@
 						</div>
 					</div>
 				</div>
-			</div>	
+			</div-->	
 			<!-- fin Barra Lateral -->	
 			<!-- cuerpo -->
-			<div class="col-10 noPadding-left">
+			<div class="fila">
 				<div class="tab-content rounded" id="Cuerpo">
 					<!-- table id="GrillaCuerpo"></table>
 					<div id="GrillaCuerpo_pie"></div>
@@ -150,7 +170,7 @@
 			<!-- fin cuerpo -->
 		</div>		
 		<!-- pie -->
-		<div class="row justify-content-between pie">
+		<div class="fila">
 			<nav class="navbar navbar-expand col navbar-light negro T-blanco rounded">
 				<div class="collapse navbar-collapse" id="navbarNav">
 					<ul class="navbar-nav">
