@@ -102,16 +102,48 @@ function cerrarPregunta(funcion=""){//CIERRA Y EJECUTA FUNCION DE CANCELACIÓN E
 	
 }
 
-function cerrarFormu(formu='',funcion=''){//CIERRA Y EJECUTA FUNCION DE CANCELACIÓN EN MODAL TIPO PREGUNTA
-	
+var formularios=[];
+var formulario={};
+function abrirFormulario(parametros={}){// parametros.url parametros.parametros
+	if(parametros!={}){
+    	cargando();
+    	formularios[formularios.length]=formulario;
+		$.ajax({
+			type:'GET',//todos los 
+			url: parametros.url,		
+			data: parametros.parametros,
+			success: function(data) {
+	    		cerrarAlerta();
+	    		if($(data).data("popup")){
+					$(document.body).append($(data));	
+					$(".modal").draggable();
+					$(data).show();  			    			
+	    		}else{
+					$("#Cuerpo").html($(data));
+	    		}   
+	    		//console.log(formulario);
+    		}, 
+    		error:function(data){        			
+	    		cerrarAlerta();
+    	    	console.log(data);
+    		}
+    	});				
+	}
+}
+
+function cerrarFormu(formu="",funcion=""){//CIERRA Y EJECUTA FUNCION DE CANCELACIÓN EN MODAL TIPO PREGUNTA
+	if(formu==""){
+		formu=$(".formulario").last().attr("id");		
+	}
+	formulario=(formularios.length-2<0?undefined:formularios[formularios.length-1]);
 	$("#"+formu).last().remove();
 	$(".popover").popover("hide");
 	$("table.ui-jqgrid-btable.ui-common-table",$(".formulario").last()).trigger( 'reloadGrid' );
 	if(funcion!=""){
 		funcion();
-	}
-	
+	}	
 }
+
 
 function okPregunta(funcion=""){//CIERRA Y EJECUTA FUNCION DE CONFIRMACIÓN EN MODAL TIPO PREGUNTA
 	
@@ -336,8 +368,8 @@ $.fn.extend(
 
 function stringToBoolean(string){
 	switch(string.toLowerCase().trim()){
-		case "true": case "yes": case "1": return true;
-		case "false": case "no": case "0": case null: return false;
+		case "true": case "yes": case "1": case "si": return true;
+		case "false": case "no": case "0": case "no": case null: return false;
 		default: return Boolean(string);
 	}
 }

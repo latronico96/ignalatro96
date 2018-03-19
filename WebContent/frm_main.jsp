@@ -186,49 +186,15 @@
 
 	<script>
 		$(document).ready(function(){
-			$(".dropdown .dropdown-item").click(function(){
-				
+			$(".dropdown .dropdown-item").click(function(){				
 				var item=$(this);	
 				if(item.data().hasOwnProperty("url")){
-			    	cargando();
-					$.ajax({
-						type:'GET',
-						url: item.data("url"),		
-						success: function(data) {
-				    		cerrarAlerta();
-				    		//if($(data).data("popup")=="true"){
-								$(document.body).prepend($(data));	
-								$(".modal").draggable();
-								$('#'+item.data("form")).show();  			    			
-				    		/*}else{
-								$("#Cuerpo").html($(data));
-				    		}  */    				
-		        		}, 
-		        		error:function(data){        			
-				    		cerrarAlerta();
-		        	    	console.log(data);
-		        		}
-		        	});				
+					abrirFormulario(item.data());			
 				}
 	        });	
 			
 			$(".card-header").click( function(){
-		    	cargando();
-				var boton=$(this);
-				$.ajax({
-					type:'GET',
-					url: boton.data('url'), 
-					success: function(data) {
-			    		cerrarAlerta();
-						$("#Cuerpo").html($(data));
-						$(boton.data('form')).show();   	       			
-	        		}, 
-	        		error:function(data){      			
-			    		cerrarAlerta();
-	        	    	console.log(data);
-				    }
-	        	});
-				
+				abrirFormulario($(this).data());				
 			});
 			$("#Rem").click();
 			

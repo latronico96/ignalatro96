@@ -156,11 +156,11 @@
 		</div>
 	</div>
 
-	<script type="text/javascript">       
-      	var idGrilla="<%=idGrilla%>";
+	<script type="text/javascript">     
        	var formulario = $.fn.extend($(<%="\"#"+idForm+"\""%>), {
        		modo:"<%=modo%>",      
-       		NidGrilla: "#" + idGrilla,
+       		idGrilla:"<%=idGrilla%>",
+       		NidGrilla: "#" + "<%=idGrilla%>",
 			modoGrilla:"ALTA",
        		GetProveedorRow: function (nroprv=""){       			
             	if(nroprv.toString().trim()==""){
@@ -320,7 +320,7 @@
     	        		{name:'red_preci', index:'red_preci', width:10, hidden: false, align:'right'},
     	        		{name:'red_total', index:'red_total', width:10, hidden: false, align:'right'}
     	        		],
-    		        	width: ($("#fld_<%=idGrilla%>").width()),
+    		        	width: ($("#fld_<%=idGrilla%>",formulario).width()),
     		        	height: 200,
     	        	rowNum:'100',
     	        	datastr: <%=Grilla%>,
@@ -360,9 +360,6 @@
     	        	caption:""
     	        });
     	        $(".ui-jqgrid-titlebar").hide();	 
-    	        $( document ).resize(function(){  
-    	      	  reSizeGrid(idGrilla,($("#Cuerpo").width()-10),($("#Cuerpo").height()-80));
-    	      	});
             },
             validarForm: function(){
             	if($("#rem_total",formulario).val()=="" ||  parseFloat($("#rem_total",formulario).val())<=0){

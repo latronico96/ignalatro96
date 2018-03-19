@@ -90,13 +90,47 @@
 		</div>
 	</div>
 
-	<script type="text/javascript">       
+	<script type="text/javascript">    
+	formulario = $.fn.extend($(<%="\"#"+idForm+"\""%>), {
+   		idGrilla:"<%=idGrilla%>",
+   		NidGrilla: "#" + "<%=idGrilla%>",
+		modo: "<%=modo%>",
+		validarArt: function (){
+    		var formulario = $("#<%=idForm%>");    		
+    		var res=true;
+    		
+    		$("#art_codbr",formulario).val(fillZero($("#art_codbr",formulario).val().toString().trim(), 13));
+    		
+    		if(res && $("#art_nombr",formulario).val()==""){
+    			mensaje="El nombre no puede quedar vacio.";
+    			res=false;
+    			$("#art_nombr").abrirpopover(mensaje);
+    		}
+    		if(res && $("#art_marca",formulario).val()==""){
+    			mensaje="La marca no puede quedar vacia.";
+    			res=false;
+    			$("#art_marca").abrirpopover(mensaje);
+    		}
+    		if(res && $("#art_costo",formulario).val()=="0.00"){
+    			mensaje="El costo neto no puede ser cero.";
+    			res=false;
+    			$("#art_pneto").abrirpopover(mensaje);
+    		}
+    		if(res && $("#art_pmayo",formulario).val()=="0.00"){
+    			mensaje="El precio al mayor neto no puede ser cero.";
+    			res=false;
+    			$("#art_pmayo").abrirpopover(mensaje);
+    		}
+    		if(res && $("#art_pmeno",formulario).val()=="0.00"){
+    			mensaje="El precio al menor no puede quedar vacio.";
+    			res=false;
+    			$("#art_pmeno").abrirpopover(mensaje);
+    		}
+    		return res;   		
+    	}
+   	});
         $(document).ready(function(){	 		
-       		var idGrilla="<%=idGrilla%>";
-        	var NidGrilla = "#" + idGrilla;
-        	var formulario = $("#<%=idForm%>");
-        	$("#modo",formulario).val("<%=modo%>");
-        	formulario.modo="<%=modo%>";
+        	$("#modo",formulario).val(formulario.modo);
         	<%=Articulo%>
         	Articulo.forEach(function(value,index){	
         		if (value=="true" || value=="false"){
@@ -149,7 +183,7 @@
    	
         	
         	$("#btn_confirmar",formulario).unbind("click").click(function(){
-        		if (validarArt()){
+        		if (formulario.validarArt()){
         			cargando();
 				    $.ajax({
 				    	dataType:'json',
@@ -176,39 +210,6 @@
         
 
     	
-    	function validarArt(){
-    		var formulario = $("#<%=idForm%>");    		
-    		var res=true;
-    		
-    		$("#art_codbr",formulario).val(fillZero($("#art_codbr",formulario).val().toString().trim(), 13));
-    		
-    		if(res && $("#art_nombr",formulario).val()==""){
-    			mensaje="El nombre no puede quedar vacio.";
-    			res=false;
-    			$("#art_nombr").abrirpopover(mensaje);
-    		}
-    		if(res && $("#art_marca",formulario).val()==""){
-    			mensaje="La marca no puede quedar vacia.";
-    			res=false;
-    			$("#art_marca").abrirpopover(mensaje);
-    		}
-    		if(res && $("#art_costo",formulario).val()=="0.00"){
-    			mensaje="El costo neto no puede ser cero.";
-    			res=false;
-    			$("#art_pneto").abrirpopover(mensaje);
-    		}
-    		if(res && $("#art_pmayo",formulario).val()=="0.00"){
-    			mensaje="El precio al mayor neto no puede ser cero.";
-    			res=false;
-    			$("#art_pmayo").abrirpopover(mensaje);
-    		}
-    		if(res && $("#art_pmeno",formulario).val()=="0.00"){
-    			mensaje="El precio al menor no puede quedar vacio.";
-    			res=false;
-    			$("#art_pmeno").abrirpopover(mensaje);
-    		}
-    		return res;   		
-    	}
 
 	</script>
 	

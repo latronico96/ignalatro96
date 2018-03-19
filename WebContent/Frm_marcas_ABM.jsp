@@ -61,7 +61,10 @@
 	</div>
 
 	<script type="text/javascript">
-		stringFrom="<div id=\"form\">\n"+
+	formulario = $.fn.extend($(<%="\"#"+idForm+"\""%>), {
+		idGrilla:"<%=idGrilla%>",
+   		NidGrilla: "#" + "<%=idGrilla%>",
+		stringFrom: "<div id=\"form\">\n"+
 						"<button id=\"btn_rev\" class=\"form-control \" style=\"width:20px; height: 18px; padding: 1px;\" type=\"button\" value=\"se apreto\">\n"+
 						"	<img src=\"/img/iconos/glyphicons-208-remove.png\" style=\"width: 16px;\" >\n"+
 						"</button>\n"+
@@ -71,31 +74,18 @@
 						"<button id=\"btn_act\" class=\"form-control\" style=\"width: 14px; height: 18px;  padding: 1px;\" type=\"button\" value=\"se apreto\" >\n"+
 						"	<img src=\"/img/iconos/check.svg\" style=\"width: 16px; \">\n"+
 						"</button>\n"+
-					"</div>";
-			
-		var idGrilla="<%=idGrilla%>";
-        var NidGrilla = "#" + idGrilla;
-        var form=$("#<%=idForm%>");
-        $(document).ready(function(){
-        	form.draggable();
-	        Grilla();
-        });
-        
-    	
-    	function validarMarca(){
-    		var formulario = $("#<%=idForm%>");    		
-    		var res=true;
-    		
+					"</div>",
+		validarMarca: function (){  		
+    		var res=true;    		
     		if(res && $("#mar_nombr",formulario).val()==""){
     			mensaje="El nombre no puede quedar vacio.";
     			res=false;
-    			$("#mar_nombr").abrirpopover(mensaje);
+    			$("#mar_nombr",formulario).abrirpopover(mensaje);
     		}
     		return res;   		
-    	}
-        
-        function Grilla(){	        
-	        $(NidGrilla).jqGrid({
+    	},
+    	Grilla: function (){	        
+	        $(formulario.NidGrilla).jqGrid({
 	        	url: <%=URL%>,
 	        	datatype:"json",
 	        	mtype:'POST', 
@@ -109,28 +99,28 @@
 	        	height:400,
 	        	rowNum:'10',
 	        	rowList:[10, 15, 20, 25, 50, 75, 100, 150, 200, 250, 500, 750],
-	        	pager:NidGrilla + '_pie',
+	        	pager: formulario.NidGrilla + '_pie',
 	        	sortname:'mar_codig',
 	        	viewrecords:true,
 	        	sortorder:"asc",
 	        	hidegrid:false,
 	        	title:false,
 	        	gridComplete:function(){
-	        		$('tbody [role="row"]',form).each(function(id, val){
+	        		$('tbody [role="row"]',formulario).each(function(id, val){
 	        			if(id % 2 == 0){
-	        				$(NidGrilla + ' #' + id,form).css('background-color', 'rgb(224, 224, 224)');
+	        				$(formulario.NidGrilla + ' #' + id,formulario).css('background-color', 'rgb(224, 224, 224)');
 	        			}
 	        		});
-	        		$("#form",form).remove();
-	        		$(".ui-jqgrid-bdiv",form).prepend(stringFrom);
-	        		$("#btn_rev",form).unbind("click").click(function(){
-	        			$(".dato",form).val("");
-		        		$("#mar_codig",form).val(Math.max(...$(NidGrilla).jqGrid('getCol', 'mar_codig', false).concat([0]))+1);   	
-		        		$("#mar_activ",form).prop("checked",true);
+	        		$("#form",formulario).remove();
+	        		$(".ui-jqgrid-bdiv",formulario).prepend(formulario.stringFrom);
+	        		$("#btn_rev",formulario).unbind("click").click(function(){
+	        			$(".dato",formulario).val("");
+		        		$("#mar_codig",formulario).val(Math.max(...$(formulario.NidGrilla).jqGrid('getCol', 'mar_codig', false).concat([0]))+1);   	
+		        		$("#mar_activ",formulario).prop("checked",true);
 	        		});	        		        		
-	        		$("#btn_act",form).unbind("click").click(function(){
-	        			if(validarMarca()){
-		        			var checkboxes = $('input[type="checkbox"].dato',form);
+	        		$("#btn_act",formulario).unbind("click").click(function(){
+	        			if(formulario.validarMarca()){
+		        			var checkboxes = $('input[type="checkbox"].dato',formulario);
 		        			$.each( checkboxes, function( key, value ) {
 		        			    if (value.checked === false) {
 		        			        value.value = 0;
@@ -139,18 +129,18 @@
 		        			    }
 		        			    $(value).attr('type', 'hidden');
 		        			});
-		        			var disabled = $('.dato:disabled', form).prop("disabled",false);
+		        			var disabled = $('.dato:disabled', formulario).prop("disabled",false);
 		        			cargando();
 		        			$.ajax({
 		        				dataType:'json',
-		        				data:$('.dato').serializeI(),
+		        				data:$('.dato', formulario).serializeI(),
 		        				type:'GET',
 		        				url:  <%=URL%>,
 		        				success:function(data){
 		        					cerrarAlerta();
 		        					console.log(data);
 									if(data.error == 0){
-										$(NidGrilla).trigger('reloadGrid');
+										$(formulario.NidGrilla).trigger('reloadGrid');
 									}
 								}, 
 								error:function(data){
@@ -162,18 +152,18 @@
 		        			disabled.prop("disabled",true);
 	        			}
 	        		});
-	        		$("#mar_codig",form).val(Math.max(...$(NidGrilla).jqGrid('getCol', 'mar_codig', false).concat([0]))+1);
-	        		$("#mar_activ",form).prop("checked",true);	
-	        		$("#mar_codig",form).prop("disabled",true);
+	        		$("#mar_codig",formulario).val(Math.max(...$(formulario.NidGrilla).jqGrid('getCol', 'mar_codig', false).concat([0]))+1);
+	        		$("#mar_activ",formulario).prop("checked",true);	
+	        		$("#mar_codig",formulario).prop("disabled",true);
 	        		
-	        		$("#jqgridSearchForm",form).remove();
-	        		$(NidGrilla + "_pie_left",form).prepend(<%=(fun.buscadorGrilla("nombre", "ptv_nombr"))%>);
-	        		$("tr.jqgrow.ui-row-ltr.ui-widget-content",form).first().trigger("click");
-	        		$(NidGrilla,form).focus();
+	        		$("#jqgridSearchForm",formulario).remove();
+	        		$(formulario.NidGrilla + "_pie_left",formulario).prepend(<%=(fun.buscadorGrilla("nombre", "ptv_nombr"))%>);
+	        		$("tr.jqgrow.ui-row-ltr.ui-widget-content",formulario).first().trigger("click");
+	        		$(formulario.NidGrilla,formulario).focus();
 	        	}, 
 	        	ondblClickRow:function(id){
-	        		var ret = $(NidGrilla,form).jqGrid('getRowData', id);
-	        		$(".dato",form).each(function(index){
+	        		var ret = $(formulario.NidGrilla,formulario).jqGrid('getRowData', id);
+	        		$(".dato",formulario).each(function(index){
 	        			if(this.type=="checkbox"){
 	        				if(ret[this.id]!="" && ret[this.id]!="0" )
 	        				$(this).prop("checked",true);	        		
@@ -184,8 +174,14 @@
 	        	},
 	        	caption:""
 	        });
-	        $(".ui-jqgrid-titlebar",form).hide();	        
+	        $(".ui-jqgrid-titlebar",formulario).hide();	        
         }
-	</script>
+	});
+		
+	$(document).ready(function(){
+		formulario.show();
+		formulario.Grilla();
+	});
 	
+	</script>	
 </div>

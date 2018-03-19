@@ -86,44 +86,21 @@
 		<div id="<%=idGrilla%>_pie"></div>
 	</div>
 <script type="text/javascript">
-			
-		var idGrilla="<%=idGrilla%>";
-        var NidGrilla = "#" + idGrilla;
-        
-        $(document).ready(function(){	        
-	       	/* $("#<%=idForm%>").draggable();*/
-	       Grilla();
-	       	
-	        $("#<%=idForm %>  .tool:not(:first-child)").click(function(){
-	        	var cod=GetSelected();
-	        	cargando();
-				$.ajax({
-					type:'GET',
-					url: 'Frm_ArticuloABM',
-					data: { modo: $(this).data("modo"), art_codig: cod },
-					success:function(data){     			
-			    		cerrarAlerta();
-						$("#<%=idForm%>").prepend($(data));  			      				
-	        		}, 
-	        		error:function(data){     			
-			    		cerrarAlerta();
-	        	    	console.log(data);
-				    }
-	        	});
-	        });		       	
-        });
-        function GetSelected(){
-        	var id = $(NidGrilla).jqGrid('getGridParam','selrow');
+	formulario = $.fn.extend($(<%="\"#"+idForm+"\""%>), {
+   		idGrilla:"<%=idGrilla%>",
+   		NidGrilla: "#" + "<%=idGrilla%>",
+		modoGrilla:"ALTA",
+		GetSelected: function (){
+        	var id = $(formulario.NidGrilla).jqGrid('getGridParam','selrow');
         	var art=0;
 			if (id) {
-				var ret = $(NidGrilla).jqGrid('getRowData',id);
+				var ret = $(formulario.NidGrilla).jqGrid('getRowData',id);
 				art = ret.art_codig;
 			}
         	return art;
-        }
-        
-        function Grilla(){	        
-	        $(NidGrilla).jqGrid({
+        },
+        Grilla: function (){	        
+	        $(formulario.NidGrilla,formulario).jqGrid({
 	        	url: <%=URL%>,
 	        	datatype:"json",
 	        	mtype:'GET', 
@@ -141,53 +118,52 @@
 	        	height: ($("#Cuerpo").height()-80),
 	        	rowNum:'10',
 	        	rowList:[10, 15, 20, 25, 50, 75, 100, 150, 200, 250, 500, 750],
-	        	pager:NidGrilla + '_pie',
+	        	pager:formulario.NidGrilla + '_pie',
 	        	sortname:'art_codig',
 	        	viewrecords:true,
 	        	sortorder:"asc",
 	        	hidegrid:false,
 	        	title:false,
-	        	gridComplete:function(){
-	        			        	
-	        		$('tbody [role="row"]').each(function(id, val){
+	        	gridComplete:function(){	        			        	
+	        		$('tbody [role="row"]',formulario).each(function(id, val){
 	        			if(id % 2 == 0){
-	        				$(NidGrilla + ' #' + id).css('background-color', 'rgb(224, 224, 224)');
+	        				$(formulario.NidGrilla + ' #' + id,formulario).css('background-color', 'rgb(224, 224, 224)');
 	        			}
 	        		});
 	        		
-	        		if ($(NidGrilla + "_pie_left #jqgridSearchForm").length<=0){
-						$("#jqgridSearchForm").remove();
-						$(NidGrilla + "_pie_left").prepend(<% out.print(fun.buscadorGrilla(" Nombre", "art_nombr")); %>);
-						$(NidGrilla + "_pie_left #jqgridSearInput").bind('keydown', function(e) {			
+	        		if ($(formulario.NidGrilla + "_pie_left #jqgridSearchForm",formulario).length<=0){
+						$("#jqgridSearchForm",formulario).remove();
+						$(formulario.NidGrilla + "_pie_left",formulario).prepend(<% out.print(fun.buscadorGrilla(" Nombre", "art_nombr")); %>);
+						$(formulario.NidGrilla + "_pie_left #jqgridSearInput",formulario).bind('keydown', function(e) {			
 							switch (e.which) {				
 								case 13:
-									$(NidGrilla).jqGrid('setGridParam',
+									$(formulario.NidGrilla,formulario).jqGrid('setGridParam',
 									   { postData : { 
-									     	BusquedaValor : $(NidGrilla + "_pie_left #jqgridSearInput").val(),
-									     	BusquedaCampo : $(NidGrilla + "_pie_left #jqgridSearInput").data("field")
+									     	BusquedaValor : $(formulario.NidGrilla + "_pie_left #jqgridSearInput",formulario).val(),
+									     	BusquedaCampo : $(formulario.NidGrilla + "_pie_left #jqgridSearInput",formulario).data("field")
 									   } 
 									}).trigger(	"reloadGrid");						    
 									break;				
 							}
 						});
 						      
-						$(NidGrilla + "_pie_left #jqgridSearInput").click( function() {			
-							$(NidGrilla).jqGrid('setGridParam',
+						$(formulario.NidGrilla + "_pie_left #jqgridSearInput",formulario).click( function() {			
+							$(formulario.NidGrilla,formulario).jqGrid('setGridParam',
 							   { postData : { 
-							     	BusquedaValor : $(NidGrilla + "_pie_left #jqgridSearInput").val(),
-							     	BusquedaCampo : $(NidGrilla + "_pie_left #jqgridSearInput").data("field")
+							     	BusquedaValor : $(formulario.NidGrilla + "_pie_left #jqgridSearInput",formulario).val(),
+							     	BusquedaCampo : $(formulario.NidGrilla + "_pie_left #jqgridSearInput",formulario).data("field")
 							   } 
 							}).trigger(	"reloadGrid");
 						});
 	        		}	        		
 	        		
-	        		if (!$(NidGrilla + "_pie_left #jqgridSearInput").is(":focus")) {
-		        		$("tr.jqgrow.ui-row-ltr.ui-widget-content").first().trigger("click");
-		        		$(NidGrilla).focus();	        			 
+	        		if (!$(formulario.NidGrilla + "_pie_left #jqgridSearInput",formulario).is(":focus")) {
+		        		$("tr.jqgrow.ui-row-ltr.ui-widget-content",formulario).first().trigger("click");
+		        		$(formulario.NidGrilla,formulario).focus();	        			 
 	        		}
 	        	}, 
 	        	ondblClickRow:function(id){
-	        		var ret = $(NidGrilla).jqGrid('getRowData', id);
+	        		var ret = $(formulario.NidGrilla,formulario).jqGrid('getRowData', id);
 	        		$.each(Object.values(ret), function(i, val){
 	        			$(".dato")[i].value = val;
 	        		})
@@ -200,13 +176,13 @@
 	        	},
 	        	caption:"",
 	        	postData : {
-			     	BusquedaValor : $(NidGrilla + "_pie_left #jqgridSearInput").val(),
-			     	BusquedaCampo : $(NidGrilla + "_pie_left #jqgridSearInput").data("field")	
+			     	BusquedaValor : $(formulario.NidGrilla + "_pie_left #jqgridSearInput",formulario).val(),
+			     	BusquedaCampo : $(formulario.NidGrilla + "_pie_left #jqgridSearInput",formulario).data("field")	
 	    		} 
 	        });
 	        $(".ui-jqgrid-titlebar").hide();	 
 	        $( document ).resize(function(){  
-	      	  reSizeGrid("GrillaClientes",($("#Cuerpo").width()-10),($("#Cuerpo").height()-80));
+	      	  reSizeGrid(formulario.idGrilla,($("#Cuerpo").width()-10),($("#Cuerpo").height()-80));
 	      	});
 	        
 	        
@@ -214,5 +190,18 @@
 	        
 	        
         }
-	</script>
+   	});
+$(document).ready(function(){	        
+	/* $("#<%=idForm%>").draggable();*/
+	formulario.Grilla();	
+	$(".tool:not(:first-child)",formulario).click(function(){
+		var parametros=$(this).data();
+		parametros.url='Frm_ArticuloABM';
+		parametros.parametros={ modo: $(this).data("modo"), art_codig: formulario.GetSelected() };
+		abrirFormulario(parametros);		
+	});	
+ 
+});        
+
+</script>
 </div>

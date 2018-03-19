@@ -156,11 +156,11 @@
 		</div>
 	</div>
 
-	<script type="text/javascript">       
-      	var idGrilla="<%=idGrilla%>";
+	<script type="text/javascript">      
        	var formulario = $.fn.extend($(<%="\"#"+idForm+"\""%>), {
        		modo:"<%=modo%>",      
-       		NidGrilla: "#" + idGrilla,
+       		idGrilla: "<%=idGrilla%>",
+       		NidGrilla: "#" + "<%=idGrilla%>",
 			modoGrilla:"ALTA",
        		GetClienteRow: function (nrocli=""){       			
             	if(nrocli.toString().trim()==""){
@@ -360,9 +360,6 @@
     	        	caption:""
     	        });
     	        $(".ui-jqgrid-titlebar").hide();	 
-    	        $( document ).resize(function(){  
-    	      	  reSizeGrid(idGrilla,($("#Cuerpo").width()-10),($("#Cuerpo").height()-80));
-    	      	});
             },
             validarForm: function(){
             	if($("#rem_total",formulario).val()=="" ||  parseFloat($("#rem_total",formulario).val())<=0){

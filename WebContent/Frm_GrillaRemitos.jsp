@@ -91,64 +91,22 @@
 		<div id="<%=idGrilla%>_pie"></div>
 	</div>
 <script type="text/javascript">
-			
-		var idGrilla="<%=idGrilla%>";
-        var NidGrilla = "#" + idGrilla;
-        
-        $(document).ready(function(){	        
-	       	/* $("#<%=idForm%>").draggable();*/
-	       Grilla();
-	       	
-	        $("#<%=idForm %>  .tool:not(:first-child)").click(function(){
-	        	var obj=GetSelected();
-	        	var cod=obj.cod;
-	        	if(cod>0 || $(this).data("modo")=="ALTA"){
-		        	cargando();
-		        	var link= 'Frm_RemitoEABM';
-		        	if($(this).data("modo")=="ALTA"){
-		        		if($(this).data("tipo")=='S'){
-		        			link= 'Frm_RemitoSABM';
-		        		}else{
-		        			link= 'Frm_RemitoEABM';
-		        		}		        		
-		        	}else{
-		        		if(obj.tip=='S'){
-		        			link= 'Frm_RemitoSABM';
-		        		}else{
-		        			link= 'Frm_RemitoEABM';
-		        		}	
-		        	}
-		        	
-					$.ajax({
-						type:'GET',
-						url: link,
-						data: { modo: $(this).data("modo") , rem_codig: cod },
-						success:function(data){     			
-				    		cerrarAlerta();
-							$("#<%=idForm%>").prepend($(data));  			      				
-		        		}, 
-		        		error:function(data){     			
-				    		cerrarAlerta();
-		        	    	console.log(data);
-					    }
-		        	});
-	        	}
-	        });		       	
-        });
-        
-        function GetSelected(){
-        	var id = $(NidGrilla).jqGrid('getGridParam','selrow');
+	formulario = $.fn.extend($(<%="\"#"+idForm+"\""%>), {
+		idGrilla:"<%=idGrilla%>",
+		NidGrilla: "#" + "<%=idGrilla%>",
+		modoGrilla:"ALTA",
+		GetSelected: function (){
+        	var id = $(formulario.NidGrilla).jqGrid('getGridParam','selrow');
         	var rem=new Object();
 			if (id) {
-				var ret = $(NidGrilla).jqGrid('getRowData',id);
+				var ret = $(formulario.NidGrilla).jqGrid('getRowData',id);
 				rem.cod = ret.rem_codig;
 				rem.tip = ret.rem_tipor;
 			}
         	return rem;
-        }
-        
-        function Grilla(){	        
-	        $(NidGrilla).jqGrid({
+        },
+        Grilla: function (){	        
+	        $(formulario.NidGrilla).jqGrid({
 	        	url: <%=URL%>,
 	        	datatype:"json",
 	        	mtype:'GET', 
@@ -167,50 +125,48 @@
 	        	height: ($("#Cuerpo").height()-80),
 	        	rowNum:'10',
 	        	rowList:[10, 15, 20, 25, 50, 75, 100, 150, 200, 250, 500, 750],
-	        	pager:NidGrilla + '_pie',
+	        	pager: formulario.NidGrilla + '_pie',
 	        	sortname:'rem_fecha',
 	        	viewrecords:true,
 	        	sortorder:"desc",
 	        	hidegrid:false,
 	        	title:false,	        	
-	        	gridComplete:function(){
-
-		        	
-	        		$('tbody [role="row"]').each(function(id, val){
+	        	gridComplete:function(){		        	
+	        		$('tbody [role="row"]',formulario).each(function(id, val){
 	        			if(id % 2 == 0){
-	        				$(NidGrilla + ' #' + id).css('background-color', 'rgb(224, 224, 224)');
+	        				$(formulario.NidGrilla + ' #' + id).css('background-color', 'rgb(224, 224, 224)');
 	        			}
 	        		});
 	        		
-	        		if ($(NidGrilla + "_pie_left #jqgridSearchForm").length<=0){
-						$("#jqgridSearchForm").remove();
-						$(NidGrilla + "_pie_left").prepend(<% out.print(fun.buscadorGrilla(" Nombre", "cli_nombr")); %>);
-						$(NidGrilla + "_pie_left #jqgridSearInput").bind('keydown', function(e) {			
+	        		if ($(formulario.NidGrilla + "_pie_left #jqgridSearchForm").length<=0){
+						$("#jqgridSearchForm",formulario).remove();
+						$(formulario.NidGrilla + "_pie_left").prepend(<% out.print(fun.buscadorGrilla(" Nombre", "cli_nombr")); %>);
+						$(formulario.NidGrilla + "_pie_left #jqgridSearInput").bind('keydown', function(e) {			
 							switch (e.which) {				
 								case 13:
-									$(NidGrilla).jqGrid('setGridParam',
+									$(formulario.NidGrilla).jqGrid('setGridParam',
 									   { postData : { 
-									     	BusquedaValor : $(NidGrilla + "_pie_left #jqgridSearInput").val(),
-									     	BusquedaCampo : $(NidGrilla + "_pie_left #jqgridSearInput").data("field")
+									     	BusquedaValor : $(formulario.NidGrilla + "_pie_left #jqgridSearInput").val(),
+									     	BusquedaCampo : $(formulario.NidGrilla + "_pie_left #jqgridSearInput").data("field")
 									   } 
 									}).trigger(	"reloadGrid");						    
 									break;				
 							}
 						});
 						      
-						$(NidGrilla + "_pie_left #jqgridSearInput").click( function() {			
-							$(NidGrilla).jqGrid('setGridParam',
+						$(formulario.NidGrilla + "_pie_left #jqgridSearInput").click( function() {			
+							$(formulario.NidGrilla).jqGrid('setGridParam',
 							   { postData : { 
-							     	BusquedaValor : $(NidGrilla + "_pie_left #jqgridSearInput").val(),
-							     	BusquedaCampo : $(NidGrilla + "_pie_left #jqgridSearInput").data("field")
+							     	BusquedaValor : $(formulario.NidGrilla + "_pie_left #jqgridSearInput").val(),
+							     	BusquedaCampo : $(formulario.NidGrilla + "_pie_left #jqgridSearInput").data("field")
 							   } 
 							}).trigger(	"reloadGrid");
 						});
 	        		}	        		
 	        		
-	        		if (!$(NidGrilla + "_pie_left #jqgridSearInput").is(":focus")) {
-		        		$("tr.jqgrow.ui-row-ltr.ui-widget-content").first().trigger("click");
-		        		$(NidGrilla).focus();	        			 
+	        		if (!$(formulario.NidGrilla + "_pie_left #jqgridSearInput").is(":focus")) {
+		        		$("tr.jqgrow.ui-row-ltr.ui-widget-content",formulario).first().trigger("click");
+		        		$(formulario.NidGrilla).focus();	        			 
 	        		}
 	        	}, 
 	        	ondblClickRow:function(id){
@@ -230,8 +186,39 @@
 	        });
 	        $(".ui-jqgrid-titlebar").hide();	 
 	        $( document ).resize(function(){  
-	      	  reSizeGrid("GrillaClientes",($("#Cuerpo").width()-10),($("#Cuerpo").height()-80));
+	      	  reSizeGrid(formulario.idGrilla,($("#Cuerpo").width()-10),($("#Cuerpo").height()-80));
 	      	});
         }
+		
+	});
+        
+	$(document).ready(function(){	        
+		formulario.Grilla();	       	
+		$("#<%=idForm %>  .tool:not(:first-child)").click(function(){
+			var obj=formulario.GetSelected();
+			var cod=obj.cod;
+			if(cod>0 || $(this).data("modo")=="ALTA"){
+				var link= 'Frm_RemitoEABM';
+				if($(this).data("modo")=="ALTA"){
+					if($(this).data("tipo")=='S'){
+						link= 'Frm_RemitoSABM';
+					}else{
+						link= 'Frm_RemitoEABM';
+					}		        		
+				}else{
+					if(obj.tip=='S'){
+						link= 'Frm_RemitoSABM';
+					}else{
+						link= 'Frm_RemitoEABM';
+					}	
+				}     	
+				var parametros=$(this).data();
+				parametros.url=link;
+				parametros.parametros={ modo: $(this).data("modo"), rem_codig: cod };
+				abrirFormulario(parametros);	
+			}
+		});		       	
+	});        
+        
 	</script>
 </div>

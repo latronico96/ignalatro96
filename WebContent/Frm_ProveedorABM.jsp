@@ -144,11 +144,109 @@
 		</div>
 	</div>
 
-	<script type="text/javascript">       
+	<script type="text/javascript">   
+	formulario = $.fn.extend($(<%="\"#"+idForm+"\""%>), {
+   		idGrilla:"<%=idGrilla%>",
+   		NidGrilla: "#" + "<%=idGrilla%>",
+		modo: "<%=modo%>",  
+		validarprv: function (){   		
+    		var res=true;
+    		
+    		if(res && $("#prv_nombr",formulario).val()==""){
+    			mensaje="El nombre no puede quedar vacio.";
+    			res=false;
+    			$("#prv_nombr",formulario).abrirpopover(mensaje);
+    		}
+    		if(res && $("#prv_telef",formulario).val()==""){
+    			mensaje="El telefono no puede quedar vacio.";
+    			res=false;
+    			$("#prv_telef",formulario).abrirpopover(mensaje);
+    		}/*
+    		if(res && $("#prv_celul",formulario).val()==""){
+    			mensaje="no puede quedar vacio.";
+    			res=false;
+    			$("#prv_celul").abrirpopover(mensaje);
+    		}
+    		if(res && $("#prv_direc",formulario).val()==""){
+    			mensaje="no puede quedar vacio.";
+    			res=false;
+    			$("#prv_direc").abrirpopover(mensaje);
+    		}*/
+    		if(res && $("#prv_cliva",formulario).val()==""){
+    			mensaje="La condicion de IVA no puede quedar vacia.";
+    			res=false;
+    			$("#prv_condi",formulario).abrirpopover(mensaje);
+    		}
+    		if(res && $("#prv_tpdoc",formulario).val()==""){
+    			mensaje="El tipo de Documento no puede quedar vacio.";
+    			res=false;
+    			$("#prv_tpdoc",formulario).abrirpopover(mensaje);
+    		}
+    		if(res && $("#prv_nrdoc",formulario).val()==""){
+    			mensaje="El numero de Dcoumento no puede quedar vacio.";
+    			res=false;
+    			$("#prv_nrdoc",formulario).abrirpopover(mensaje);
+    		}/*
+    		if(res && $("#prv_email",formulario).val()==""){
+    			mensaje="El email no puede quedar vacio.";
+    			res=false;
+    			$("#prv_email").abrirpopover(mensaje);
+    		}
+    		if(res && $("#prv_nrocbu",formulario).val()==""){
+    			mensaje="El CBU no puede quedar vacio.";
+    			res=false;
+    			$("#prv_nrocbu").abrirpopover(mensaje);
+    		}*/
+
+    		if(res && $("#prv_condi",formulario).val()==""){
+    			mensaje="Condicion de pago no puede quedar vacio.";
+    			res=false;
+    			$("#prv_condi",formulario).abrirpopover(mensaje);
+    		}
+
+    		if(res && $("#prv_plazo",formulario).val()=="" && $("#prv_condi",formulario).val()=="U"){
+    			mensaje="Si se factura a cta. Corriente el plazo de pago no puede quedar vacio.";
+    			res=false;
+    			$("#prv_plazo",formulario).abrirpopover(mensaje);
+    		}
+
+    		if(false && res && $("prv_fnomb",formulario).val()==""){
+    			if(res && $("prv_ftele").val()==""){
+    				mensaje="El telefono no puede quedar vacio.";
+    				res=false;
+    				$("#prv_ftele",formulario).abrirpopover(mensaje);
+    			}
+    			/*if(res && $("prv_fcelu").val()==""){
+    				mensaje="El cleular no puede quedar vacio.";
+    				res=false;
+    				$("#prv_fcelu").abrirpopover(mensaje);
+    			}
+    			if(res && $("prv_fdire").val()==""){
+    				mensaje="La direccion no puede quedar vacia.";
+    				res=false;
+    				$("#prv_fdire").abrirpopover(mensaje);
+    			}*/
+    			if(res && $("prv_fciva",formulario).val()==""){
+    				mensaje="La condicion de IVA no puede quedar vacia.";
+    				res=false;
+    				$("#prv_fciva",formulario).abrirpopover(mensaje);
+    			}
+    			if(res && $("prv_ftdoc",formulario).val()==""){
+    				mensaje="El tipo de Documento no puede quedar vacio.";
+    				res=false;
+    				$("#prv_ftdoc",formulario).abrirpopover(mensaje);
+    			}
+    			if(res && $("prv_fndoc",formulario).val()==""){
+    				mensaje="El numero de Dcoumento no puede quedar vacio.";
+    				res=false;
+    				$("#prv_fndoc",formulario).abrirpopover(mensaje);
+    			}
+    		}
+    		return res;   		
+    	}   
+	});
         $(document).ready(function(){	 		
-       		var idGrilla="<%=idGrilla%>";
-        	var NidGrilla = "#" + idGrilla;
-        	var formulario = $("#<%=idForm%>");
+
         	$("#modo",formulario).val("<%=modo%>");
         	formulario.modo="<%=modo%>";
         	<%=Proveedor%>
@@ -205,7 +303,7 @@
         	});        	
         	
         	$("#btn_confirmar",formulario).unbind("prvck").click(function(){
-        		if (validarprv()){
+        		if (formulario.validarprv()){
         			cargando();
 				    $.ajax({
 				    	data: $(".campo", formulario).serializeI(),
@@ -229,105 +327,8 @@
         	}); 
         	$("#Titulo",formulario).html(modoTitulo);
         });
-        
-
+         	
     	
-    	function validarprv(){
-    		var formulario = $("#<%=idForm%>");    		
-    		var res=true;
-    		
-    		if(res && $("#prv_nombr",formulario).val()==""){
-    			mensaje="El nombre no puede quedar vacio.";
-    			res=false;
-    			$("#prv_nombr").abrirpopover(mensaje);
-    		}
-    		if(res && $("#prv_telef",formulario).val()==""){
-    			mensaje="El telefono no puede quedar vacio.";
-    			res=false;
-    			$("#prv_telef").abrirpopover(mensaje);
-    		}/*
-    		if(res && $("#prv_celul",formulario).val()==""){
-    			mensaje="no puede quedar vacio.";
-    			res=false;
-    			$("#prv_celul").abrirpopover(mensaje);
-    		}
-    		if(res && $("#prv_direc",formulario).val()==""){
-    			mensaje="no puede quedar vacio.";
-    			res=false;
-    			$("#prv_direc").abrirpopover(mensaje);
-    		}*/
-    		if(res && $("#prv_cliva",formulario).val()==""){
-    			mensaje="La condicion de IVA no puede quedar vacia.";
-    			res=false;
-    			$("#prv_condi").abrirpopover(mensaje);
-    		}
-    		if(res && $("#prv_tpdoc",formulario).val()==""){
-    			mensaje="El tipo de Documento no puede quedar vacio.";
-    			res=false;
-    			$("#prv_tpdoc").abrirpopover(mensaje);
-    		}
-    		if(res && $("#prv_nrdoc",formulario).val()==""){
-    			mensaje="El numero de Dcoumento no puede quedar vacio.";
-    			res=false;
-    			$("#prv_nrdoc").abrirpopover(mensaje);
-    		}/*
-    		if(res && $("#prv_email",formulario).val()==""){
-    			mensaje="El email no puede quedar vacio.";
-    			res=false;
-    			$("#prv_email").abrirpopover(mensaje);
-    		}
-    		if(res && $("#prv_nrocbu",formulario).val()==""){
-    			mensaje="El CBU no puede quedar vacio.";
-    			res=false;
-    			$("#prv_nrocbu").abrirpopover(mensaje);
-    		}*/
-
-    		if(res && $("#prv_condi",formulario).val()==""){
-    			mensaje="Condicion de pago no puede quedar vacio.";
-    			res=false;
-    			$("#prv_condi").abrirpopover(mensaje);
-    		}
-
-    		if(res && $("#prv_plazo",formulario).val()=="" && $("#prv_condi",formulario).val()=="U"){
-    			mensaje="Si se factura a cta. Corriente el plazo de pago no puede quedar vacio.";
-    			res=false;
-    			$("#prv_plazo").abrirpopover(mensaje);
-    		}
-
-    		if(false && res && $("prv_fnomb").val()==""){
-    			if(res && $("prv_ftele").val()==""){
-    				mensaje="El telefono no puede quedar vacio.";
-    				res=false;
-    				$("#prv_ftele").abrirpopover(mensaje);
-    			}
-    			/*if(res && $("prv_fcelu").val()==""){
-    				mensaje="El cleular no puede quedar vacio.";
-    				res=false;
-    				$("#prv_fcelu").abrirpopover(mensaje);
-    			}
-    			if(res && $("prv_fdire").val()==""){
-    				mensaje="La direccion no puede quedar vacia.";
-    				res=false;
-    				$("#prv_fdire").abrirpopover(mensaje);
-    			}*/
-    			if(res && $("prv_fciva").val()==""){
-    				mensaje="La condicion de IVA no puede quedar vacia.";
-    				res=false;
-    				$("#prv_fciva").abrirpopover(mensaje);
-    			}
-    			if(res && $("prv_ftdoc").val()==""){
-    				mensaje="El tipo de Documento no puede quedar vacio.";
-    				res=false;
-    				$("#prv_ftdoc").abrirpopover(mensaje);
-    			}
-    			if(res && $("prv_fndoc").val()==""){
-    				mensaje="El numero de Dcoumento no puede quedar vacio.";
-    				res=false;
-    				$("#prv_fndoc").abrirpopover(mensaje);
-    			}
-    		}
-    		return res;   		
-    	}
 
 	</script>
 	

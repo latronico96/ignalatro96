@@ -144,13 +144,109 @@
 		</div>
 	</div>
 
-	<script type="text/javascript">       
-        $(document).ready(function(){	 		
-       		var idGrilla="<%=idGrilla%>";
-        	var NidGrilla = "#" + idGrilla;
-        	var formulario = $("#<%=idForm%>");
-        	$("#modo",formulario).val("<%=modo%>");
-        	formulario.modo="<%=modo%>";
+	<script type="text/javascript">    	
+	formulario = $.fn.extend($(<%="\"#"+idForm+"\""%>), {
+   		idGrilla:"<%=idGrilla%>",
+   		NidGrilla: "#" + "<%=idGrilla%>",
+		modo: "<%=modo%>",          
+		validarCli:	function (){  		
+    		var res=true;
+    		
+    		if(res && $("#cli_nombr",formulario).val()==""){
+    			mensaje="El nombre no puede quedar vacio.";
+    			res=false;
+    			$("#cli_nombr",formulario).abrirpopover(mensaje);
+    		}
+    		if(res && $("#cli_telef",formulario).val()==""){
+    			mensaje="El telefono no puede quedar vacio.";
+    			res=false;
+    			$("#cli_telef",formulario).abrirpopover(mensaje);
+    		}/*
+    		if(res && $("#cli_celul",formulario).val()==""){
+    			mensaje="no puede quedar vacio.";
+    			res=false;
+    			$("#cli_celul").abrirpopover(mensaje);
+    		}
+    		if(res && $("#cli_direc",formulario).val()==""){
+    			mensaje="no puede quedar vacio.";
+    			res=false;
+    			$("#cli_direc").abrirpopover(mensaje);
+    		}*/
+    		if(res && $("#cli_cliva",formulario).val()==""){
+    			mensaje="La condicion de IVA no puede quedar vacia.";
+    			res=false;
+    			$("#cli_condi",formulario).abrirpopover(mensaje);
+    		}
+    		if(res && $("#cli_tpdoc",formulario).val()==""){
+    			mensaje="El tipo de Documento no puede quedar vacio.";
+    			res=false;
+    			$("#cli_tpdoc",formulario).abrirpopover(mensaje);
+    		}
+    		if(res && $("#cli_nrdoc",formulario).val()==""){
+    			mensaje="El numero de Dcoumento no puede quedar vacio.";
+    			res=false;
+    			$("#cli_nrdoc",formulario).abrirpopover(mensaje);
+    		}/*
+    		if(res && $("#cli_email",formulario).val()==""){
+    			mensaje="El email no puede quedar vacio.";
+    			res=false;
+    			$("#cli_email").abrirpopover(mensaje);
+    		}
+    		if(res && $("#cli_nrocbu",formulario).val()==""){
+    			mensaje="El CBU no puede quedar vacio.";
+    			res=false;
+    			$("#cli_nrocbu").abrirpopover(mensaje);
+    		}*/
+
+    		if(res && $("#cli_condi",formulario).val()==""){
+    			mensaje="Condicion de pago no puede quedar vacio.";
+    			res=false;
+    			$("#cli_condi",formulario).abrirpopover(mensaje);
+    		}
+
+    		if(res && $("#cli_plazo",formulario).val()=="" && $("#cli_condi",formulario).val()=="U"){
+    			mensaje="Si se factura a cta. Corriente el plazo de pago no puede quedar vacio.";
+    			res=false;
+    			$("#cli_plazo",formulario).abrirpopover(mensaje);
+    		}
+
+    		if(false && res && $("cli_fnomb",formulario).val()==""){
+    			if(res && $("cli_ftele",formulario).val()==""){
+    				mensaje="El telefono no puede quedar vacio.";
+    				res=false;
+    				$("#cli_ftele",formulario).abrirpopover(mensaje);
+    			}
+    			/*if(res && $("cli_fcelu").val()==""){
+    				mensaje="El cleular no puede quedar vacio.";
+    				res=false;
+    				$("#cli_fcelu").abrirpopover(mensaje);
+    			}
+    			if(res && $("cli_fdire").val()==""){
+    				mensaje="La direccion no puede quedar vacia.";
+    				res=false;
+    				$("#cli_fdire").abrirpopover(mensaje);
+    			}*/
+    			if(res && $("cli_fciva",formulario).val()==""){
+    				mensaje="La condicion de IVA no puede quedar vacia.";
+    				res=false;
+    				$("#cli_fciva",formulario).abrirpopover(mensaje);
+    			}
+    			if(res && $("cli_ftdoc",formulario).val()==""){
+    				mensaje="El tipo de Documento no puede quedar vacio.";
+    				res=false;
+    				$("#cli_ftdoc",formulario).abrirpopover(mensaje);
+    			}
+    			if(res && $("cli_fndoc",formulario).val()==""){
+    				mensaje="El numero de Dcoumento no puede quedar vacio.";
+    				res=false;
+    				$("#cli_fndoc",formulario).abrirpopover(mensaje);
+    			}
+    		}
+    		return res;   		
+    	}
+	});
+        $(document).ready(function(){	 	
+        	$("#modo",formulario).val("<%=modo%>");        	
         	<%=cliente%>
         	Cliente.forEach(function(value,index){	
         		if (value=="true" || value=="false"){
@@ -205,7 +301,7 @@
         	});        	
         	
         	$("#btn_confirmar",formulario).unbind("click").click(function(){
-        		if (validarCli()){
+        		if (formulario.validarCli()){
         			cargando();
 				    $.ajax({
 				    	data: $(".campo", formulario).serializeI(),
@@ -229,105 +325,7 @@
         	}); 
         	$("#Titulo",formulario).html(modoTitulo);
         });
-        
 
-    	
-    	function validarCli(){
-    		var formulario = $("#<%=idForm%>");    		
-    		var res=true;
-    		
-    		if(res && $("#cli_nombr",formulario).val()==""){
-    			mensaje="El nombre no puede quedar vacio.";
-    			res=false;
-    			$("#cli_nombr").abrirpopover(mensaje);
-    		}
-    		if(res && $("#cli_telef",formulario).val()==""){
-    			mensaje="El telefono no puede quedar vacio.";
-    			res=false;
-    			$("#cli_telef").abrirpopover(mensaje);
-    		}/*
-    		if(res && $("#cli_celul",formulario).val()==""){
-    			mensaje="no puede quedar vacio.";
-    			res=false;
-    			$("#cli_celul").abrirpopover(mensaje);
-    		}
-    		if(res && $("#cli_direc",formulario).val()==""){
-    			mensaje="no puede quedar vacio.";
-    			res=false;
-    			$("#cli_direc").abrirpopover(mensaje);
-    		}*/
-    		if(res && $("#cli_cliva",formulario).val()==""){
-    			mensaje="La condicion de IVA no puede quedar vacia.";
-    			res=false;
-    			$("#cli_condi").abrirpopover(mensaje);
-    		}
-    		if(res && $("#cli_tpdoc",formulario).val()==""){
-    			mensaje="El tipo de Documento no puede quedar vacio.";
-    			res=false;
-    			$("#cli_tpdoc").abrirpopover(mensaje);
-    		}
-    		if(res && $("#cli_nrdoc",formulario).val()==""){
-    			mensaje="El numero de Dcoumento no puede quedar vacio.";
-    			res=false;
-    			$("#cli_nrdoc").abrirpopover(mensaje);
-    		}/*
-    		if(res && $("#cli_email",formulario).val()==""){
-    			mensaje="El email no puede quedar vacio.";
-    			res=false;
-    			$("#cli_email").abrirpopover(mensaje);
-    		}
-    		if(res && $("#cli_nrocbu",formulario).val()==""){
-    			mensaje="El CBU no puede quedar vacio.";
-    			res=false;
-    			$("#cli_nrocbu").abrirpopover(mensaje);
-    		}*/
-
-    		if(res && $("#cli_condi",formulario).val()==""){
-    			mensaje="Condicion de pago no puede quedar vacio.";
-    			res=false;
-    			$("#cli_condi").abrirpopover(mensaje);
-    		}
-
-    		if(res && $("#cli_plazo",formulario).val()=="" && $("#cli_condi",formulario).val()=="U"){
-    			mensaje="Si se factura a cta. Corriente el plazo de pago no puede quedar vacio.";
-    			res=false;
-    			$("#cli_plazo").abrirpopover(mensaje);
-    		}
-
-    		if(false && res && $("cli_fnomb").val()==""){
-    			if(res && $("cli_ftele").val()==""){
-    				mensaje="El telefono no puede quedar vacio.";
-    				res=false;
-    				$("#cli_ftele").abrirpopover(mensaje);
-    			}
-    			/*if(res && $("cli_fcelu").val()==""){
-    				mensaje="El cleular no puede quedar vacio.";
-    				res=false;
-    				$("#cli_fcelu").abrirpopover(mensaje);
-    			}
-    			if(res && $("cli_fdire").val()==""){
-    				mensaje="La direccion no puede quedar vacia.";
-    				res=false;
-    				$("#cli_fdire").abrirpopover(mensaje);
-    			}*/
-    			if(res && $("cli_fciva").val()==""){
-    				mensaje="La condicion de IVA no puede quedar vacia.";
-    				res=false;
-    				$("#cli_fciva").abrirpopover(mensaje);
-    			}
-    			if(res && $("cli_ftdoc").val()==""){
-    				mensaje="El tipo de Documento no puede quedar vacio.";
-    				res=false;
-    				$("#cli_ftdoc").abrirpopover(mensaje);
-    			}
-    			if(res && $("cli_fndoc").val()==""){
-    				mensaje="El numero de Dcoumento no puede quedar vacio.";
-    				res=false;
-    				$("#cli_fndoc").abrirpopover(mensaje);
-    			}
-    		}
-    		return res;   		
-    	}
 
 	</script>
 	
