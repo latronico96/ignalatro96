@@ -132,12 +132,13 @@
         $(document).ready(function(){	 		
         	$("#modo",formulario).val(formulario.modo);
         	<%=Articulo%>
-        	Articulo.forEach(function(value,index){	
-        		if (value=="true" || value=="false"){
-        			$("#"+index,formulario).first().prop("checked",(value=="true"?true:false));            			
-        		}else{
-        			$("#"+index,formulario).first().val(value);
-        		}	
+        	Articulo.forEach(function(value,index){	        		
+        		if($("#"+index,formulario).first().attr("type")=="checkbox"){
+        			console.log("#"+index +" "+value);
+        			$("#"+index,formulario).first().prop("checked",(value!="" && value!="0" ));	
+    			}else{
+        			$("#"+index,formulario).first().val(value);     				
+    			}
         	});
         	
         	$(".precio",formulario).priceFormat({

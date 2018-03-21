@@ -182,7 +182,7 @@
 		<!-- fin pie -->
 	</div>
 	
-	<section id="bloqueoAlerta" class="backmodal"></section><!-- div para mensajes emergentes (al final para que este arriba de todos los formularios -->
+	<section id="bloqueoAlerta" class="backmodal" style="z-index: 10000;"></section><!-- div para mensajes emergentes (al final para que este arriba de todos los formularios -->
 
 	<script>
 		$(document).ready(function(){

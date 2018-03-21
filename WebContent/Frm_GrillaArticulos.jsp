@@ -163,10 +163,7 @@
 	        		}
 	        	}, 
 	        	ondblClickRow:function(id){
-	        		var ret = $(formulario.NidGrilla,formulario).jqGrid('getRowData', id);
-	        		$.each(Object.values(ret), function(i, val){
-	        			$(".dato")[i].value = val;
-	        		})
+	        		$(".tool:not(:first-child)",formulario).first().click();
 	        	},
 	        	loadBeforeSend: function () {
 	        		var x=this;	        	

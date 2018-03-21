@@ -45,8 +45,11 @@ public class Frm_marcas_ABM extends HttpServlet {
 		String campos="";
 		String valores="";
 		String claveValor="";
+		String updateStr="update "+this.tabla+" set ";
+		String camposUpdate="";
 		Map<String,String> parametros=fun.parametrosAMap(request);
-		Iterator<Entry<String, String>> it = parametros.entrySet().iterator();
+		String modo=parametros.getOrDefault("modo", "CONS");
+		Iterator<Entry<String, String>> it = tipos.entrySet().iterator();
 		while (it.hasNext()) {
 			Map.Entry<String, String> pair = (Map.Entry<String, String>)it.next();
 			if (!campos.equals("")){ 
@@ -58,19 +61,22 @@ public class Frm_marcas_ABM extends HttpServlet {
 				claveValor=(String) pair.getValue();*/
 			}
 			if (this.claveCampo.equals(pair.getKey())){
-				claveValor=(String) pair.getValue();
+				claveValor=parametros.getOrDefault((String) pair.getKey(),"");
 			}
 			campos+=pair.getKey() ;
-			valores+= fun.PrepararCampo( (String)pair.getKey(), tipos, (String)pair.getValue());
-		    System.out.println(pair.getKey() + " = " + pair.getValue());
+			valores+= Funciones.PrepararCampo( (String)pair.getKey(), tipos, parametros.getOrDefault((String) pair.getKey(),""));
+			
+			camposUpdate+=(camposUpdate.equals("")?"":", ");
+			camposUpdate+=pair.getKey() + " = " +  Funciones.PrepararCampo( (String)pair.getKey(), tipos, parametros.getOrDefault((String) pair.getKey(),""));
+			
+		    System.out.println(pair.getKey() + " = " + parametros.getOrDefault((String) pair.getKey(),""));
 		    it.remove(); // avoids a ConcurrentModificationException
 		}
 
 		String delete="delete from "+this.tabla+" where "+this.claveCampo+"='"+claveValor+"'";
 		String insert="insert into "+this.tabla+" ("+campos+") values ("+valores+")";
-		    System.out.println(delete);
-		    System.out.println(insert);
-		
+		updateStr+=camposUpdate + " where "+this.claveCampo+"='"+claveValor+"'";
+	
 		response.setContentType("application/json"); 
 	    PrintWriter prt=response.getWriter();
 	    JSONObject json=new JSONObject();
@@ -78,9 +84,17 @@ public class Frm_marcas_ABM extends HttpServlet {
 		try {
 			cn = fun.Conectar();
 			cn.setAutoCommit(false);
-			Statement st = cn.createStatement();			
-			st.executeUpdate(delete);
-			st.executeUpdate(insert);		    
+			Statement st = cn.createStatement();		
+			String sql="";
+			if (modo.equals("ALTA")){
+				sql=insert;
+			}else if (modo.equals("BAJA")){
+				sql=delete;
+			}else if (modo.equals("MODI")){
+				sql=updateStr;
+			}
+				System.out.println(sql);
+			st.executeUpdate(sql);			    
 			cn.commit();
 			st.close();
 			cn.close();

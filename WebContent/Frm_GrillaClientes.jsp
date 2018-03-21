@@ -106,7 +106,7 @@
 	        	mtype:'GET', 
 	        	colNames:['Cod.','Nombre','Telefono','Celular','Direcion','IVA','Documento','Plazo'],
 	        	colModel:[
-	        		{name:'cli_codig', index:'cli_codig', width:30, hidden:false,  formatter:'FormatClient'},
+	        		{name:'cli_codig', index:'cli_codig', width:30, hidden:false,  formatter:'FormatClient',key: true},
 	        		{name:'cli_nombr', index:'cli_nombr', width:100, hidden:false},
 	        		{name:'cli_telef', index:'cli_telef', width:60,hidden:false},
 	        		{name:'cli_celul', index:'cli_celul', width:60,hidden:false},

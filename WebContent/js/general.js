@@ -59,8 +59,8 @@ function cerrarAlerta(cfocus=""){//CIERRA MODAL ALERTA EJECUTANDO FOCUS
 	
 }
 
-function abrirPregunta(preg,funcionOk,funcionNo=""){//ABRE MODAL DE TIPO PREGUNTA (FUNCION CONFIRMACION,CANCELACION)
-	
+function abrirPregunta(preg,funcionOk=function(){},funcionNo=function(){}){//ABRE MODAL DE TIPO PREGUNTA (FUNCION CONFIRMACION,CANCELACION)
+	/*
 	if(funcionOk.name===undefined){		
 	}else{
 		funcionOk=funcionOk.name;
@@ -69,7 +69,7 @@ function abrirPregunta(preg,funcionOk,funcionNo=""){//ABRE MODAL DE TIPO PREGUNT
 	if(funcionNo.name===undefined){		
 	}else{
 		funcionNo=funcionNo.name;
-	}
+	}*/
 	
 	$("#bloqueoAlerta").html(
 	                         '<div class="modal modal-pregunta" data-tmodal="pregunta"> '+
@@ -80,25 +80,28 @@ function abrirPregunta(preg,funcionOk,funcionNo=""){//ABRE MODAL DE TIPO PREGUNT
 	                         '		¿'+preg+'? '+
 	                         '	</div> '+
 	                         '	<div class="modal-foot"> '+
-	                         '		<button type="button" class="btn btn-azul" onclick="okPregunta('+funcionOk+');">Confirmar</button> '+
-	                         '		<button id="btnCerrarPregunta" type="button" class="btn btn-gris" onclick="cerrarPregunta('+funcionNo+');">Cancelar</button> '+
+	                         '		<button id="btnConfirmarPregunta" type="button" class="btn btn-azul">Si</button> '+
+	                         '		<button id="btnCerrarPregunta" type="button" class="btn btn-gris">No</button> '+
 	                         '	</div> '+
 	                         '</div>'
 	);
-	
+		
+	$("#bloqueoAlerta #btnConfirmarPregunta").unbind("click").click({funcionOk: funcionOk },okPregunta);
+
+
+	$("#bloqueoAlerta #btnCerrarPregunta").unbind("click").click({funcionNo: funcionNo },cerrarPregunta);
+
 	$(".modal").draggable();
 	$("#bloqueoAlerta").show();
 	
 }
 
-function cerrarPregunta(funcion=""){//CIERRA Y EJECUTA FUNCION DE CANCELACIÓN EN MODAL TIPO PREGUNTA
+function cerrarPregunta(event){//CIERRA Y EJECUTA FUNCION DE CANCELACIÓN EN MODAL TIPO PREGUNTA
 	
 	$("#bloqueoAlerta [data-tmodal='pregunta']").last().remove();
 	$("#bloqueoAlerta").hide();
-	
-	if(funcion!=""){
-		funcion();
-	}
+
+	event.handleObj.data.funcionNo();
 	
 }
 
@@ -145,14 +148,14 @@ function cerrarFormu(formu="",funcion=""){//CIERRA Y EJECUTA FUNCION DE CANCELAC
 }
 
 
-function okPregunta(funcion=""){//CIERRA Y EJECUTA FUNCION DE CONFIRMACIÓN EN MODAL TIPO PREGUNTA
-	
+function okPregunta(event){//CIERRA Y EJECUTA FUNCION DE CONFIRMACIÓN EN MODAL TIPO PREGUNTA
+
+ 
+    
 	$("#bloqueoAlerta [data-tmodal='pregunta']").last().remove();
 	$("#bloqueoAlerta").hide();
-	
-	if(funcion!=""){
-		funcion();
-	}
+	console.log(JSON.stringify(event));
+	event.handleObj.data.funcionOk();
 	
 }
 
@@ -212,14 +215,27 @@ $.extend($.fn.fmatter , {
 });
 
 $.extend($.fn.fmatter.FormatActivo , {
-	unformat : function(cellvalue, options) {
-		if (cellvalue=="<img src=\"img/iconos/glyphicons-153-check.png\" style=\"height: auto;width: 22px;\">"){
+	unformat : function(cellvalue, options,cellObject) {
+		if ($($(cellObject).html())=="<img src=\"img/iconos/glyphicons-153-check.png\" style=\"height: auto;width: 22px;\">"){
 			return "1";
 		}else{
 			return "0";
 		}
 	}
 });
+
+function formatImage(cellValue, options, rowObject) {
+	if (cellValue=="1"){
+		var imageHtml =  "<img src=\"img/iconos/glyphicons-153-check.png\" style=\"height: auto;width: 22px;\" originalValue='" + cellValue + "' >";
+	}else{
+		var imageHtml =  "<img src=\"img/iconos/glyphicons-198-remove-circle.png\" style=\"height: auto;width: 18px;\" originalValue='" + cellValue + "' >";
+	}
+    return imageHtml;
+}
+
+function unformatImage(cellValue, options, cellObject) {
+    return $($(cellObject).html()).attr("originalValue");
+}
 
 function funciones(nombre,arg1=[],funcionSuccess=''){//devuelve resultados de las funciones declaradas en Funciones.java
 	//Declarar los parametros de la funcion como:
