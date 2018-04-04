@@ -3,10 +3,9 @@
 <%@page import="funciones.Funciones"%>
 <%
 	Funciones fun = new Funciones(request);
-	String idGrilla = "Frm_marcas_ABM_Grilla";
-	String idForm = "Frm_marcas_ABM";
-	String URL = "'./Frm_marcas_ABM'";
-	String tiposPuntos="<option value=\"E\">Electronico</option><option value=\"M\">Manual</option>";
+	String idGrilla = "Frm_cuentas_ABM_Grilla";
+	String idForm = "Frm_cuentas_ABM";
+	String URL = "'./Frm_cuentas_ABM'";
 %>
 
 <div id="<%=idForm%>" data-popup="true" class="backmodal formulario">
@@ -49,7 +48,7 @@
 		<div class="modal-header">
 			<div class="fila negro T-blanco rounded" style="height: 40px;padding: 4px 10px;">
 				<div class="tool">
-					<h3 style="margin: 0px;">Marcas</h3>
+					<h3 style="margin: 0px;">Cuentas</h3>
 				</div>		
 				<div class="tool tool-boton" data-modo="ALTA">
 					<img src="/img/iconos/glyphicons-433-plus.png"

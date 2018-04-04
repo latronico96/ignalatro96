@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.5.1.final using JasperReports Library version 6.5.1  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Stock Hoy" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7c14ec03-5c82-4e66-a07f-9f0c47b0a441">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="WebContent\reportes\DataAdapter.xml"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.report.description" value="Stock de articulos de hoy."/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="224"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="765"/>
+	<parameter name="filtro" class="java.lang.String">
+		<defaultValueExpression><![CDATA[3]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT case stk_canti when 0 then 0 else 
+	case when stk_canti > art_stmin then 2 else 1 end 
+	end as stk , dbarticulos.*,stockhoy.*
+FROM dbarticulos
+left join stockhoy on (stk_artic=art_codig)
+where  case stk_canti when 0 then 0 else 
+			case when stk_canti > art_stmin then
+			1 else 2 end end in (  $P!{filtro}  )
+order by stk  desc]]>
+	</queryString>
+	<field name="stk" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="stk"/>
+	</field>
+	<field name="art_codig" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="art_codig"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="dbarticulos"/>
+	</field>
+	<field name="art_marca" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="art_marca"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="dbarticulos"/>
+	</field>
+	<field name="art_nombr" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="art_nombr"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="dbarticulos"/>
+	</field>
+	<field name="art_activ" class="java.lang.Object">
+		<property name="com.jaspersoft.studio.field.label" value="art_activ"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="dbarticulos"/>
+	</field>
+	<field name="art_codbr" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="art_codbr"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="dbarticulos"/>
+	</field>
+	<field name="art_pmeno" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="art_pmeno"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="dbarticulos"/>
+	</field>
+	<field name="art_pmayo" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="art_pmayo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="dbarticulos"/>
+	</field>
+	<field name="art_costo" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="art_costo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="dbarticulos"/>
+	</field>
+	<field name="art_stmin" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="art_stmin"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="dbarticulos"/>
+	</field>
+	<field name="stk_artic" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="stk_artic"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="dbremdetalles"/>
+	</field>
+	<field name="stk_canti" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="stk_canti"/>
+	</field>
+	<variable name="TotalMenor" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[Math.round($F{stk_canti}.doubleValue()*$F{art_pmayo}.doubleValue() * 100.0) / 100.0]]></variableExpression>
+		<initialValueExpression><![CDATA[0d]]></initialValueExpression>
+	</variable>
+	<variable name="TotalMayor" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[+Math.round($F{stk_canti}.doubleValue()*$F{art_pmeno}.doubleValue() * 100.0) / 100.0]]></variableExpression>
+		<initialValueExpression><![CDATA[0d]]></initialValueExpression>
+	</variable>
+	<group name="Group1" isReprintHeaderOnEachPage="true" keepTogether="true">
+		<groupExpression><![CDATA[( $F{stk}==null ? "" : $F{stk} )]]></groupExpression>
+		<groupHeader>
+			<band height="17">
+				<textField>
+					<reportElement x="0" y="-1" width="212" height="17" uuid="38780559-8f21-4fe2-9a80-8fdbb8e9a40c"/>
+					<textElement>
+						<font size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[	( $F{stk} == 0  ? "Articulos sin Stock" : 
+		($F{stk} == 1 ? "Articulos con poco Stock" : "Articulos con  Stock" )
+	)	]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="80">
+			<staticText>
+				<reportElement x="0" y="61" width="30" height="14" uuid="f28de01e-7c7d-4303-8af1-01aa35e1a005"/>
+				<text><![CDATA[Cod.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="30" y="61" width="70" height="14" uuid="e1f7aa10-6c87-4dc7-af4f-576d8597507c"/>
+				<text><![CDATA[Marca]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="412" y="61" width="64" height="14" uuid="9eb5e1fe-1cc3-471a-a75f-3a23e3231122"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Tot. x menor]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="380" y="61" width="32" height="14" uuid="dd9973fc-956c-4899-a8c7-ce25f733910b"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Cant.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="100" y="61" width="112" height="14" uuid="bb7c61a3-cab5-4a4f-8f74-12e09b9d6731"/>
+				<text><![CDATA[Nombre]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="476" y="61" width="64" height="14" uuid="e8311b6b-a37a-4fbb-beec-5e487cb7dae6"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Tot. x mayor]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="79" width="555" height="1" uuid="30a0cb6b-fb9c-4269-b736-d22efd06c77c"/>
+			</line>
+			<staticText>
+				<reportElement x="276" y="61" width="64" height="14" uuid="9b04680f-4b65-4259-9064-303ff073631a"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[P. al mayor]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="212" y="61" width="64" height="14" uuid="0f99fc3d-0d58-45a6-8d94-f90a0cdde32d"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[P. al menor]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="340" y="61" width="40" height="14" uuid="8d1eb07d-873d-4855-881f-401e0d20414e"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Stk. min.]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="16" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="2" width="30" height="14" uuid="813ff3a8-682e-4f2b-a7d8-f54c90567397"/>
+				<textElement>
+					<paragraph leftIndent="1" rightIndent="1" spacingBefore="0"/>
+				</textElement>
+				<textFieldExpression><![CDATA[String.format("%04d", $F{art_codig}.intValue())]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="30" y="2" width="70" height="14" uuid="7e13c8ad-f3e9-40db-a0a6-28c073a0ea60"/>
+				<textElement>
+					<paragraph leftIndent="1" rightIndent="1" spacingBefore="0"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{art_marca}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="2" width="112" height="14" uuid="9cfe4651-5bf2-49f7-8930-c7c73fd14d19"/>
+				<textElement>
+					<paragraph leftIndent="1" rightIndent="1" spacingBefore="0"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{art_nombr}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="412" y="2" width="64" height="14" uuid="8b073cf4-bd82-4218-a9fb-acdf90a27d0c"/>
+				<textElement textAlignment="Right">
+					<paragraph leftIndent="1" rightIndent="1" spacingBefore="0"/>
+				</textElement>
+				<textFieldExpression><![CDATA[String.format("%,.2f", Math.round($F{stk_canti}.doubleValue()*$F{art_pmeno}.doubleValue() * 100.0) / 100.0)]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="476" y="2" width="64" height="14" uuid="5a40ebcc-3bcc-4420-a763-9ec93985cf4d"/>
+				<textElement textAlignment="Right">
+					<paragraph leftIndent="1" rightIndent="1" spacingBefore="0"/>
+				</textElement>
+				<textFieldExpression><![CDATA[String.format("%,.2f", Math.round($F{stk_canti}.doubleValue()*$F{art_pmayo}.doubleValue() * 100.0) / 100.0)]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="380" y="2" width="32" height="14" uuid="47a66f8f-b829-4651-a40d-0f484aee8d89"/>
+				<textElement textAlignment="Right">
+					<paragraph leftIndent="1" rightIndent="1" spacingBefore="0"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{stk_canti}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="212" y="2" width="64" height="14" uuid="c91e9626-ad6d-43fc-9849-d3a398035ccb"/>
+				<textElement textAlignment="Right">
+					<paragraph leftIndent="1" rightIndent="1" spacingBefore="0"/>
+				</textElement>
+				<textFieldExpression><![CDATA[String.format("%,.2f", $F{art_pmeno})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="276" y="2" width="64" height="14" uuid="71072d0e-02be-4ec0-bed2-fe7a93b58fe2"/>
+				<textElement textAlignment="Right">
+					<paragraph leftIndent="1" rightIndent="1" spacingBefore="0"/>
+				</textElement>
+				<textFieldExpression><![CDATA[String.format("%,.2f", $F{art_pmayo})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="340" y="2" width="40" height="14" uuid="c7c38a24-3b88-4d08-9194-761c475a774e"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{art_stmin}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="24">
+			<textField evaluationTime="Report">
+				<reportElement key="" x="412" y="2" width="64" height="20" uuid="a2ad752a-7edf-497e-b07a-04719040a461"/>
+				<textElement textAlignment="Right">
+					<font size="12" isBold="true"/>
+					<paragraph leftIndent="1" rightIndent="1" spacingBefore="0"/>
+				</textElement>
+				<textFieldExpression><![CDATA[String.format("%,.2f", $V{TotalMenor})]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement key="" x="476" y="2" width="64" height="20" uuid="50231d1f-e76b-4095-9578-5ec157e10267"/>
+				<textElement textAlignment="Right">
+					<font size="12" isBold="true"/>
+					<paragraph leftIndent="1" rightIndent="1" spacingBefore="0"/>
+				</textElement>
+				<textFieldExpression><![CDATA[String.format("%,.2f", $V{TotalMayor})]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="366" y="2" width="46" height="20" uuid="5d0a3248-115d-4577-91e3-d9006f005ece"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Totales]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>

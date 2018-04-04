@@ -151,19 +151,19 @@
 						</div>
 					</div>
 				</div>
-			</div-->	
+			</div>	
 			<!-- fin Barra Lateral -->	
 			<!-- cuerpo -->
 			<div class="fila">
 				<div class="tab-content rounded" id="Cuerpo">
 					<!-- table id="GrillaCuerpo"></table>
 					<div id="GrillaCuerpo_pie"></div>
-					<div class="fila">
-						<input type="text" id="cli_codig">
-						<button type="button" class="btn btn-primary" id="btn_confirmar" onclick="HelpCampo('ART','#cli_codig')">
-							<img src="/img/iconos/glyphicons-28-search.png"	style="width: auto; filter: invert(55%);">
-						</button>
-						<input type="text" id="cli_nombr">
+						<div class="fila">
+							<input type="text" id="cli_codig">
+							<button type="button" class="btn btn-primary" id="btn_confirmar" onclick="HelpCampo('ART','#cli_codig')">
+								<img src="/img/iconos/glyphicons-28-search.png"	style="width: auto; filter: invert(55%);">
+							</button>
+							<input type="text" id="cli_nombr">
 					</div-->
 				</div>
 			</div>
