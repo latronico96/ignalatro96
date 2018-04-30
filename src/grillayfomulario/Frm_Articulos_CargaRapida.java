@@ -26,6 +26,10 @@ import funciones.Funciones;
 public class Frm_Articulos_CargaRapida extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     private Funciones fun = null;
+    private String tablaArt="dbArticulos";
+    private String tablaMar="dbMarcas";
+    private String tablaRem="dbremitos";
+    private String tablaRed="dbremdetalles";
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -40,9 +44,12 @@ public class Frm_Articulos_CargaRapida extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		fun = new Funciones(request);
 		Map<String,String> parametros=fun.parametrosAMap(request);
+		Map<String,String> tiposArt=fun.getTipos(tablaArt);
+		Map<String,String> tiposMar=fun.getTipos(tablaMar);
+		Map<String,String> tiposRem=fun.getTipos(tablaRem);
+		Map<String,String> tiposRed=fun.getTipos(tablaRed);
 		String error="0";
-		String msg="sin errores se modifico con exito";
-		
+		String msg="sin errores se modifico con exito";		
 		response.setContentType("application/json"); 
 		PrintWriter prt=response.getWriter();
 		JSONObject json=new JSONObject();
@@ -51,20 +58,31 @@ public class Frm_Articulos_CargaRapida extends HttpServlet {
 		try {
 			cn = fun.Conectar();
 			cn.setAutoCommit(false);
-			
+			String insertMarca="";
 			String sigMar=parametros.getOrDefault("mar_codig", "");
 			if(sigMar.equals("")){
 				sigMar=fun.getMaximoStr("dbmarcas", "mar_codig");
 				sigMar=String.valueOf(Integer.parseInt(sigMar)+1);
-				String insertMarca="insert into dbMarcas (mar_codig,mar_nombr,mar_activ) values ("+
+				insertMarca="insert into dbMarcas (mar_codig,mar_nombr,mar_activ) values ("+
 						sigMar+",'"+parametros.getOrDefault("mar_nombr", "")+"',1)";
-				st = cn.createStatement();			
-				st.executeUpdate(insertMarca);
-				st.close();
+		    }else{
+				sigMar=fun.getMaximoStr("dbmarcas", "mar_codig");
+				sigMar=String.valueOf(Integer.parseInt(sigMar)+1);
+				insertMarca="update dbMarcas set "
+						+ "mar_nombr='"+parametros.getOrDefault("mar_nombr", "")+"',"
+						+ "mar_activ=1"
+						+ "where mar_codig="+sigMar;
 		    }	
+			st = cn.createStatement();			
+			st.executeUpdate(insertMarca);
+			st.close();
+			
 			
 			
 			String art_codig=parametros.getOrDefault("art_codig", "");
+			
+
+			JSONObject obj= fun.ValyGetOBJ("ART", art_codig);
 			String art_marca=sigMar;
 			String art_nombr=parametros.getOrDefault("art_nombr", "");
 			String art_codbr=parametros.getOrDefault("art_codbr", "");
@@ -73,29 +91,82 @@ public class Frm_Articulos_CargaRapida extends HttpServlet {
 			String art_costo=parametros.getOrDefault("art_costo", "");
 			String art_pmeno=parametros.getOrDefault("art_pmeno", "");
 			String art_pmayo=parametros.getOrDefault("art_pmayo", "");
-			String insertArticulo="insert into dbArticulos "
-					+ "(art_codig,art_marca,art_nombr,art_codbr,art_activ,art_stmin,art_costo,art_pmeno,art_pmayo) "
-					+ "values ("+art_codig+","+art_marca+",'"+art_nombr+"','"+art_codbr+"',"+art_activ+","+art_stmin+","+art_costo+","+art_pmeno+","+art_pmayo+")";
+			
+			String insertArticulo="";
+			if (obj.getOrDefault("error", "1").equals("1")){// no existe el articulo		
+				
+				insertArticulo="insert into dbArticulos "
+						+ "(art_codig,art_marca,art_nombr,art_codbr,art_activ,art_stmin,art_costo,art_pmeno,art_pmayo) "
+						+ "values ("+art_codig+","+art_marca+",'"+art_nombr+"','"+art_codbr+"',"+art_activ+","+art_stmin+","+art_costo+","+art_pmeno+","+art_pmayo+")";
+				
+			}else{
+				
+				insertArticulo="update dbArticulos set "
+					+" art_marca="+Funciones.PrepararCampo("art_marca" , tiposArt, art_marca)
+					+", art_nombr="+Funciones.PrepararCampo("art_nombr" , tiposArt, art_nombr)
+					+", art_codbr="+Funciones.PrepararCampo("art_codbr" , tiposArt, art_codbr)
+					+", art_activ="+Funciones.PrepararCampo("art_activ" , tiposArt, art_activ)
+					+", art_stmin="+Funciones.PrepararCampo("art_stmin" , tiposArt, art_stmin)
+					+", art_costo="+Funciones.PrepararCampo("art_costo" , tiposArt, art_costo)
+					+", art_pmeno="+Funciones.PrepararCampo("art_pmeno" , tiposArt, art_pmeno)
+					+", art_pmayo="+Funciones.PrepararCampo("art_pmayo" , tiposArt, art_pmayo)
+					+" where art_codig="+Funciones.PrepararCampo("art_codig" , tiposArt, art_codig);
+				
+			}
 			st = cn.createStatement();			
 			st.executeUpdate(insertArticulo);
 			st.close();
 			
+			String red_canti=parametros.getOrDefault("red_canti", "0");
+			String rem_codig=parametros.getOrDefault("rem_codig", "0");
+			String rem_total=Funciones.PrepararCampo("rem_total" , tiposArt, fun.FormatNumber(Double.parseDouble(red_canti)*Double.parseDouble(art_pmeno),2));
+			String rem_codcl="NULL";
+			String rem_condi=Funciones.PrepararCampo("rem_condi" , tiposArt,Funciones.Contado);
+			String rem_fecha=Funciones.PrepararCampo("rem_fecha" , tiposArt, fun.Ahora("yyyy/MM/dd"));
+			String rem_tipor="'"+fun.RemStock+"'";
+
 			
-			double red_canti=Double.parseDouble(parametros.getOrDefault("red_canti", "0"));
-			String rem_codig=fun.getMaximoStr("dbremitos", "rem_codig");			
-			rem_codig=String.valueOf(Integer.parseInt(rem_codig)+1);			
-			String insertRemito="insert into dbremitos (rem_total,rem_codcl,rem_condi,rem_fecha,rem_codig,rem_tipor) values "
-					+ "("+String.valueOf(red_canti*Double.parseDouble(art_pmeno))+",null,'"+fun.Contado+"',now(),"+rem_codig+",'E')";
+			String insertRemito="";
+			String insertRemitoDet="";
+			if (rem_codig.equals("") || Integer.parseInt(rem_codig)==0){
+				rem_codig=fun.getMaximoStr("dbremitos", "rem_codig");			
+				rem_codig=String.valueOf(Integer.parseInt(rem_codig)+1);			
+				insertRemito="insert into dbremitos (rem_total,rem_codcl,rem_condi,rem_fecha,rem_codig,rem_tipor) values "
+						+ "("+rem_total+","+rem_codcl+","+rem_condi+","+rem_fecha+","+rem_codig+","+rem_tipor+")";
+
+				
+				insertRemitoDet="insert into dbremdetalles (red_pmeno,red_pmayo,red_costo,red_artic,red_canti,red_nrore,red_nitem) values"
+						+ "("+art_pmeno+","+art_pmayo+","+art_costo+","+art_codig+","+String.valueOf(red_canti)+","+rem_codig+",1)";
+				
+			}else{	
+
+				insertRemito="update dbremitos set "
+								+"rem_total="+rem_total
+								+", rem_codcl="+rem_codcl
+								+", rem_condi="+rem_condi
+								+", rem_fecha="+rem_fecha
+								+", rem_codig="+rem_codig
+								+", rem_tipor="+rem_tipor
+								+"WHERE rem_codig="+rem_codig;
+
+				insertRemitoDet="UPDATE dbremdetalles set "
+						+"red_pmeno="+art_pmeno
+						+", red_pmayo="+art_pmayo
+						+", red_costo="+art_costo
+						+", red_artic="+art_codig
+						+", red_canti="+String.valueOf(red_canti)
+						+", red_nitem=1 "
+						+"WHERE red_nrore="+rem_codig;
+				
+				
+			}
 			st = cn.createStatement();			
 			st.executeUpdate(insertRemito);
 			st.close();
 			
-			String insertRemitoDet="insert into dbremdetalles (red_pmeno,red_pmayo,red_costo,red_artic,red_canti,red_nrore,red_nitem) values"
-									+ "("+art_pmeno+","+art_pmayo+","+art_costo+","+art_codig+","+String.valueOf(red_canti)+","+rem_codig+",1)";
-			st = cn.createStatement();			
+			st = cn.createStatement();	
 			st.executeUpdate(insertRemitoDet);
 			st.close();
-			
 			
 			
 		} catch (ClassNotFoundException e) {
@@ -231,7 +302,8 @@ public class Frm_Articulos_CargaRapida extends HttpServlet {
 			}else{
 				filtro+= " and ";
 			}	    	
-			filtro+= BusquedaCampo+" in (0"+BusquedaValor+") ";	   		
+			//filtro+= BusquedaCampo+" in (0"+BusquedaValor+") ";	   		
+			filtro += " rem_tipor = '"+fun.RemStock+"' ";	   		
 		}
 
 
@@ -243,6 +315,7 @@ public class Frm_Articulos_CargaRapida extends HttpServlet {
 					+ "from  dbarticulos \n"
 					+ "left join dbmarcas on (art_marca=mar_codig) \n"
 					+ "left join dbremdetalles on (art_codig=red_artic) \n"
+					+ "left join dbremitos on (rem_codig=red_nrore) \n"
 					+ filtro
 					+ " ORDER BY " + ordenarcampo+ " " +ordenarmetodo;
 			JSONObject jsonGrilla=fun.Grilla(sql,empieza,termina,pagina,rp);	 		   

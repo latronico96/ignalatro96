@@ -85,8 +85,8 @@
 							</a>
 							<div class="dropdown-menu" aria-labelledby="configuracion">
 								<a class="dropdown-item" id="marcas" data-url="Frm_marcas_ABM.jsp" data-form="Frm_marcas_ABM">Marcas</a>
-								<a class="dropdown-item" id="marcas" data-url="Frm_Articulos_CargaRapida.jsp" data-form="Frm_Articulos_CargaRapida">Carga Rapida</a>
-
+								<a class="dropdown-item" id="cargaRapida" data-url="Frm_Articulos_CargaRapida.jsp" data-form="Frm_Articulos_CargaRapida">Carga Rapida</a>
+								<a class="dropdown-item" id="stockHoy" data-url="Rpt_StockHoy.jsp" data-form="Rpt_StockHoy">Informa de Stock de Hoy</a>
 							</div>
 						</li>
 						<li class="nav-item">
@@ -197,6 +197,13 @@
 				abrirFormulario($(this).data());				
 			});
 			$("#Rem").click();
+			
+			$(document).keyup(function (e) {
+    			if (e.keyCode == 27) { // escape key maps to keycode `27`
+    				cerrarFormu();	 					
+    			}
+    		});
+
 			
 		});
 	</script>

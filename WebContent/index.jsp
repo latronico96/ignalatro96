@@ -22,11 +22,13 @@
 <script type="text/javascript" src="js/general.js" charset="UTF-8"></script>
 <script>
 	$(document).ready(function(){
-		$("#frm_login input").on('keyup', function (e) {
+		$("#frm_login input").keyup(function (e) {
 		    if (e.keyCode == 13) {
-		    	$("#frm_login input#btn_Enviar").click();
+		    	$("#frm_login #btn_Enviar").click();
 		    }
 		});
+		
+		
 		
 	    $("#btn_Enviar").click(function(){
 		    var formulario = $("#login");

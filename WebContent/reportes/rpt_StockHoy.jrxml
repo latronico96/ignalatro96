@@ -92,9 +92,9 @@ order by stk  desc]]>
 					<textElement>
 						<font size="12" isBold="true"/>
 					</textElement>
-					<textFieldExpression><![CDATA[	( $F{stk} == 0  ? "Articulos sin Stock" : 
+					<textFieldExpression><![CDATA[( $F{stk} == 0  ? "Articulos sin Stock" : 
 		($F{stk} == 1 ? "Articulos con poco Stock" : "Articulos con  Stock" )
-	)	]]></textFieldExpression>
+	)]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupHeader>
@@ -106,29 +106,44 @@ order by stk  desc]]>
 		<band height="80">
 			<staticText>
 				<reportElement x="0" y="61" width="30" height="14" uuid="f28de01e-7c7d-4303-8af1-01aa35e1a005"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
 				<text><![CDATA[Cod.]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="30" y="61" width="70" height="14" uuid="e1f7aa10-6c87-4dc7-af4f-576d8597507c"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
 				<text><![CDATA[Marca]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="412" y="61" width="64" height="14" uuid="9eb5e1fe-1cc3-471a-a75f-3a23e3231122"/>
-				<textElement textAlignment="Right"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
 				<text><![CDATA[Tot. x menor]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="380" y="61" width="32" height="14" uuid="dd9973fc-956c-4899-a8c7-ce25f733910b"/>
-				<textElement textAlignment="Right"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
 				<text><![CDATA[Cant.]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="100" y="61" width="112" height="14" uuid="bb7c61a3-cab5-4a4f-8f74-12e09b9d6731"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
 				<text><![CDATA[Nombre]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="476" y="61" width="64" height="14" uuid="e8311b6b-a37a-4fbb-beec-5e487cb7dae6"/>
-				<textElement textAlignment="Right"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
 				<text><![CDATA[Tot. x mayor]]></text>
 			</staticText>
 			<line>
@@ -136,19 +151,32 @@ order by stk  desc]]>
 			</line>
 			<staticText>
 				<reportElement x="276" y="61" width="64" height="14" uuid="9b04680f-4b65-4259-9064-303ff073631a"/>
-				<textElement textAlignment="Right"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
 				<text><![CDATA[P. al mayor]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="212" y="61" width="64" height="14" uuid="0f99fc3d-0d58-45a6-8d94-f90a0cdde32d"/>
-				<textElement textAlignment="Right"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
 				<text><![CDATA[P. al menor]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="340" y="61" width="40" height="14" uuid="8d1eb07d-873d-4855-881f-401e0d20414e"/>
-				<textElement textAlignment="Right"/>
-				<text><![CDATA[Stk. min.]]></text>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Min.]]></text>
 			</staticText>
+			<textField pattern="MMMMM dd, yyyy">
+				<reportElement x="132" y="16" width="291" height="29" uuid="922c330f-4c75-4dea-a8ba-da2ce085d510"/>
+				<textElement textAlignment="Center">
+					<font size="19" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Stock al dia de " + new SimpleDateFormat("dd/MM/yyyy").format(new java.util.Date())]]></textFieldExpression>
+			</textField>
 		</band>
 	</pageHeader>
 	<detail>
@@ -217,9 +245,9 @@ order by stk  desc]]>
 		</band>
 	</detail>
 	<summary>
-		<band height="24">
+		<band height="25">
 			<textField evaluationTime="Report">
-				<reportElement key="" x="412" y="2" width="64" height="20" uuid="a2ad752a-7edf-497e-b07a-04719040a461"/>
+				<reportElement key="" x="412" y="5" width="64" height="20" uuid="a2ad752a-7edf-497e-b07a-04719040a461"/>
 				<textElement textAlignment="Right">
 					<font size="12" isBold="true"/>
 					<paragraph leftIndent="1" rightIndent="1" spacingBefore="0"/>
@@ -227,7 +255,7 @@ order by stk  desc]]>
 				<textFieldExpression><![CDATA[String.format("%,.2f", $V{TotalMenor})]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report">
-				<reportElement key="" x="476" y="2" width="64" height="20" uuid="50231d1f-e76b-4095-9578-5ec157e10267"/>
+				<reportElement key="" x="476" y="5" width="64" height="20" uuid="50231d1f-e76b-4095-9578-5ec157e10267"/>
 				<textElement textAlignment="Right">
 					<font size="12" isBold="true"/>
 					<paragraph leftIndent="1" rightIndent="1" spacingBefore="0"/>
@@ -235,12 +263,15 @@ order by stk  desc]]>
 				<textFieldExpression><![CDATA[String.format("%,.2f", $V{TotalMayor})]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="366" y="2" width="46" height="20" uuid="5d0a3248-115d-4577-91e3-d9006f005ece"/>
+				<reportElement x="366" y="5" width="46" height="20" uuid="5d0a3248-115d-4577-91e3-d9006f005ece"/>
 				<textElement>
 					<font size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Totales]]></text>
 			</staticText>
+			<line>
+				<reportElement x="0" y="4" width="555" height="1" uuid="026cec6a-aefe-42b0-9ec1-6ab2e56ebce0"/>
+			</line>
 		</band>
 	</summary>
 </jasperReport>

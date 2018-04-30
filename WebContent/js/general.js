@@ -122,9 +122,9 @@ function abrirFormulario(parametros={}){// parametros.url parametros.parametros
 					$(".modal").draggable();
 					$(data).show();  			    			
 	    		}else{
+	    			cerrarFormu();
 					$("#Cuerpo").html($(data));
 	    		}   
-	    		//console.log(formulario);
     		}, 
     		error:function(data){        			
 	    		cerrarAlerta();
@@ -135,23 +135,24 @@ function abrirFormulario(parametros={}){// parametros.url parametros.parametros
 }
 
 function cerrarFormu(formu="",funcion=""){//CIERRA Y EJECUTA FUNCION DE CANCELACIÓN EN MODAL TIPO PREGUNTA
-	if(formu==""){
-		formu=$(".formulario").last().attr("id");		
+	if (formularios.length>1){
+		if(formu==""){
+			formu=$(".formulario").last().attr("id");		
+		}
+		formulario=formularios.pop();
+			//(formularios.length-2<0?undefined:formularios[formularios.length-1]);		
+		$("#"+formu).last().remove();
+		$(".popover").popover("hide");
+		$("table.ui-jqgrid-btable.ui-common-table",$(".formulario").last()).trigger( 'reloadGrid' );
+		if(funcion!=""){
+			funcion();
+		}
 	}
-	formulario=(formularios.length-2<0?undefined:formularios[formularios.length-1]);
-	$("#"+formu).last().remove();
-	$(".popover").popover("hide");
-	$("table.ui-jqgrid-btable.ui-common-table",$(".formulario").last()).trigger( 'reloadGrid' );
-	if(funcion!=""){
-		funcion();
-	}	
 }
 
 
 function okPregunta(event){//CIERRA Y EJECUTA FUNCION DE CONFIRMACIÓN EN MODAL TIPO PREGUNTA
-
- 
-    
+  
 	$("#bloqueoAlerta [data-tmodal='pregunta']").last().remove();
 	$("#bloqueoAlerta").hide();
 	console.log(JSON.stringify(event));

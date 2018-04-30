@@ -2,6 +2,8 @@ package funciones;
 
 import java.sql.Statement;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.text.FieldPosition;
 import java.text.ParseException;
 import java.text.ParsePosition;
@@ -32,6 +34,9 @@ public class Funciones {
 	private int codigoHash=12;
 	public Map<String,String> parametros=new HashMap<String,String>();
 	public  Date hoy = new Date();
+	public static final String RemEntrada="E";
+	public static final String RemSalida="S";
+	public static final String RemStock="T";
 	public static final String Contado="O";
 	public static final String CtaCorrienta="U";
 	/*public String server="";
@@ -444,8 +449,21 @@ public class Funciones {
 		}
 	}
 	
+	public  static String FormatNumber(Object numero, int digitos) {
+		String patron="0."+Funciones.fillZero("", digitos);
+		DecimalFormatSymbols unusualSymbols = new DecimalFormatSymbols();
+		unusualSymbols.setDecimalSeparator('.');
+		unusualSymbols.setGroupingSeparator(',');
+		DecimalFormat formateador = new DecimalFormat(patron,unusualSymbols);
+		return formateador.format(numero);
+	}
+	
+	public  static String FormatNumber(Object numero) {
+		return Funciones.FormatNumber(numero,0);		
+	}
+	
 	public Date Ahora(){
-		return new Date();		
+		return this.hoy;		
 	}
 	
 	public String Ahora(String tipo){
@@ -612,7 +630,7 @@ public class Funciones {
 		return str;
 	}
 	
-	public String ValyGet(String cod, String id){
+	public JSONObject ValyGetOBJ(String cod, String id){
 		String tabla="";
 		String campo="";
 		String err="";
@@ -683,10 +701,13 @@ public class Funciones {
 			jsonGen.put("error",err); 
 		}
 		
-		return jsonGen.toString();
+		return jsonGen;
 		
 	}
-	public String fillZero(String str,int max) {
+	public String ValyGet(String cod, String id){
+		return  ValyGetOBJ( cod,  id).toString();
+	}
+	public static String fillZero(String str,int max) {
 		  str = str.toString();
 		  return (str.length() < max ? fillZero("0" + str, max) : str);
 	}

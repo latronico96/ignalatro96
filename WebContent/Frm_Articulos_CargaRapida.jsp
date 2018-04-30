@@ -66,22 +66,27 @@
    		NidGrilla: "#" + "<%=idGrilla%>",
 		cargados:"",
 		stringFrom:"<div id=\"form\">\n"+
-						"<input id=\"art_codbr\" class=\"form-control with-14-50 dato\" type=\"text\" placeholder=\"Cod. Barras\"  maxlength=\"13\">\n"+
-						"<input id=\"art_codig\" class=\"form-control with-5-50 dato\" type=\"text\" placeholder=\"Cod.\" >\n"+
-						"<input id=\"red_canti\" class=\"form-control with-4-50 dato\" type=\"text\" placeholder=\"Cant.\" >\n"+
-						"<input id=\"mar_codig\" class=\"dato\" type=\"hidden\" placeholder=\"codigo\" >\n"+
-						"<input id=\"mar_nombr\" class=\"form-control with-14-50 dato\" type=\"text\" placeholder=\"Grupo\" list=\"listaMarca\"  maxlength=\"45\">\n"+
-						"<datalist id=\"listaMarca\"></datalist>\n"+
-						"<input id=\"art_nombr\" class=\"form-control with-14-50 dato\" type=\"text\" placeholder=\"Articulo\"  maxlength=\"45\">\n"+
-						"<input id=\"art_stmin\" class=\"form-control with-4-00 dato\" type=\"text\" placeholder=\"Stk Min\" >\n"+
-						"<input id=\"art_costo\" class=\"form-control with-9-50 dato\" type=\"text\" placeholder=\"Costo\" >\n"+
-						"<input id=\"art_pmenoP\" class=\"form-control with-4-00 dato\" type=\"text\" placeholder=\"%\" >\n"+
-						"<input id=\"art_pmeno\" class=\"form-control with-10-00 dato\" type=\"text\" placeholder=\"Minorista\" >\n"+
-						"<input id=\"art_pmayoP\" class=\"form-control with-4-00 dato\" type=\"text\" placeholder=\"%\" >\n"+
-						"<input id=\"art_pmayo\" class=\"form-control with-10-00 dato\" type=\"text\" placeholder=\"Mayorista\" >\n"+
-						"<button id=\"btn_act\" class=\"form-control with-1-00\" style=\"height: 18px;  padding: 1px;\" type=\"button\" value=\"se apreto\" >\n"+
-						"	<img src=\"/img/iconos/check.svg\" style=\"width: 16px; \">\n"+
-						"</button>\n"+
+						"<div Style=\"width: calc(100% - 20px);float: left;\">"+
+						"	<input id=\"rem_codig\" class=\"dato\" type=\"hidden\">\n"+
+						"	<input id=\"art_codbr\" class=\"form-control with-15-00 dato\" type=\"text\" placeholder=\"Cod. Barras\"  maxlength=\"13\">\n"+
+						"	<input id=\"art_codig\" class=\"form-control with-5-00 dato\" type=\"text\" placeholder=\"Cod.\" >\n"+
+						"	<input id=\"red_canti\" class=\"form-control with-5-00 dato\" type=\"text\" placeholder=\"Cant.\" >\n"+
+						"	<input id=\"mar_codig\" class=\"dato\" type=\"hidden\" placeholder=\"codigo\" >\n"+
+						"	<input id=\"mar_nombr\" class=\"form-control with-15-00 dato\" type=\"text\" placeholder=\"Grupo\" list=\"listaMarca\"  maxlength=\"45\">\n"+
+						"	<datalist id=\"listaMarca\"></datalist>\n"+
+						"	<input id=\"art_nombr\" class=\"form-control with-15-00 dato\" type=\"text\" placeholder=\"Articulo\"  maxlength=\"45\">\n"+
+						"	<input id=\"art_stmin\" class=\"form-control with-5-00 dato\" type=\"text\" placeholder=\"Stk Min\" >\n"+
+						"	<input id=\"art_costo\" class=\"form-control with-10-00 dato\" type=\"text\" placeholder=\"Costo\" >\n"+
+						"	<input id=\"art_pmenoP\" class=\"form-control with-5-00 dato\" type=\"text\" placeholder=\"%\" >\n"+
+						"	<input id=\"art_pmeno\" class=\"form-control with-10-00 dato\" type=\"text\" placeholder=\"Minorista\" >\n"+
+						"	<input id=\"art_pmayoP\" class=\"form-control with-5-00 dato\" type=\"text\" placeholder=\"%\" >\n"+
+						"	<input id=\"art_pmayo\" class=\"form-control with-10-00 dato\" type=\"text\" placeholder=\"Mayorista\" >\n"+
+						"</div>"+
+						"<div Style=\"width: 20px;float: left;\">"+
+						"	<button id=\"btn_act\" class=\"form-control\" style=\"height: 18px;width: 16px;  padding: 1px;\" type=\"button\" value=\"se apreto\" >\n"+
+						"		<img src=\"/img/iconos/check.svg\" style=\"width: 16px; \">\n"+
+						"	</button>\n"+
+						"</div>"+
 					"</div>",
 		validarMarca:function (){   		
     		var res=true;    		
@@ -97,8 +102,9 @@
 	        	url: <%=URL%>,
 	        	datatype:"json",
 	        	mtype:'POST', 
-	        	colNames:['Cod. Barras','Cod.','Cant.','Codigo grupo','Grupo','Articulo','C. Min','Costo','P Men.','P. May.'],
+	        	colNames:['Nro Remito','Cod. Barras','Cod.','Cant.','Codigo grupo','Grupo','Articulo','C. Min','Costo','P Men.','P. May.'],
 	        	colModel:[
+	        		{name:'rem_codig', index:'rem_codig', width:0, hidden:true},
 					{name:'art_codbr', index:'art_codbr', width:15,},
 					{name:'art_codig', index:'art_codig', width:5,  formatter:'FormatClient'},					
 	        		{name:'red_canti', index:'red_canti', width:5, align:"right"},
@@ -129,7 +135,9 @@
 	        		
 	        		$("#form",formulario).remove();
 	        		$(".ui-jqgrid-bdiv",formulario).prepend(formulario.stringFrom);     
-	        		
+	        		$("#form div:first *",formulario).each(function( index ) {
+	        			  $(this).width(parseFloat($(this).width()-2));
+	        			});
 	        		$("#listaMarca",formulario).html(funciones("GetHTMLOtionList",["mar_codig","String","mar_nombr","String","dbmarcas","String"]));
 	        		
 	        		$('#mar_nombr',formulario).change(function(){
@@ -160,7 +168,7 @@
 	        	    });
 	        		
 	        		$('#art_codig',formulario).change(function(){	        			
-	        			var cod=$(this).val();
+	        			var cod=$(this).val();        				
                 		rowArt=JSON.parse(valyget("ART",cod));    
                 		switch(rowArt.error){
         	                case "2":
@@ -203,6 +211,17 @@
 	        			$("#art_pmayo",formulario).val(number_format(costo+(costo*porceMay),2));	        			
 	        	    });	 
 	        		
+	        		$('#art_pmeno,#art_pmayo',formulario).change(function(){	 
+	        			var costo=$('#art_costo',formulario).val();
+	        			$('#art_costo',formulario).val(number_format(costo,2));
+	        			var costo=parseFloat($('#art_costo',formulario).val()); 
+	        			var pmeno=parseFloat($('#art_pmeno',formulario).val()); 
+	        			var pmayo=parseFloat($('#art_pmayo',formulario).val()); 
+	        			
+	        			$('#art_pmenoP',formulario).val(number_format( (pmeno/costo - 1)*100 ,2));
+	        			$('#art_pmayoP',formulario).val(number_format( (pmayo/costo - 1)*100 ,2));		
+	        	    });	 
+	        		
 	        		$("#btn_act",formulario).unbind("click").click(function(){
 	        			var costo=$('#art_costo',formulario).val();
 	        			var menor=$('#art_pmeno',formulario).val();
@@ -242,6 +261,17 @@
 	        		
 	        	}, 
 	        	ondblClickRow:function(id){
+	        		var ret = $(formulario.NidGrilla,formulario).jqGrid('getRowData', id);
+	        		$(".dato",formulario).each(function(index){
+	        			if(this.type=="checkbox"){
+	        				$(this).prop("checked",(ret[this.id]!="" && ret[this.id]!="0" ));	
+	        			}else{
+	        				$(this).val(ret[this.id]);	        				
+	        			}
+	        			$('#art_pmeno,#art_pmayo',formulario).change();        			
+	        			
+	        		});
+	        		$(".dato#modo",formulario).val("MODI");
 	        	},
 	        	caption:"",
 				postData : {
