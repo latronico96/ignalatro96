@@ -126,7 +126,7 @@
 	        		],
 	        	width:700,
 	        	height:500,
-	        	rowNum:'10',
+	        	rowNum:'100',
 	        	rowList:[10, 15, 20, 25, 50, 75, 100, 150, 200, 250, 500, 750],
 	        	pager:NidGrilla + '_pie',
 	        	sortname:'ptv_codig',

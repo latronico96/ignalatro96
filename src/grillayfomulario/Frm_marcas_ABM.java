@@ -233,9 +233,8 @@ public class Frm_marcas_ABM extends HttpServlet {
 		PrintWriter prt=response.getWriter();
 		try{			    
 			// the sql server url		          
-			String sql="Select * from "+tabla+" "
-					+ " ORDER BY " + ordenarcampo+ " " +ordenarmetodo;
-			JSONObject jsonGrilla=fun.Grilla(sql,empieza,termina,pagina,rp);	 		   
+			String sql="Select * from "+tabla+" ";
+			JSONObject jsonGrilla=fun.Grilla(sql,empieza,termina,pagina,rp,ordenarcampo,ordenarmetodo);	 		   
 			prt.print(jsonGrilla.toString());
 
 		}catch(Exception e){

@@ -47,6 +47,7 @@ public class Frm_GrillaArticulos extends HttpServlet {
 		String search_campo=request.getParameter("searchField");
 		String search_valor=request.getParameter("searchString");
 		String search_oper=request.getParameter("searchOper");
+		String marca=request.getParameter("marca");
 		String search_operador="";
 		String sentenciaWhere="";
 
@@ -134,6 +135,19 @@ public class Frm_GrillaArticulos extends HttpServlet {
 			}	    	
 			filtro+= BusquedaCampo+" LIKE '%"+BusquedaValor+"%' ";	   		
 		}
+		
+		if(!(marca == null || marca.length() == 0)){
+			if (!marca.equals("0")){
+				if(filtro==""){
+					filtro= "where ";
+				}else{
+					filtro+= " and ";
+				}	    	
+				filtro+= "art_marca= "+marca+" ";	  
+			}
+		}
+		
+		
 
 
 		response.setContentType("application/json"); 
@@ -144,9 +158,9 @@ public class Frm_GrillaArticulos extends HttpServlet {
 			String sql="select  art_codig,art_marca,mar_nombr,art_nombr,art_codbr,art_costo,art_pmeno,art_pmayo,art_activ \n"
 					+ "	from dbArticulos \n"
 					+ "		left join dbMarcas on (art_marca=mar_codig) \n"	
-					+ filtro			
-					+ " ORDER BY " + ordenarcampo+ " " +ordenarmetodo;
-			JSONObject jsonGrilla=fun.Grilla(sql,empieza,termina,pagina,rp);	 		   
+					+ filtro			;
+			JSONObject jsonGrilla=fun.Grilla(sql,empieza,termina,pagina,rp
+					,ordenarcampo, ordenarmetodo);	 		   
 			prt.print(jsonGrilla.toString());
 
 		}catch(Exception e){

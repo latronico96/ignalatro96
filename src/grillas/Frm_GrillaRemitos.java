@@ -157,9 +157,8 @@ public class Frm_GrillaRemitos extends HttpServlet {
 					+ "left join dbremDetalles on (rem_codig=red_nrore) \n"
 					+ "left join dbclientes on (cli_codig=rem_codcl) \n"
 					+ filtro
-					+ " group by rem_codig "
-					+ " ORDER BY " + ordenarcampo+ " " +ordenarmetodo;
-			JSONObject jsonGrilla=fun.Grilla(sql,empieza,termina,pagina,rp);	 		   
+					+ " group by rem_codig ";
+			JSONObject jsonGrilla=fun.Grilla(sql,empieza,termina,pagina,rp,ordenarcampo,ordenarmetodo);	 		   
 			prt.print(jsonGrilla.toString());
 
 		}catch(Exception e){

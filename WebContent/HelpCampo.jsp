@@ -66,17 +66,17 @@
 			dataEvents:  $("#GrillaHelpCampo").bind('keydown',function(e) {
 				var TeclasPer = "abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ1234567890., ";	
 				if ((TeclasPer.search(e.key) >= 0) || (e.which == 8)) {
-					$("#bloqueo #BusquedaValor").focus();
+					$("#frm_HelpCampo #BusquedaValor").focus();
 				}												
 			}) ,
 			gridComplete: function (){
-				$('#bloqueo tbody [role="row"]').each(
+				$('#frm_HelpCampo tbody [role="row"]').each(
 						function(id,val){ if(id%2==0){ 
-							$('#bloqueo #'+id).css('background-color','rgb(224, 224, 224)');} 
+							$('#frm_HelpCampo #'+id).css('background-color','rgb(224, 224, 224)');} 
 						} );
 				$("tr.jqgrow.ui-row-ltr.ui-widget-content").first().trigger( "click");
 				$("#GrillaHelpCampo").focus(); 
-				$("#bloqueo #BusquedaCampo").val($("#GrillaHelpCampo").jqGrid('getGridParam','sortname'));
+				$("#frm_HelpCampo #BusquedaCampo").val($("#GrillaHelpCampo").jqGrid('getGridParam','sortname'));
 					
 			},
 			ondblClickRow : function(id) { HC_ProcesarId(id); },
@@ -99,7 +99,7 @@
 			
 		$(".ui-jqgrid-titlebar").hide();
 	
-		$("#bloqueo #BusquedaValor").bind('keydown', function(e) {			
+		$("#frm_HelpCampo #BusquedaValor").bind('keydown', function(e) {			
 			switch (e.which) {				
 				case 13:
 					HC_ActualizarParametros();
@@ -116,8 +116,8 @@
 				tipo:			'<%= hc.getColum().get("tipo") %>',
 				filtExt: '<%=filtExt %>',
 				filtro:			filtro,  
-				BusquedaValor : $("#bloqueo #BusquedaValor").val(),
-				BusquedaCampo : $("#bloqueo #BusquedaCampo").val()
+				BusquedaValor : $("#frm_HelpCampo #BusquedaValor").val(),
+				BusquedaCampo : $("#frm_HelpCampo #BusquedaCampo").val()
 			} 
 		}).trigger("reloadGrid");
 	}
@@ -146,6 +146,9 @@
 			z-index: 1;
 			height: 18.5px;
 		}*/
+		#frm_HelpCampo .busqGrill *{
+			float:left;
+		}
 		
 		#frm_HelpCampo>div {
 			width: calc(<%= hc.getColum().get("ancho") %>px + 20px );
@@ -153,7 +156,7 @@
 		}
 	</style>
 	<div class="modal" data-tmodal="alerta">
-		<div class="modal-header">
+		<div class="modal-header" id="headerhcmodal">
 			<h5 class="modal-title"><%= hc.getColum().get("titulo") %></h5>
 			<button type="button" type="button" class="close" onclick="bloquear(false);">
 				<span aria-hidden="true">&times;</span>

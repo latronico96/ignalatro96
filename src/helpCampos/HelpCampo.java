@@ -162,7 +162,7 @@ public abstract class HelpCampo {
 	public abstract Map<String,String> getColum();
 	
 	public JSONObject getJsonGrilla(){
-		return this.fun.Grilla(this.getTabla(), this.getEmpieza(), this.getTermina(), this.getPagina(), this.getCntRows());
+		return this.fun.Grilla(this.getTabla(), this.getEmpieza(), this.getTermina(), this.getPagina(), this.getCntRows(),this.getOrdenarCampo(),this.getOrdenarMetodo());
 	}
 	
 	public String getRows(){

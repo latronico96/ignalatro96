@@ -106,8 +106,9 @@ public class HelpCampoPrv extends HelpCampo {
 					+ "			<option value='prv_ndoc'>DNI</option>"
 					+ "			<option value='prv_cuit'>CUIT</option>"
 					+ "		</select>"
-					+ "		<div class='w1 elem'>"
-					+ "			<button onclick='ActualizarParametros();' style='height: 26px;top: 0px;' type='button' class='form-control elem w3 glyphicon glyphicon-search icono'>"
+					+ "		<div class='with-10-00 elem'>"
+					+ "			<button  onclick='ActualizarParametros();' type='button' class='btn blanco form-control with-50-00 campo' id='btn_HcPrv'>"
+					+ "				<img src='/img/iconos/glyphicons-28-search.png'	style='height: auto; filter: invert(55%);'>"
 					+ "			</button>"
 					+ "		</div>"
 					+ "	</div>";

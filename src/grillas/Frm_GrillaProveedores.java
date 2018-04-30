@@ -152,9 +152,8 @@ public class Frm_GrillaProveedores extends HttpServlet {
 					+ "from  dbproveedores \n"
 					+ "	left join dbCondIva on (iva_codig=CASE WHEN trim(ifnull(prv_fciva,''))='' THEN prv_cliva ELSE prv_fciva END) \n"
 					+ "left join dbTipoDocumentos on ( doc_codig =CASE WHEN trim(ifnull(prv_fndoc,''))='' THEN prv_tpdoc ELSE prv_ftdoc END) "
-					+ filtro
-					+ " ORDER BY " + ordenarcampo+ " " +ordenarmetodo;
-			JSONObject jsonGrilla=fun.Grilla(sql,empieza,termina,pagina,rp);	 		   
+					+ filtro;
+			JSONObject jsonGrilla=fun.Grilla(sql,empieza,termina,pagina,rp,ordenarcampo,ordenarmetodo);	 		   
 			prt.print(jsonGrilla.toString());
 
 		}catch(Exception e){

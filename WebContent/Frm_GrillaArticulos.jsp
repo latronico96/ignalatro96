@@ -1,11 +1,38 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@page import="funciones.Funciones"%>
+
+<%@page import="java.sql.Connection"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.Statement"%>
 <%
 	Funciones fun = new Funciones(request);
 	String idForm = "Frm_GrillaArticulos";
 	String idGrilla = "GrillaArticulos";
 	String URL = "'./Frm_GrillaArticulos'";
+	
+	String marcas="";
+	
+	try{
+		Connection cn=fun.Conectar();
+		Statement st=cn.createStatement();
+		ResultSet rs=st.executeQuery("select * from dbMarcas");
+		while(rs.next()){
+			marcas+="<li class='nav-item'>"
+					+"	<a class='nav-link' href='#' data-cod='"+rs.getString("mar_codig")+"'>"+rs.getString("mar_nombr")+"</a>"
+					+"</li>	";			  
+		}
+		
+	}catch(Exception e){
+
+	}
+	
+	marcas+="<li class='nav-item'>"
+			+"	<a class='nav-link active' href='#' data-cod='0'>todos</a>"
+			+"</li>	";
+	
+	
+	
 %>
 <div id="<%=idForm%>" class="formulario">
 	<style type="text/css">
@@ -80,6 +107,9 @@
 			</div>
 		</div>
 	</div>
+	<ul class="nav nav-tabs">
+	 	<%=marcas %>
+	</ul>
 
 	<div class="d-block">
 		<table id="<%=idGrilla%>"></table>
@@ -87,6 +117,7 @@
 	</div>
 <script type="text/javascript">
 	formulario = $.fn.extend($(<%="\"#"+idForm+"\""%>), {
+		idForm:"<%=idForm%>",
    		idGrilla:"<%=idGrilla%>",
    		NidGrilla: "#" + "<%=idGrilla%>",
 		modoGrilla:"ALTA",
@@ -99,6 +130,15 @@
 			}
         	return art;
         },
+        ActualizarParametros: function() {
+        	$(formulario.NidGrilla,formulario).jqGrid('setGridParam',{ 
+    			postData : {
+	        		marca: $("#"+formulario.idForm + " .nav-link.active").data("cod"),	        	
+			     	BusquedaValor : $(formulario.NidGrilla + "_pie_left #jqgridSearInput",formulario).val(),
+			     	BusquedaCampo : $(formulario.NidGrilla + "_pie_left #jqgridSearInput",formulario).data("field")	
+	    		} 
+    		}).trigger("reloadGrid");
+    	},
         Grilla: function (){	        
 	        $(formulario.NidGrilla,formulario).jqGrid({
 	        	url: <%=URL%>,
@@ -116,7 +156,7 @@
 	        		{name:'art_activ', index:'art_activ', width:15,hidden:false, formatter:'FormatActivo'}],
 	        	width: ($("#Cuerpo").width()-10),
 	        	height: ($("#Cuerpo").height()-80),
-	        	rowNum:'10',
+	        	rowNum:'100',
 	        	rowList:[10, 15, 20, 25, 50, 75, 100, 150, 200, 250, 500, 750],
 	        	pager:formulario.NidGrilla + '_pie',
 	        	sortname:'art_codig',
@@ -150,6 +190,7 @@
 						$(formulario.NidGrilla + "_pie_left #jqgridSearInput",formulario).click( function() {			
 							$(formulario.NidGrilla,formulario).jqGrid('setGridParam',
 							   { postData : { 
+					        		marca: $("#"+formulario.idForm + " .nav-link.active").data("cod"),	        
 							     	BusquedaValor : $(formulario.NidGrilla + "_pie_left #jqgridSearInput",formulario).val(),
 							     	BusquedaCampo : $(formulario.NidGrilla + "_pie_left #jqgridSearInput",formulario).data("field")
 							   } 
@@ -173,6 +214,7 @@
 	        	},
 	        	caption:"",
 	        	postData : {
+	        		marca: $("#"+formulario.idForm + " .nav-link.active").data("cod"),	        	
 			     	BusquedaValor : $(formulario.NidGrilla + "_pie_left #jqgridSearInput",formulario).val(),
 			     	BusquedaCampo : $(formulario.NidGrilla + "_pie_left #jqgridSearInput",formulario).data("field")	
 	    		} 
@@ -181,16 +223,19 @@
 	        $( document ).resize(function(){  
 	      	  reSizeGrid(formulario.idGrilla,($("#Cuerpo").width()-10),($("#Cuerpo").height()-80));
 	      	});
-	        
-	        
-	       
-	        
-	        
         }
    	});
 $(document).ready(function(){	        
 	/* $("#<%=idForm%>").draggable();*/
 	formulario.Grilla();	
+	
+	$("#"+formulario.idForm + " .nav-link").click(function(){
+		$("#"+formulario.idForm + " .nav-link").removeClass("active");
+		$(this).addClass("active");
+		formulario.ActualizarParametros();
+	});
+
+	
 	$(".tool:not(:first-child)",formulario).click(function(){
 		var parametros=$(this).data();
 		parametros.url='Frm_ArticuloABM';

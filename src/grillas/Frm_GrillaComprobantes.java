@@ -155,9 +155,8 @@ public class Frm_GrillaComprobantes extends HttpServlet {
 					+ " concat(cmp_letra,' ', cmp_ptvta,' ',cmp_nroco) as cmp_compo,cli_nombr,cmp_impor  \n"
 					+ " from dbComprobantes \n"
 					+ "	left join dbClientes on (cmp_codcl=cli_codig) \n"	
-					+ filtro
-					+ " ORDER BY " + ordenarcampo+ " " +ordenarmetodo;
-			JSONObject jsonGrilla=fun.Grilla(sql,empieza,termina,pagina,rp);	 		   
+					+ filtro;
+			JSONObject jsonGrilla=fun.Grilla(sql,empieza,termina,pagina,rp, ordenarcampo,ordenarmetodo);	 		   
 			prt.print(jsonGrilla.toString());
 
 		}catch(Exception e){

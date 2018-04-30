@@ -118,7 +118,7 @@
 	        		],
 	        	width: ($("#<%=idForm%>>div").width()-20),
 	        	height:400,
-	        	rowNum:'10',
+	        	rowNum:'100',
 	        	rowList:[10, 15, 20, 25, 50, 75, 100, 150, 200, 250, 500, 750],
 	        	pager: formulario.NidGrilla + '_pie',
 	        	sortname:'art_codig',

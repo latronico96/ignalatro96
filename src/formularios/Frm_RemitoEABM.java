@@ -90,9 +90,8 @@ public class Frm_RemitoEABM extends HttpServlet {
 						+ "		left join dbarticulos on (art_codig=red_artic) \n"
 						+ "		left join dbmarcas on (art_marca=mar_codig) \n"
 						+ "		left join stockhoy on (stk_artic=art_codig) \n"	
-						+ "where red_nrore="+cod+" \n"
-						+ "order by red_nitem asc \n";
-				jsonGrilla=fun.Grilla(sql,"0","1000","0","100");	
+						+ "where red_nrore="+cod+" \n";
+				jsonGrilla=fun.Grilla(sql,"0","1000","0","100", "red_nitem", "asc");	
 			} catch (ClassNotFoundException | SQLException e) {
 				// TODO Auto-generated catch block
 				System.out.println("erro al cargar los datos del Comporbante. " + String.valueOf(cod));				

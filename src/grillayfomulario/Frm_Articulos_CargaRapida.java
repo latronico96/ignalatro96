@@ -70,7 +70,7 @@ public class Frm_Articulos_CargaRapida extends HttpServlet {
 				sigMar=String.valueOf(Integer.parseInt(sigMar)+1);
 				insertMarca="update dbMarcas set "
 						+ "mar_nombr='"+parametros.getOrDefault("mar_nombr", "")+"',"
-						+ "mar_activ=1"
+						+ "mar_activ=1 "
 						+ "where mar_codig="+sigMar;
 		    }	
 			st = cn.createStatement();			
@@ -100,7 +100,7 @@ public class Frm_Articulos_CargaRapida extends HttpServlet {
 						+ "values ("+art_codig+","+art_marca+",'"+art_nombr+"','"+art_codbr+"',"+art_activ+","+art_stmin+","+art_costo+","+art_pmeno+","+art_pmayo+")";
 				
 			}else{
-				
+				art_codig=(art_codig.equals("") || art_codig.equals("0") ? String.valueOf(1+fun.getMaximo(tablaArt,"art_codig")):art_codig);
 				insertArticulo="update dbArticulos set "
 					+" art_marca="+Funciones.PrepararCampo("art_marca" , tiposArt, art_marca)
 					+", art_nombr="+Funciones.PrepararCampo("art_nombr" , tiposArt, art_nombr)
@@ -316,9 +316,8 @@ public class Frm_Articulos_CargaRapida extends HttpServlet {
 					+ "left join dbmarcas on (art_marca=mar_codig) \n"
 					+ "left join dbremdetalles on (art_codig=red_artic) \n"
 					+ "left join dbremitos on (rem_codig=red_nrore) \n"
-					+ filtro
-					+ " ORDER BY " + ordenarcampo+ " " +ordenarmetodo;
-			JSONObject jsonGrilla=fun.Grilla(sql,empieza,termina,pagina,rp);	 		   
+					+ filtro;
+			JSONObject jsonGrilla=fun.Grilla(sql,empieza,termina,pagina,rp, ordenarcampo,ordenarmetodo);	 		   
 			prt.print(jsonGrilla.toString());
 
 		}catch(Exception e){

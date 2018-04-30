@@ -224,18 +224,18 @@ public class Funciones {
 
 		// cambia el caracter por el codigo html (NO SE USA UTF-ENCODE)
 
-		cadena = cadena.replace("á", "&#225;");
-		cadena = cadena.replace("é", "&#233;");
-		cadena = cadena.replace("í", "&#237;");
-		cadena = cadena.replace("ó", "&#243;");
-		cadena = cadena.replace("ú", "&#250;");
-		cadena = cadena.replace("ñ", "&#241;");
-		cadena = cadena.replace("Á", "&#193;");
-		cadena = cadena.replace("É", "&#201;");
-		cadena = cadena.replace("Í", "&#205;");
-		cadena = cadena.replace("Ó", "&#211;");
-		cadena = cadena.replace("Ú", "&#218;");
-		cadena = cadena.replace("Ñ", "&#209;");
+		cadena = cadena.replace("Ã¡", "&#225;");
+		cadena = cadena.replace("Ã©", "&#233;");
+		cadena = cadena.replace("Ã­", "&#237;");
+		cadena = cadena.replace("Ã³", "&#243;");
+		cadena = cadena.replace("Ãº", "&#250;");
+		cadena = cadena.replace("Ã±", "&#241;");
+		cadena = cadena.replace("Ã�", "&#193;");
+		cadena = cadena.replace("Ã‰", "&#201;");
+		cadena = cadena.replace("Ã�", "&#205;");
+		cadena = cadena.replace("Ã“", "&#211;");
+		cadena = cadena.replace("Ãš", "&#218;");
+		cadena = cadena.replace("Ã‘", "&#209;");
 
 		return cadena;
 	}
@@ -244,18 +244,18 @@ public class Funciones {
 
 		// cambia el caracter por el codigo html (NO SE USA UTF-ENCODE)
 
-		cadena = cadena.replace("á", "a");
-		cadena = cadena.replace("é", "e");
-		cadena = cadena.replace("í", "i");
-		cadena = cadena.replace("ó", "o");
-		cadena = cadena.replace("ú", "u");
-		cadena = cadena.replace("ñ", "n");
-		cadena = cadena.replace("Á", "A");
-		cadena = cadena.replace("É", "E");
-		cadena = cadena.replace("Í", "I");
-		cadena = cadena.replace("Ó", "O");
-		cadena = cadena.replace("Ú", "U");
-		cadena = cadena.replace("Ñ", "N");
+		cadena = cadena.replace("Ã¡", "a");
+		cadena = cadena.replace("Ã©", "e");
+		cadena = cadena.replace("Ã­", "i");
+		cadena = cadena.replace("Ã³", "o");
+		cadena = cadena.replace("Ãº", "u");
+		cadena = cadena.replace("Ã±", "n");
+		cadena = cadena.replace("Ã�", "A");
+		cadena = cadena.replace("Ã‰", "E");
+		cadena = cadena.replace("Ã�", "I");
+		cadena = cadena.replace("Ã“", "O");
+		cadena = cadena.replace("Ãš", "U");
+		cadena = cadena.replace("Ã‘", "N");
 
 		return cadena;
 	}
@@ -342,12 +342,15 @@ public class Funciones {
 		return respuesta;
 	}
 
-	public JSONObject Grilla(String subConsulta,String desde,String hasta, String pagina,String CantPorPagina){
+	public JSONObject Grilla(String subConsulta,String desde,String hasta, String pagina,String CantPorPagina,
+			String ordenarcampo, String ordenarmetodo){
 		String consulta="select @rownum as total,grilla.* from ("
 				+ "		select *, @rownum := @rownum + 1 AS rank "
 				+ " from ("+subConsulta+")consulta, "
 				+ "	(SELECT @rownum := 0) contador"
-				+ " )grilla LIMIT "+desde+" , "+hasta+";";
+				+ " )grilla "
+				+ " ORDER BY " + ordenarcampo+ " " +ordenarmetodo 
+				+ " LIMIT "+desde+" , "+hasta+";";
 
 		JSONObject jsonGrilla = new JSONObject();
 		JSONArray json = new JSONArray();

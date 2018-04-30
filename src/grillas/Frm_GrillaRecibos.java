@@ -150,9 +150,8 @@ public class Frm_GrillaRecibos extends HttpServlet {
 					+ "		DATE_FORMAT(rec_fecha,'%d/%m/%Y') as rec_fecha, \n"	
 					+ " concat(rec_letra,' ', rec_ptvta,' ',rec_nroco) as rec_compo,cli_nombr,rec_impor  \n"	
 					+ " from dbRecibos \n"	
-					+ " 	left join dbClientes on (rec_codcl=cli_codig)  \n"	
-					+ " ORDER BY " + ordenarcampo+ " " +ordenarmetodo;
-			JSONObject jsonGrilla=fun.Grilla(sql,empieza,termina,pagina,rp);	 		   
+					+ " 	left join dbClientes on (rec_codcl=cli_codig)  \n";
+			JSONObject jsonGrilla=fun.Grilla(sql,empieza,termina,pagina,rp,ordenarcampo,ordenarmetodo);	 		   
 			prt.print(jsonGrilla.toString());
 
 		}catch(Exception e){

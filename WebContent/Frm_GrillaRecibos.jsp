@@ -114,7 +114,7 @@
 	        		{name:'rec_impor', index:'rec_impor', width:60,hidden:false, align:'right'}],
 	        	width: ($("#Cuerpo").width()-10),
 	        	height: ($("#Cuerpo").height()-80),
-	        	rowNum:'10',
+	        	rowNum:'100',
 	        	rowList:[10, 15, 20, 25, 50, 75, 100, 150, 200, 250, 500, 750],
 	        	pager: formulario.NidGrilla + '_pie',
 	        	sortname:'rec_fecha',
