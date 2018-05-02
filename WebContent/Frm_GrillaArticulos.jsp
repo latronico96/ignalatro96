@@ -11,12 +11,15 @@
 	String idGrilla = "GrillaArticulos";
 	String URL = "'./Frm_GrillaArticulos'";
 	
-	String marcas="";
+	String marcas="<li class='nav-item'>"
+			+"	<a class='nav-link active' href='#' data-cod='0'>todos</a>"
+			+"</li>	";
+	
 	
 	try{
 		Connection cn=fun.Conectar();
 		Statement st=cn.createStatement();
-		ResultSet rs=st.executeQuery("select * from dbMarcas");
+		ResultSet rs=st.executeQuery("select * from dbMarcas order by mar_nombr");
 		while(rs.next()){
 			marcas+="<li class='nav-item'>"
 					+"	<a class='nav-link' href='#' data-cod='"+rs.getString("mar_codig")+"'>"+rs.getString("mar_nombr")+"</a>"
@@ -27,10 +30,7 @@
 
 	}
 	
-	marcas+="<li class='nav-item'>"
-			+"	<a class='nav-link active' href='#' data-cod='0'>todos</a>"
-			+"</li>	";
-	
+
 	
 	
 %>
@@ -72,6 +72,21 @@
 		#<%=idForm %>  .tool:not(:first-child) {
 		    cursor: pointer;
 		    border-right: solid #fff 1px;
+		}
+		
+		#<%=idForm %>  .nav-tabs .nav-link {
+		    border: 1px solid transparent;
+		    border-top-left-radius: 0.25rem;
+		    border-top-right-radius: 0.25rem;
+		    background-color: #4444448f;
+		    color: #ffffff;
+   			min-height: 28px;
+			margin-left: 1px;
+	    }
+	    
+	    
+	    #<%=idForm %> .nav-link {
+		    padding: 0.05rem 0.5rem;
 		}
 	</style>
 	<div class="fila negro T-blanco rounded" style="height: 40px;padding: 4px 10px;">
