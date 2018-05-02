@@ -110,7 +110,15 @@
 	<ul class="nav nav-tabs">
 	 	<%=marcas %>
 	</ul>
-
+	<div class="fila negro T-blanco rounded">
+		<label class="with-20">Modelo</label>
+		<input class="with-20" id="mod_nombr1" type="text">
+		<input class="with-20" id="mod_nombr2" type="text">
+		<input class="with-20" id="mod_nombr3" type="text">
+		<input class="with-20" id="mod_nombr3" type="radio" name="operador" value="Y">
+		<input class="with-20" id="mod_nombr3" type="radio" name="operador" value="O">
+		
+	</div>
 	<div class="d-block">
 		<table id="<%=idGrilla%>"></table>
 		<div id="<%=idGrilla%>_pie"></div>
