@@ -34,9 +34,6 @@ public class funcionesJS extends HttpServlet {
 		Object obj = null;
 		String methodName = "";
 		String js=request.getParameter("js");
-		System.out.println(request.getParameter("js"));
-		System.out.println(request.getParameter("nombre"));
-		System.out.println(request.getParameter("parametro"));
 		JSONObject jsonok = null;
 		JSONArray PARAMETROS=null;
 		JSONParser parser = new JSONParser();

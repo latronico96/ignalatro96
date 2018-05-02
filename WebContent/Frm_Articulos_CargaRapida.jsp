@@ -62,6 +62,7 @@
 	</div>
 	<script type="text/javascript">
 	formulario = $.fn.extend($(<%="\"#"+idForm+"\""%>), {
+		idForm: "#<%=idForm%>",	
    		idGrilla:"<%=idGrilla%>",
    		NidGrilla: "#" + "<%=idGrilla%>",
 		cargados:"",
@@ -134,14 +135,14 @@
 	        		});
 	        		
 	        		$("#form",formulario).remove();
-	        		$(".ui-jqgrid-bdiv",formulario).prepend(formulario.stringFrom);     
+	        		$(formulario.stringFrom).insertBefore(formulario.idForm + " .ui-jqgrid-bdiv");
 	        		$("#form div:first *",formulario).each(function( index ) {
 	        			  $(this).width(parseFloat($(this).width()-2));
 	        			});
 	        		$("#listaMarca",formulario).html(funciones("GetHTMLOtionList",["mar_codig","String","mar_nombr","String","dbmarcas","String"]));
 	        		
 	        		$('#mar_nombr',formulario).change(function(){
-	        	        var clave=$("#listaMarca option[value='" + $('#mar_nombr',form).val() + "']",formulario).attr('data-id');
+	        	        var clave=$("#listaMarca option[value='" + $('#mar_nombr',formulario).val() + "']",formulario).attr('data-id');
 	        	        clave=(clave==undefined,"",clave);
 	        	        $('#mar_codig',formulario).val(clave);
 	        	    });

@@ -66,8 +66,6 @@ public class Frm_Articulos_CargaRapida extends HttpServlet {
 				insertMarca="insert into dbMarcas (mar_codig,mar_nombr,mar_activ) values ("+
 						sigMar+",'"+parametros.getOrDefault("mar_nombr", "")+"',1)";
 		    }else{
-				sigMar=fun.getMaximoStr("dbmarcas", "mar_codig");
-				sigMar=String.valueOf(Integer.parseInt(sigMar)+1);
 				insertMarca="update dbMarcas set "
 						+ "mar_nombr='"+parametros.getOrDefault("mar_nombr", "")+"',"
 						+ "mar_activ=1 "
@@ -119,11 +117,11 @@ public class Frm_Articulos_CargaRapida extends HttpServlet {
 			
 			String red_canti=parametros.getOrDefault("red_canti", "0");
 			String rem_codig=parametros.getOrDefault("rem_codig", "0");
-			String rem_total=Funciones.PrepararCampo("rem_total" , tiposArt, fun.FormatNumber(Double.parseDouble(red_canti)*Double.parseDouble(art_pmeno),2));
+			String rem_total=Funciones.PrepararCampo("rem_total" , tiposArt, Funciones.FormatNumber(Double.parseDouble(red_canti)*Double.parseDouble(art_pmeno),2));
 			String rem_codcl="NULL";
 			String rem_condi=Funciones.PrepararCampo("rem_condi" , tiposArt,Funciones.Contado);
 			String rem_fecha=Funciones.PrepararCampo("rem_fecha" , tiposArt, fun.Ahora("yyyy/MM/dd"));
-			String rem_tipor="'"+fun.RemStock+"'";
+			String rem_tipor="'"+Funciones.RemStock+"'";
 
 			
 			String insertRemito="";
@@ -303,7 +301,7 @@ public class Frm_Articulos_CargaRapida extends HttpServlet {
 				filtro+= " and ";
 			}	    	
 			//filtro+= BusquedaCampo+" in (0"+BusquedaValor+") ";	   		
-			filtro += " rem_tipor = '"+fun.RemStock+"' ";	   		
+			filtro += " rem_tipor = '"+Funciones.RemStock+"' ";	   		
 		}
 
 
