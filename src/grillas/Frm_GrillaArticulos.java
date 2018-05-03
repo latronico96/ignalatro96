@@ -48,6 +48,10 @@ public class Frm_GrillaArticulos extends HttpServlet {
 		String search_valor=request.getParameter("searchString");
 		String search_oper=request.getParameter("searchOper");
 		String marca=request.getParameter("marca");
+		String mod_nombr1=fun.isNull(request.getParameter("mod_nombr1"),"");
+		String mod_nombr2=fun.isNull(request.getParameter("mod_nombr2"),"");
+		String mod_nombr3=fun.isNull(request.getParameter("mod_nombr3"),"");
+		String operador=fun.isNull(request.getParameter("operador"),"OR");
 		String search_operador="";
 		String sentenciaWhere="";
 
@@ -128,7 +132,7 @@ public class Frm_GrillaArticulos extends HttpServlet {
 		String filtro = sentenciaWhere;
 
 		if(!(BusquedaValor == null || BusquedaValor.length() == 0)){
-			if(filtro==""){
+			if(filtro.equals("")){
 				filtro= "where ";
 			}else{
 				filtro+= " and ";
@@ -138,7 +142,7 @@ public class Frm_GrillaArticulos extends HttpServlet {
 		
 		if(!(marca == null || marca.length() == 0)){
 			if (!marca.equals("0")){
-				if(filtro==""){
+				if(filtro.equals("")){
 					filtro= "where ";
 				}else{
 					filtro+= " and ";
@@ -147,7 +151,53 @@ public class Frm_GrillaArticulos extends HttpServlet {
 			}
 		}
 		
-		
+		if (!mod_nombr1.equals("") || !mod_nombr2.equals("") || !mod_nombr2.equals("")){
+			String filtroModelo="";
+			
+			if (!mod_nombr1.equals("")){				
+				filtroModelo+= " ( art_nombr LIKE '%"+mod_nombr1+"%' ";
+				filtroModelo+= " or ";
+				filtroModelo+= "art_nombr LIKE '"+mod_nombr1+"%' ";
+				filtroModelo+= " or ";
+				filtroModelo+= "art_nombr LIKE '%"+mod_nombr1+"' )";	   	
+			}
+			
+			if (!mod_nombr2.equals("")){	
+				if(!filtroModelo.equals("")){
+					filtroModelo+= " " + operador + " ";
+				}			
+				filtroModelo+= " ( art_nombr LIKE '%"+mod_nombr2+"%' ";
+				filtroModelo+= " or ";
+				filtroModelo+= "art_nombr LIKE '"+mod_nombr2+"%' ";
+				filtroModelo+= " or ";
+				filtroModelo+= "art_nombr LIKE '%"+mod_nombr2+"' ) ";	   	
+			}			
+
+			if (!mod_nombr3.equals("")){	
+				if(!filtroModelo.equals("")){
+					filtroModelo+= " " + operador + " ";
+				}			
+				
+				filtroModelo+= " ( art_nombr LIKE '%"+mod_nombr3+"%' ";
+				filtroModelo+= " or ";
+				filtroModelo+= "art_nombr LIKE '"+mod_nombr3+"%' ";
+				filtroModelo+= " or ";
+				filtroModelo+= "art_nombr LIKE '%"+mod_nombr3+"' ) ";	   	
+			}
+			
+			
+			if(filtro.equals("")){
+				filtro= "where ";
+			}else{
+				filtro+= " and ";
+			}
+			
+			filtro+=" ( "+filtroModelo+" ) ";
+			
+
+			
+			
+		}	
 
 
 		response.setContentType("application/json"); 
@@ -155,7 +205,8 @@ public class Frm_GrillaArticulos extends HttpServlet {
 		try{			    
 			// the sql server url		          			
 
-			String sql="select  art_codig,art_marca,mar_nombr,art_nombr,art_codbr,art_costo,art_pmeno,art_pmayo,art_activ \n"
+			String sql="select  art_codig,art_marca,mar_nombr,art_nombr,art_codbr,art_costo, \n"
+					+ "	art_pmeno,art_pmayo,art_activ \n"
 					+ "	from dbArticulos \n"
 					+ "		left join dbMarcas on (art_marca=mar_codig) \n"	
 					+ filtro			;

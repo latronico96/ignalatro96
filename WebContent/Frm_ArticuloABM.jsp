@@ -99,7 +99,7 @@
     		var formulario = $("#<%=idForm%>");    		
     		var res=true;
     		
-    		$("#art_codbr",formulario).val(($("#art_codbr",formulario).val()==0?"":fillZero($("#art_codbr",formulario).val().toString().trim(), 13));
+    		$("#art_codbr",formulario).val(($("#art_codbr",formulario).val()==0?"":fillZero($("#art_codbr",formulario).val().toString().trim(), 13)));
     		
     		if(res && $("#art_nombr",formulario).val()==""){
     			mensaje="El nombre no puede quedar vacio.";

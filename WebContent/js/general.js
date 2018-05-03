@@ -357,30 +357,14 @@ $.fn.extend(
             	conjunto.each(function(){
             		if(this.type=="checkbox"){
             			result[$(this).attr('id')]=(this.checked?1:0);            		
-            		}else if (this.type=="radio" && $(this).is(":checked")){
-            			result[$(this).attr('id')]=$(this).val(); 
+            		}else if (this.type=="radio"){
+            			if ($(this).is(":checked")){
+            				result[$(this).attr('name')]=$(this).val();
+            			}
             		}else{
             			result[$(this).attr('id')]=$(this).val();            			
             		}            		
             	});
-            	/*
-          		var checkboxes = conjunto.filter('input[type="checkbox"]');          		
-    			$.each( checkboxes, function( key, value ) {
-    			    if (value.checked === false) {
-    			        value.value = 0;
-    			    }else{
-    			        value.value = 1;
-    			    }
-    			    $(value).attr('type', 'hidden');
-    			});
-    			var disabled = conjunto.filter(':disabled').prop("disabled",false);
-    			param=conjunto.filter(':not(.precio)').serialize();
-    			$.each(conjunto.filter('.precio'), function( key, value ) {
-    				param += (param==""?"":"&");
-    				param += $(this).attr("id")+"="+$(this).priceToFloat();
-    			});
-    			checkboxes.attr("type","checkbox");
-    			disabled.prop("disabled",true);*/
             	return ((result));
             }
 );

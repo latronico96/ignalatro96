@@ -12,7 +12,7 @@
 	String URL = "'./Frm_GrillaArticulos'";
 	
 	String marcas="<li class='nav-item'>"
-			+"	<a class='nav-link active' href='#' data-cod='0'>todos</a>"
+			+"	<a class='negro nav-link active' href='#' data-cod='0'>todos</a>"
 			+"</li>	";
 	
 	
@@ -22,7 +22,7 @@
 		ResultSet rs=st.executeQuery("select * from dbMarcas order by mar_nombr");
 		while(rs.next()){
 			marcas+="<li class='nav-item'>"
-					+"	<a class='nav-link' href='#' data-cod='"+rs.getString("mar_codig")+"'>"+rs.getString("mar_nombr")+"</a>"
+					+"	<a class='negro nav-link' href='#' data-cod='"+rs.getString("mar_codig")+"'>"+rs.getString("mar_nombr")+"</a>"
 					+"</li>	";			  
 		}
 		
@@ -78,7 +78,7 @@
 		    border: 1px solid transparent;
 		    border-top-left-radius: 0.25rem;
 		    border-top-right-radius: 0.25rem;
-		    background-color: #4444448f;
+		    /*background-color: #4444448f;*/
 		    color: #ffffff;
    			min-height: 28px;
 			margin-left: 1px;
@@ -88,6 +88,11 @@
 	    #<%=idForm %> .nav-link {
 		    padding: 0.05rem 0.5rem;
 		}
+		
+		 #<%=idForm %> label {
+		    padding: 0px 15px;
+		}
+		
 	</style>
 	<div class="fila negro T-blanco rounded" style="height: 40px;padding: 4px 10px;">
 		<div class="tool">
@@ -125,16 +130,16 @@
 	<ul class="nav nav-tabs">
 	 	<%=marcas %>
 	</ul>
-	<div class="fila negro rounded">
-		<label class="with-10-00 T-blanco">Modelo</label>
-		<input class="with-20-00 filtro" id="mod_nombr1" type="text">
-		<input class="with-20-00 filtro" id="mod_nombr2" type="text">
-		<input class="with-20-00 filtro" id="mod_nombr3" type="text">
-		<label class="with-5-00 T-blanco">Y</label>
-		<input class="filtro" id="mod_nombr4" type="radio" name="operador" value="Y">
-		<label class="with-5-00 T-blanco">O</label>
-		<input class=" filtro" id="mod_nombr5" type="radio" name="operador" value="O">
-		<button class="with-7-00" onclick="formulario.ActualizarParametros();">Actulizar</button>
+	<div class="fila negro rounded" style="padding: 6px 0px 0px 0px;">
+		<label class="float-left with-10-00 T-blanco">Artículo</label>
+		<input class="form-control with-20-00 filtro" id="mod_nombr1" type="text">
+		<input class="form-control with-20-00 filtro" id="mod_nombr2" type="text">
+		<input class="form-control with-20-00 filtro" id="mod_nombr3" type="text">
+		<label class="float-left with-5-00 T-blanco">O</label>
+		<input class="form-control filtro with-2-00 " id="mod_nombr5" type="radio" name="operador" value="OR" checked="checked" style="top: 7px;">
+		<label class="float-left with-5-00 T-blanco">Y</label>
+		<input class="form-control filtro with-2-00 " id="mod_nombr4" type="radio" name="operador" value="AND" style="top: 7px;">
+		<button class="form-control with-7-00 btn " onclick="formulario.ActualizarParametros();">Actulizar</button>
 	</div>
 	<div class="d-block">
 		<table id="<%=idGrilla%>"></table>
@@ -155,13 +160,16 @@
 			}
         	return art;
         },
-        ActualizarParametros: function() {
+        getFiltro: function(){
+        	return $.extend($(".filtro").serializeI(),{
+        		marca: $("#"+formulario.idForm + " .nav-link.active").data("cod"),	        	
+		     	BusquedaValor : $(formulario.NidGrilla + "_pie_left #jqgridSearInput",formulario).val(),
+		     	BusquedaCampo : $(formulario.NidGrilla + "_pie_left #jqgridSearInput",formulario).data("field")	
+    		} );
+        },
+        ActualizarParametros: function(textbox=""){  
         	$(formulario.NidGrilla,formulario).jqGrid('setGridParam',{ 
-    			postData : {
-	        		marca: $("#"+formulario.idForm + " .nav-link.active").data("cod"),	        	
-			     	BusquedaValor : $(formulario.NidGrilla + "_pie_left #jqgridSearInput",formulario).val(),
-			     	BusquedaCampo : $(formulario.NidGrilla + "_pie_left #jqgridSearInput",formulario).data("field")	
-	    		} 
+    			postData : formulario.getFiltro()
     		}).trigger("reloadGrid");
     	},
         Grilla: function (){	        
@@ -172,12 +180,12 @@
 	        	colNames:['Cod.','Marca','Articúlo','Cod. Barra','Costo','P. Menor','P. Mayor','Activo'],
 	        	colModel:[
 	        		{name:'art_codig', index:'art_codig', width:15, hidden:false, formatter:'FormatClient'},
-	        		{name:'mar_nombr', index:'mar_nombr', width:100, hidden:false},
-	        		{name:'art_nombr', index:'art_nombr', width:100,hidden:false},
-	        		{name:'art_codbr', index:'art_codbr', width:80,hidden:false,},
-	        		{name:'art_costo', index:'art_costo', width:60,hidden:false, align:'right'},
-	        		{name:'art_pmeno', index:'art_pmeno', width:60,hidden:false, align:'right'},
-	        		{name:'art_pmayo', index:'art_pmayo', width:60,hidden:false, align:'right'},
+	        		{name:'mar_nombr', index:'mar_nombr', width:120, hidden:false},
+	        		{name:'art_nombr', index:'art_nombr', width:140,hidden:false},
+	        		{name:'art_codbr', index:'art_codbr', width:60,hidden:false,},
+	        		{name:'art_costo', index:'art_costo', width:50,hidden:false, align:'right'},
+	        		{name:'art_pmeno', index:'art_pmeno', width:50,hidden:false, align:'right'},
+	        		{name:'art_pmayo', index:'art_pmayo', width:50,hidden:false, align:'right'},
 	        		{name:'art_activ', index:'art_activ', width:15,hidden:false, formatter:'FormatActivo'}],
 	        	width: ($("#Cuerpo").width()-10),
 	        	height: ($("#Cuerpo").height()-80),
@@ -189,7 +197,8 @@
 	        	sortorder:"asc",
 	        	hidegrid:false,
 	        	title:false,
-	        	gridComplete:function(){	        			        	
+	        	gridComplete:function(){	
+	            	formulario.textbox=$(':focus');        			        	
 	        		$('tbody [role="row"]',formulario).each(function(id, val){
 	        			if(id % 2 == 0){
 	        				$(formulario.NidGrilla + ' #' + id,formulario).css('background-color', 'rgb(224, 224, 224)');
@@ -214,11 +223,7 @@
 						      
 						$(formulario.NidGrilla + "_pie_left #jqgridSearInput",formulario).click( function() {			
 							$(formulario.NidGrilla,formulario).jqGrid('setGridParam',
-							   { postData : { 
-					        		marca: $("#"+formulario.idForm + " .nav-link.active").data("cod"),	        
-							     	BusquedaValor : $(formulario.NidGrilla + "_pie_left #jqgridSearInput",formulario).val(),
-							     	BusquedaCampo : $(formulario.NidGrilla + "_pie_left #jqgridSearInput",formulario).data("field")
-							   } 
+							   { postData :  formulario.getFiltro()
 							}).trigger(	"reloadGrid");
 						});
 	        		}	        		
@@ -227,6 +232,10 @@
 		        		$("tr.jqgrow.ui-row-ltr.ui-widget-content",formulario).first().trigger("click");
 		        		$(formulario.NidGrilla,formulario).focus();	        			 
 	        		}
+	            	if (formulario.textbox!=""){
+	            		$(formulario.textbox).focus();
+	            		formulario.textbox="";
+	            	}
 	        	}, 
 	        	ondblClickRow:function(id){
 	        		$(".tool:not(:first-child)",formulario).first().click();
@@ -238,11 +247,7 @@
 	        	    });
 	        	},
 	        	caption:"",
-	        	postData : {
-	        		marca: $("#"+formulario.idForm + " .nav-link.active").data("cod"),	        	
-			     	BusquedaValor : $(formulario.NidGrilla + "_pie_left #jqgridSearInput",formulario).val(),
-			     	BusquedaCampo : $(formulario.NidGrilla + "_pie_left #jqgridSearInput",formulario).data("field")	
-	    		} 
+	        	postData : formulario.getFiltro()
 	        });
 	        $(".ui-jqgrid-titlebar").hide();	 
 	        $( document ).resize(function(){  
@@ -267,6 +272,10 @@ $(document).ready(function(){
 		parametros.parametros={ modo: $(this).data("modo"), art_codig: formulario.GetSelected() };
 		abrirFormulario(parametros);		
 	});	
+	$(".filtro").on('change keydown paste input propertychange click keyup blur', function(){
+		formulario.ActualizarParametros(this);
+	});
+	
  
 });        
 
