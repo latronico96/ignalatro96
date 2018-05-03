@@ -178,6 +178,7 @@
     		$("#btn_confirmar",formulario).html(modoTitulo);
         	formulario.show();   
         	
+        	
         	$("#art_codbr",formulario).unbind("change").change(function(){ 
         		$(this).val(fillZero($(this).val().toString().trim(), 13));
         	});
