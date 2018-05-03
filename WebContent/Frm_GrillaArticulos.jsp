@@ -125,14 +125,16 @@
 	<ul class="nav nav-tabs">
 	 	<%=marcas %>
 	</ul>
-	<div class="fila negro T-blanco rounded">
-		<label class="with-20">Modelo</label>
-		<input class="with-20" id="mod_nombr1" type="text">
-		<input class="with-20" id="mod_nombr2" type="text">
-		<input class="with-20" id="mod_nombr3" type="text">
-		<input class="with-20" id="mod_nombr3" type="radio" name="operador" value="Y">
-		<input class="with-20" id="mod_nombr3" type="radio" name="operador" value="O">
-		
+	<div class="fila negro rounded">
+		<label class="with-10-00 T-blanco">Modelo</label>
+		<input class="with-20-00 filtro" id="mod_nombr1" type="text">
+		<input class="with-20-00 filtro" id="mod_nombr2" type="text">
+		<input class="with-20-00 filtro" id="mod_nombr3" type="text">
+		<label class="with-5-00 T-blanco">Y</label>
+		<input class="filtro" id="mod_nombr4" type="radio" name="operador" value="Y">
+		<label class="with-5-00 T-blanco">O</label>
+		<input class=" filtro" id="mod_nombr5" type="radio" name="operador" value="O">
+		<button class="with-7-00" onclick="formulario.ActualizarParametros();">Actulizar</button>
 	</div>
 	<div class="d-block">
 		<table id="<%=idGrilla%>"></table>

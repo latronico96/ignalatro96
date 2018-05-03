@@ -357,6 +357,8 @@ $.fn.extend(
             	conjunto.each(function(){
             		if(this.type=="checkbox"){
             			result[$(this).attr('id')]=(this.checked?1:0);            		
+            		}else if (this.type=="radio" && $(this).is(":checked")){
+            			result[$(this).attr('id')]=$(this).val(); 
             		}else{
             			result[$(this).attr('id')]=$(this).val();            			
             		}            		
