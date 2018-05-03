@@ -134,7 +134,6 @@
         	<%=Articulo%>
         	Articulo.forEach(function(value,index){	        		
         		if($("#"+index,formulario).first().attr("type")=="checkbox"){
-        			console.log("#"+index +" "+value);
         			$("#"+index,formulario).first().prop("checked",(value!="" && value!="0" ));	
     			}else{
         			$("#"+index,formulario).first().val(value);     				
