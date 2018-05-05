@@ -18,19 +18,18 @@
 <script type="text/javascript" src="js/jquery.priceformat.js"></script>
 <script type="text/javascript" src="js/jquery.jqGrid.min.js"></script>
 <script type="text/javascript" src="js/i18n/grid.locale-es.js"></script>
+<script type="text/javascript" src="js/multiple-select.js" ></script>
 <script type="text/javascript" src="js/general.js" charset="UTF-8"></script>
 </head>
 <body style="height: 100vh;">
 	<div class="container container-fluid cuerpo" style="">
 		<!-- Barra de menus -->
 		<div class="row justify-content-between">
-			<nav
-				class="navbar navbar-expand col navbar-light negro T-blanco rounded">
+			<nav class="navbar navbar-expand col navbar-light negro T-blanco rounded">
 				<div class="collapse navbar-collapse" id="navbarNav">
 					<ul class="navbar-nav">
 						<li class="nav-item">
-							<h3 class="col-12 negro T-blanco rounded-bottom"
-								style="font-weight: bold; text-shadow: 2px 2px #324731;">Latronic</h3>
+							<h3 class="col-12 negro T-blanco rounded-bottom" style="font-weight: bold;text-shadow: 2px 2px #324731;">Latronic</h3>
 						</li>
 						<!--li class="nav-item dropdown">
 							<a class="nav-link dropdown-toggle" id="archivo" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -81,29 +80,40 @@
 								<a class="dropdown-item" id="acercaDe">Acerca de</a>
 							</div>
 						</li-->
-						<li class="nav-item dropdown"><a
-							class="nav-link dropdown-toggle" id="configuracion"
-							data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-								Artículos </a>
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle" id="configuracion" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								Artículos
+							</a>
 							<div class="dropdown-menu" aria-labelledby="configuracion">
-								<a class="dropdown-item" id="marcas"
-									data-url="Frm_marcas_ABM.jsp" data-form="Frm_marcas_ABM">Marcas</a>
-								<a class="dropdown-item" id="cargaRapida"
-									data-url="Frm_Articulos_CargaRapida.jsp"
-									data-form="Frm_Articulos_CargaRapida">Carga Rapida</a> <a
-									class="dropdown-item" id="stockHoy" data-url="Rpt_StockHoy.jsp"
-									data-form="Rpt_StockHoy">Informa de Stock de Hoy</a>
-							</div></li>
-						<li class="nav-item"><a class="nav-link"
-							onclick="$('#Prv').click()"> Proveedores </a></li>
-						<li class="nav-item"><a class="nav-link"
-							onclick="$('#Cli').click()"> Clientes </a></li>
-						<li class="nav-item"><a class="nav-link"
-							onclick="$('#Art').click()"> Artículos </a></li>
-						<li class="nav-item"><a class="nav-link"
-							onclick="$('#Rem').click()"> Remitos </a></li>
-						<li class="nav-item" id="salir"><a class="nav-link"
-							href="Frm_logeo">Salir</a></li>
+								<a class="dropdown-item" id="marcas" data-url="Frm_marcas_ABM.jsp" data-form="Frm_marcas_ABM">Marcas</a>
+								<a class="dropdown-item" id="autos" data-url="Frm_autos_ABM.jsp" data-form="Frm_autos_ABM">Autos</a>
+								<a class="dropdown-item" id="cargaRapida" data-url="Frm_Articulos_CargaRapida.jsp" data-form="Frm_Articulos_CargaRapida">Carga Rapida</a>
+								<a class="dropdown-item" id="stockHoy" data-url="Rpt_StockHoy.jsp" data-form="Rpt_StockHoy">Informa de Stock de Hoy</a>
+							</div>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" onclick="$('#Prv').click()">
+								Proveedores
+							</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link"  onclick="$('#Cli').click()">
+								Clientes
+							</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link"  onclick="$('#Art').click()">
+								Artículos
+							</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link"  onclick="$('#Rem').click()">
+								Remitos
+							</a>
+						</li>
+						<li class="nav-item" id="salir">
+							<a class="nav-link" href="Frm_logeo">Salir</a>
+						</li>
 					</ul>
 				</div>
 			</nav>
@@ -115,36 +125,27 @@
 				<div class="list-group d-none" id="list-tab" role="tablist">
 					<div id="accordion" role="tablist">
 						<div class="card">
-							<div class="card-header" role="tab" id="Prv"
-								data-url="Frm_GrillaProveedores.jsp"
-								data-form="Frm_GrillaProveedores">
+							<div class="card-header" role="tab" id="Prv" data-url="Frm_GrillaProveedores.jsp" data-form="Frm_GrillaProveedores">
 								<h5 class="mb-0">
 									<a class="collapsed" href="javascript:void(0)">Proveedores</a>
 								</h5>
 							</div>
-							<div class="card-header" role="tab" id="Cli"
-								data-url="Frm_GrillaClientes.jsp" data-form="Frm_GrillaClientes">
+							<div class="card-header" role="tab" id="Cli" data-url="Frm_GrillaClientes.jsp" data-form="Frm_GrillaClientes">
 								<h5 class="mb-0">
 									<a class="collapsed" href="javascript:void(0)">Clientes</a>
 								</h5>
 							</div>
-							<div class="card-header" role="tab" id="Art"
-								data-url="Frm_GrillaArticulos.jsp"
-								data-form="Frm_GrillaArticulos">
+							<div class="card-header" role="tab" id="Art" data-url="Frm_GrillaArticulos.jsp" data-form="Frm_GrillaArticulos">
 								<h5 class="mb-0">
 									<a class="collapsed" href="javascript:void(0)">Artículos</a>
 								</h5>
 							</div>
-							<div class="d-none card-header" role="tab" id="Cmp"
-								data-url="Frm_GrillaComprobantes.jsp"
-								data-form="Frm_GrillaComprobantes">
+							<div class="d-none card-header" role="tab" id="Cmp" data-url="Frm_GrillaComprobantes.jsp" data-form="Frm_GrillaComprobantes">
 								<h5 class="mb-0">
-									<a class="collapsed" href="javascript:void(0)">Cmp. de
-										venta</a>
+									<a class="collapsed" href="javascript:void(0)">Cmp. de venta</a>
 								</h5>
 							</div>
-							<div class="card-header" role="tab" id="Rem"
-								data-url="Frm_GrillaRemitos.jsp" data-form="Frm_GrillaRemitos">
+							<div class="card-header" role="tab" id="Rem" data-url="Frm_GrillaRemitos.jsp" data-form="Frm_GrillaRemitos">
 								<h5 class="mb-0">
 									<a class="collapsed" href="javascript:void(0)">Remitos</a>
 								</h5>
@@ -152,8 +153,8 @@
 						</div>
 					</div>
 				</div>
-			</div>
-			<!-- fin Barra Lateral -->
+			</div>	
+			<!-- fin Barra Lateral -->	
 			<!-- cuerpo -->
 			<div class="fila">
 				<div class="tab-content rounded" id="Cuerpo">
@@ -169,23 +170,21 @@
 				</div>
 			</div>
 			<!-- fin cuerpo -->
-		</div>
+		</div>		
 		<!-- pie -->
 		<div class="fila">
-			<nav
-				class="navbar navbar-expand col navbar-light negro T-blanco rounded">
+			<nav class="navbar navbar-expand col navbar-light negro T-blanco rounded">
 				<div class="collapse navbar-collapse" id="navbarNav">
 					<ul class="navbar-nav">
 						<li class="nav-item">Hecho por Ignacio Latrónico</li>
 					</ul>
 				</div>
 			</nav>
-		</div>
+		</div>		
 		<!-- fin pie -->
 	</div>
-
-	<section id="bloqueoAlerta" class="backmodal" style="z-index: 10000;"></section>
-	<!-- div para mensajes emergentes (al final para que este arriba de todos los formularios -->
+	
+	<section id="bloqueoAlerta" class="backmodal" style="z-index: 10000;"></section><!-- div para mensajes emergentes (al final para que este arriba de todos los formularios -->
 
 	<script>
 		$(document).ready(function(){

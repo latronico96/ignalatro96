@@ -84,6 +84,11 @@ idForm %> >div {
 							type="text">
 					</div>
 					<div class="fila">
+						<span class="form-control with-10-00">Autos</span>
+						<select id="aut_autos" class="with-30-00 multiselect" multiple="multiple">
+    					</select>    
+					</div>
+					<div class="fila">
 						<span class="form-control with-10-00" style="padding-left: 10px;">Activo</span>
 						<input id="art_activ" class="form-control with-10-00 campo"
 							style="margin: 5.5px 0px;" type="checkbox">
@@ -214,6 +219,10 @@ idForm %> >div {
 				    });
         		}
         	}); 
+        	$("#aut_autos",formulario).html(funciones("GetHTMLOtionMarca",[]));
+
+   		 	$('select.multiselect').multipleSelect({position: 'top'});
+        	
         	$("#Titulo",formulario).html(modoTitulo);
         });
         

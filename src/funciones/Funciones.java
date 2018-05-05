@@ -164,6 +164,32 @@ public class Funciones {
 	public static String isNull(String valor,String valorDefault){
 		return (valor==null?valorDefault:valor);
 	}
+	
+	public String GetHTMLOtion(String CampoValue,String CampoTexto,String Tabla ){
+		return  GetHTMLOtion(CampoValue,CampoTexto,Tabla , "");
+	}
+
+	
+	public String GetHTMLOtionMarca(){
+
+		String html="";
+		try{
+			Connection cn=this.Conectar();
+			Statement st=cn.createStatement();
+			String sql="select aut_codig as campo, concat(TRIM(mar_nombr),' ',TRIM(aut_nombr))  as texto "
+					+ " from dbautos "
+					+ " left join dbmarcas on (mar_codig=aut_marca) ";
+			ResultSet rs=st.executeQuery(sql);
+			while( rs.next()){
+				html+="<option value=\""+rs.getString("campo")+"\">"+rs.getString("texto")+"</option>";
+			}
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+
+		return html;
+	}
 
 	public String GetHTMLOtion(String CampoValue,String CampoTexto,String Tabla , String where){
 

@@ -1,17 +1,11 @@
 @import url("datepicker.css");
-
 @import url("ui.jqgrid.css");
-
 @import url("jquery-ui.css");
-
 @import url("bootstrap.css");
-
 @import url("jquery-ui.theme.css");
-
+@import url("multiple-select.css");
 @import url("pisaBootstrap.css");
-
 @import url("modals.css");
-
 @import url("anchos.css");
 
 body {
@@ -77,11 +71,11 @@ img {
 	color: #ffc425 !important;
 }
 
-.T-blanco, .T-blanco>* {
+.T-blanco,.T-blanco > * {
 	color: #ffffff !important;
 }
 
-.T-negro, .T-negro>* {
+.T-negro, .T-negro > * {
 	color: #000000 !important;
 }
 
@@ -110,10 +104,10 @@ img {
 }
 
 .negro {
-	background-color: #2a6992 !important;
+    background-color: #2a6992 !important;
 }
 
-.gris {
+.gris{
 	background-color: #bdbdbd !important;
 }
 
@@ -189,31 +183,31 @@ img {
 	display: inline-block;
 }
 
-#DESCRIPCIONDELSISTEMA {
+#DESCRIPCIONDELSISTEMA{
 	font-size: 20px;
 	padding: 15px;
 	text-align: justify;
+	}
+	
+#Cuerpo > div {
+	margin-top:5px;
+    float: left;
 }
 
-#Cuerpo>div {
-	margin-top: 5px;
-	float: left;
-}
-
-.numero {
+.numero{
 	text-align: right;
 }
 /**************************BOTON AZUL*****************************/
 .btn-azul {
-	color: #fff;
-	background-color: #007bff;
-	border-color: #007bff;
+    color: #fff;
+    background-color: #007bff;
+    border-color: #007bff;
 }
 
 .btn-azul:hover {
-	color: #fff;
-	background-color: #0069d9;
-	border-color: #0062cc;
+    color: #fff;
+    background-color: #0069d9; 
+    border-color: #0062cc;
 }
 
 .btn-azul:disabled {
@@ -223,71 +217,71 @@ img {
 
 /**************************BOTON GRIS*****************************/
 .btn-gris {
-	color: #fff;
-	background-color: #868e96;
-	border-color: #868e96;
+    color: #fff;
+    background-color: #868e96;
+    border-color: #868e96;
 }
 
 .btn-gris:hover {
-	color: #fff;
-	background-color: #727b84;
-	border-color: #6c757d;
+    color: #fff;
+    background-color: #727b84;
+    border-color: #6c757d;
 }
 
 .btn-gris:disabled {
-	background-color: #868e96;
-	border-color: #868e96;
+    background-color: #868e96;
+    border-color: #868e96;
 }
 /**************************EFECTOS*DE*TOOLTIP**********************************/
 .tool {
 	position: relative;
-	/*width: 100px;*/
-	height: 32px;
-	display: inline-block;
-	overflow: hidden;
+    /*width: 100px;*/
+    height: 32px;
+    display: inline-block;
+    overflow: hidden;
 }
 
 .tool-boton {
-	min-width: 90px;
+    min-width: 90px;
 }
 
-.tool>img {
-	display: block;
-	width: 100%;
-	/*height: auto;*/
-	padding: 10% 0%;
-	height: 100%;
-	overflow: hidden;
+.tool > img {
+  display: block;
+  width: 100%;
+  /*height: auto;*/
+  padding: 10% 0%;
+  height: 100%;
+  overflow: hidden;
 }
 
-.tool>.overlay {
-	position: absolute;
-	bottom: 100%;
-	left: 0;
-	right: 0;
-	background-color: #000000;
-	overflow: hidden;
-	width: 100%;
-	height: 0;
-	transition: .5s ease;
-	border-radius: 5px;
+.tool > .overlay {
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  right: 0;
+  background-color: #000000;
+  overflow: hidden;
+  width: 100%;
+  height:0;
+  transition: .5s ease;
+  border-radius: 5px;
 }
 
 .tool:hover .overlay {
-	bottom: 0;
-	height: 100%;
+  bottom: 0;
+  height: 100%;
 }
 
 .textimg {
-	white-space: nowrap;
-	color: white;
-	font-size: 20px;
-	position: absolute;
-	overflow: hidden;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	-ms-transform: translate(-50%, -50%);
+  white-space: nowrap; 
+  color: white;
+  font-size: 20px;
+  position: absolute;
+  overflow: hidden;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
 }
 /*
 
@@ -297,3 +291,4 @@ img {
     <div class="textimg">Hello World</div>
   </div>
 </div>*/
+
