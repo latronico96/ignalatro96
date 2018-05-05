@@ -1,2 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<jdbcDataAdapter class="net.sf.jasperreports.data.jdbc.JdbcDataAdapterImpl"><name>Mangueras</name><driver>com.mysql.jdbc.Driver</driver><username>sa</username><password>olivos</password><savePassword>true</savePassword><url>jdbc:mysql://localhost:3306/mangueras</url><database></database><serverAddress></serverAddress></jdbcDataAdapter>
+<jdbcDataAdapter class="net.sf.jasperreports.data.jdbc.JdbcDataAdapterImpl">
+	<name>Mangueras</name>
+	<driver>com.mysql.jdbc.Driver</driver>
+	<username>sa</username>
+	<password>olivos</password>
+	<savePassword>true</savePassword>
+	<url>jdbc:mysql://localhost:3306/mangueras</url>
+	<database></database>
+	<serverAddress></serverAddress>
+</jdbcDataAdapter>

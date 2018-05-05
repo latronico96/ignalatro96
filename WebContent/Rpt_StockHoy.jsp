@@ -9,38 +9,41 @@
 %>
 <div id="<%=idForm%>" data-popup="true" class="backmodal formulario">
 	<style type="text/css">
-		#form {
-			position: relative;
-			-moz-box-sizing: content-box;
-			-webkit-box-sizing: content-box;
-			box-sizing: content-box;
-			margin: 0px auto;
-			width: 100%;
-			z-index: 1;
-		}
-		
-		.form-control {
-    		margin: 0px auto;
-    	}
-		
-		#jqgridSearchForm {
-			position: relative;
-			-moz-box-sizing: content-box;
-			-webkit-box-sizing: content-box;
-			box-sizing: content-box;
-			margin: 0px auto;
-			width: 100%;
-			z-index: 1;
-		}
-		
-		#<%=idForm%>>div {
-			width: 720px;
-			margin-top: 20px;
-		}
-	</style>
+#form {
+	position: relative;
+	-moz-box-sizing: content-box;
+	-webkit-box-sizing: content-box;
+	box-sizing: content-box;
+	margin: 0px auto;
+	width: 100%;
+	z-index: 1;
+}
+
+.form-control {
+	margin: 0px auto;
+}
+
+#jqgridSearchForm {
+	position: relative;
+	-moz-box-sizing: content-box;
+	-webkit-box-sizing: content-box;
+	box-sizing: content-box;
+	margin: 0px auto;
+	width: 100%;
+	z-index: 1;
+}
+
+#<%=
+idForm %> >div {
+	width: 720px;
+	margin-top: 20px;
+}
+</style>
 	<div class="modal" data-tmodal="alerta">
 		<div class="modal-header">
-			<h5 class="modal-title" id="exampleModalLabel"><span id="Titulo"></span> Informe Stock Hoy</h5>
+			<h5 class="modal-title" id="exampleModalLabel">
+				<span id="Titulo"></span> Informe Stock Hoy
+			</h5>
 			<button type="button" type="button" class="close"
 				onclick="cerrarFormu('<%=idForm%>');">
 				<span aria-hidden="true">&times;</span>
@@ -49,28 +52,27 @@
 		<div class="modal-body">
 			<div class="d-block">
 				<fieldset>
-  					<legend>Datos:</legend>
+					<legend>Datos:</legend>
 					<div class="fila">
-						<input id="sin" type="checkbox" name="filtro" value="0" class="form-control with-20-00 campo">
-							Sin Stock
-						</input>
+						<input id="sin" type="checkbox" name="filtro" value="0"
+							class="form-control with-20-00 campo"> Sin Stock </input>
 					</div>
 					<div class="fila">
-						<input id="poc" type="checkbox" name="filtro" value="2" class="form-control with-20-00 campo">
-							Con poco stock
-						</input>
+						<input id="poc" type="checkbox" name="filtro" value="2"
+							class="form-control with-20-00 campo"> Con poco stock </input>
 					</div>
 					<div class="fila">
-						<input id="con" type="checkbox" name="filtro" value="1" class="form-control with-20-00 campo">
-							Con stock
-						</input>
+						<input id="con" type="checkbox" name="filtro" value="1"
+							class="form-control with-20-00 campo"> Con stock </input>
 					</div>
-				</fieldset>				
+				</fieldset>
 			</div>
 		</div>
 		<div class="modal-footer">
-			<button id="btn_confirmar" class="btn btn-primary" type="button" style="margin-left: 10px; float: right;">Confirmar</button>
-			<button id="btncancelar" class="btn btn-danger" type="button" style="float: right;" onclick="cerrarFormu('<%=idForm%>');">salir</button>
+			<button id="btn_confirmar" class="btn btn-primary" type="button"
+				style="margin-left: 10px; float: right;">Confirmar</button>
+			<button id="btncancelar" class="btn btn-danger" type="button"
+				style="float: right;" onclick="cerrarFormu('<%=idForm%>');">salir</button>
 		</div>
 	</div>
 
@@ -115,5 +117,5 @@
         					},false);*/  	 
         	}); 
         });
-	</script>	
+	</script>
 </div>

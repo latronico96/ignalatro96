@@ -11,39 +11,40 @@
 
 <div id="<%=idForm%>" data-popup="true" class="backmodal formulario">
 	<style type="text/css">
-		#<%=idForm%> #form {
-			position: relative;
-			-moz-box-sizing: content-box;
-			-webkit-box-sizing: content-box;
-			box-sizing: content-box;
-			margin: 0px auto;
-			width: 100%;
-			z-index: 1;    
-			height: 100%;
-    		max-height: 17px;
-		}
-		
-		#<%=idForm%> #jqgridSearchForm {
-			position: relative;
-			-moz-box-sizing: content-box;
-			-webkit-box-sizing: content-box;
-			box-sizing: content-box;
-			margin: 0px auto;
-			width: 100%;
-			z-index: 1;
-			height: 18.5px;
-		}
-		
-		#Frm_ptaVta_ABM>div {
-			width: 720px;
-			margin-top: 20px;
-		}
-	</style>
+#<%=
+idForm %>#form {
+	position: relative;
+	-moz-box-sizing: content-box;
+	-webkit-box-sizing: content-box;
+	box-sizing: content-box;
+	margin: 0px auto;
+	width: 100%;
+	z-index: 1;
+	height: 100%;
+	max-height: 17px;
+}
+
+#<%=
+idForm %>#jqgridSearchForm {
+	position: relative;
+	-moz-box-sizing: content-box;
+	-webkit-box-sizing: content-box;
+	box-sizing: content-box;
+	margin: 0px auto;
+	width: 100%;
+	z-index: 1;
+	height: 18.5px;
+}
+
+#Frm_ptaVta_ABM>div {
+	width: 720px;
+	margin-top: 20px;
+}
+</style>
 
 	<div class="modal" data-tmodal="alerta">
 		<div class="modal-header">
-			<h5 class="modal-title">Administración de
-				Puntos de Venta</h5>
+			<h5 class="modal-title">Administración de Puntos de Venta</h5>
 			<button type="button" type="button" class="close"
 				onclick="cerrarFormu('<%=idForm%>');">
 				<span aria-hidden="true">&times;</span>
@@ -56,8 +57,10 @@
 			</div>
 		</div>
 		<div class="modal-footer">
-			<button type="button" class="btn btn-primary">Guardar Cambios</button>
-			<button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="cerrarFormu('<%=idForm%>');">Cerrar</button>
+			<button type="button" class="btn btn-primary">Guardar
+				Cambios</button>
+			<button type="button" class="btn btn-secondary" data-dismiss="modal"
+				onclick="cerrarFormu('<%=idForm%>');">Cerrar</button>
 		</div>
 	</div>
 
@@ -216,5 +219,5 @@
 	        $(".ui-jqgrid-titlebar",form).hide();	        
         }
 	</script>
-	
+
 </div>

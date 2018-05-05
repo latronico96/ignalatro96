@@ -36,68 +36,79 @@
 %>
 <div id="<%=idForm%>" class="formulario">
 	<style type="text/css">
-		#form {
-			position: relative;
-			-moz-box-sizing: content-box;
-			-webkit-box-sizing: content-box;
-			box-sizing: content-box;
-			margin: 0px auto;
-			width: 100%;
-			z-index: 1;
-		}
-		
-		#jqgridSearchForm {
-			position: relative;
-			-moz-box-sizing: content-box;
-			-webkit-box-sizing: content-box;
-			box-sizing: content-box;
-			margin: 0px auto;
-			width: 100%;
-			z-index: 1;
-		}
-		
-		#<%=idForm %> >div {
-			width: 100%;
-			margin-top: 1px;
-		}
-		
-		#<%=idForm %> > h3>img {
-			background-color: #ffffff;
-		}
-		
-		#<%=idForm %> {
-			width: 100%;
-		}
-		
-		#<%=idForm %>  .tool:not(:first-child) {
-		    cursor: pointer;
-		    border-right: solid #fff 1px;
-		}
-		
-		#<%=idForm %>  .nav-tabs .nav-link {
-		    border: 1px solid transparent;
-		    border-top-left-radius: 0.25rem;
-		    border-top-right-radius: 0.25rem;
-		    /*background-color: #4444448f;*/
-		    color: #ffffff;
-   			min-height: 28px;
-			margin-left: 1px;
-	    }
-	    
-	    
-	    #<%=idForm %> .nav-link {
-		    padding: 0.05rem 0.5rem;
-		}
-		
-		 #<%=idForm %> label {
-		    padding: 0px 15px;
-		}
-		
-	</style>
-	<div class="fila negro T-blanco rounded" style="height: 40px;padding: 4px 10px;">
+#form {
+	position: relative;
+	-moz-box-sizing: content-box;
+	-webkit-box-sizing: content-box;
+	box-sizing: content-box;
+	margin: 0px auto;
+	width: 100%;
+	z-index: 1;
+}
+
+#jqgridSearchForm {
+	position: relative;
+	-moz-box-sizing: content-box;
+	-webkit-box-sizing: content-box;
+	box-sizing: content-box;
+	margin: 0px auto;
+	width: 100%;
+	z-index: 1;
+}
+
+#<%=
+idForm %> >div {
+	width: 100%;
+	margin-top: 1px;
+}
+
+#<%=
+idForm %> > h3>img {
+	background-color: #ffffff;
+}
+
+#<%=
+idForm
+ 
+%>
+{
+width
+:
+ 
+100%;
+}
+#<%=
+idForm %> .tool:not (:first-child ) {
+	cursor: pointer;
+	border-right: solid #fff 1px;
+}
+
+#<%=
+idForm %> .nav-tabs .nav-link {
+	border: 1px solid transparent;
+	border-top-left-radius: 0.25rem;
+	border-top-right-radius: 0.25rem;
+	/*background-color: #4444448f;*/
+	color: #ffffff;
+	min-height: 28px;
+	margin-left: 1px;
+}
+
+#<%=
+idForm %> .nav-link {
+	padding: 0.05rem 0.5rem;
+}
+
+#<%=
+idForm %> label {
+	padding: 0px 15px;
+}
+</style>
+	<div class="fila negro T-blanco rounded"
+		style="height: 40px; padding: 4px 10px;">
 		<div class="tool">
 			<h3 style="margin: 0px;">Artículos</h3>
-		</div>			
+		</div>
 		<div class="tool tool-boton" data-modo="CONS">
 			<img src="/img/iconos/glyphicons-28-search.png"
 				style="width: auto; filter: invert(55%);">
@@ -128,24 +139,28 @@
 		</div>
 	</div>
 	<ul class="nav nav-tabs">
-	 	<%=marcas %>
+		<%=marcas %>
 	</ul>
 	<div class="fila negro rounded" style="padding: 6px 0px 0px 0px;">
-		<label class="float-left with-10-00 T-blanco">Artículo</label>
-		<input class="form-control with-20-00 filtro" id="mod_nombr1" type="text">
-		<input class="form-control with-20-00 filtro" id="mod_nombr2" type="text">
-		<input class="form-control with-20-00 filtro" id="mod_nombr3" type="text">
-		<label class="float-left with-5-00 T-blanco">O</label>
-		<input class="form-control filtro with-2-00 " id="mod_nombr5" type="radio" name="operador" value="OR" checked="checked" style="top: 7px;">
-		<label class="float-left with-5-00 T-blanco">Y</label>
-		<input class="form-control filtro with-2-00 " id="mod_nombr4" type="radio" name="operador" value="AND" style="top: 7px;">
-		<button class="form-control with-7-00 btn " onclick="formulario.ActualizarParametros();">Actulizar</button>
+		<label class="float-left with-10-00 T-blanco">Artículo</label> <input
+			class="form-control with-20-00 filtro" id="mod_nombr1" type="text">
+		<input class="form-control with-20-00 filtro" id="mod_nombr2"
+			type="text"> <input class="form-control with-20-00 filtro"
+			id="mod_nombr3" type="text"> <label
+			class="float-left with-5-00 T-blanco">O</label> <input
+			class="form-control filtro with-2-00 " id="mod_nombr5" type="radio"
+			name="operador" value="OR" checked="checked" style="top: 7px;">
+		<label class="float-left with-5-00 T-blanco">Y</label> <input
+			class="form-control filtro with-2-00 " id="mod_nombr4" type="radio"
+			name="operador" value="AND" style="top: 7px;">
+		<button class="form-control with-7-00 btn "
+			onclick="formulario.ActualizarParametros();">Actulizar</button>
 	</div>
 	<div class="d-block">
 		<table id="<%=idGrilla%>"></table>
 		<div id="<%=idGrilla%>_pie"></div>
 	</div>
-<script type="text/javascript">
+	<script type="text/javascript">
 	formulario = $.fn.extend($(<%="\"#"+idForm+"\""%>), {
 		idForm:"<%=idForm%>",
    		idGrilla:"<%=idGrilla%>",

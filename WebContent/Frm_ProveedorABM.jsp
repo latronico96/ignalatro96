@@ -11,39 +11,42 @@
 %>
 <div id="<%=idForm%>" data-popup="true" class="backmodal formulario">
 	<style type="text/css">
-		#form {
-			position: relative;
-			-moz-box-sizing: content-box;
-			-webkit-box-sizing: content-box;
-			box-sizing: content-box;
-			margin: 0px auto;
-			width: 100%;
-			z-index: 1;
-		}
-		
-		.form-control {
-    		margin: 0px auto;
-    	}
-		
-		#jqgridSearchForm {
-			position: relative;
-			-moz-box-sizing: content-box;
-			-webkit-box-sizing: content-box;
-			box-sizing: content-box;
-			margin: 0px auto;
-			width: 100%;
-			z-index: 1;
-		}
-		
-		#<%=idForm%>>div {
-			width: 720px;
-			margin-top: 20px;
-		}
-	</style>
+#form {
+	position: relative;
+	-moz-box-sizing: content-box;
+	-webkit-box-sizing: content-box;
+	box-sizing: content-box;
+	margin: 0px auto;
+	width: 100%;
+	z-index: 1;
+}
+
+.form-control {
+	margin: 0px auto;
+}
+
+#jqgridSearchForm {
+	position: relative;
+	-moz-box-sizing: content-box;
+	-webkit-box-sizing: content-box;
+	box-sizing: content-box;
+	margin: 0px auto;
+	width: 100%;
+	z-index: 1;
+}
+
+#<%=
+idForm %> >div {
+	width: 720px;
+	margin-top: 20px;
+}
+</style>
 
 	<div class="modal" data-tmodal="alerta">
 		<div class="modal-header">
-			<h5 class="modal-title" id="exampleModalLabel"><span id="Titulo"></span> Proveedor</h5>
+			<h5 class="modal-title" id="exampleModalLabel">
+				<span id="Titulo"></span> Proveedor
+			</h5>
 			<button type="button" type="button" class="close"
 				onclick="cerrarFormu('<%=idForm%>');">
 				<span aria-hidden="true">&times;</span>
@@ -52,49 +55,54 @@
 		<div class="modal-body">
 			<div class="d-block">
 				<fieldset>
-  					<legend>Datos:</legend>
+					<legend>Datos:</legend>
 					<div class="fila">
 						<input id="modo" class="form-control campo" type="hidden">
-						<span class="form-control with-20-00">Nombre</span>
-						<input id="prv_codig" class="form-control with-10-00 campo" type="number" maxlength="4">
-						<input id="prv_nombr" class="form-control with-70-00 campo" type="text" maxlength="45">
+						<span class="form-control with-20-00">Nombre</span> <input
+							id="prv_codig" class="form-control with-10-00 campo"
+							type="number" maxlength="4"> <input id="prv_nombr"
+							class="form-control with-70-00 campo" type="text" maxlength="45">
 					</div>
 					<div class="fila">
-						<span class="form-control with-20-00">Telefono</span>
-						<input id="prv_telef" class="form-control with-30-00 campo" type="text" maxlength="30">
-						<span class="form-control with-20-00">Celular</span>
-						<input id="prv_celul" class="form-control with-30-00 campo" type="text" maxlength="30">
+						<span class="form-control with-20-00">Telefono</span> <input
+							id="prv_telef" class="form-control with-30-00 campo" type="text"
+							maxlength="30"> <span class="form-control with-20-00">Celular</span>
+						<input id="prv_celul" class="form-control with-30-00 campo"
+							type="text" maxlength="30">
 					</div>
 					<div class="fila">
-						<span class="form-control with-20-00">Direción</span>
-						<input id="prv_direc" class="form-control with-80-00 campo" type="text" maxlength="60">
+						<span class="form-control with-20-00">Direción</span> <input
+							id="prv_direc" class="form-control with-80-00 campo" type="text"
+							maxlength="60">
 					</div>
-					<div class="fila">				
-						<span class="form-control with-20-00">Cond. de IVA</span>
-						<select id="prv_cliva" class="form-control with-80-00 campo">
+					<div class="fila">
+						<span class="form-control with-20-00">Cond. de IVA</span> <select
+							id="prv_cliva" class="form-control with-80-00 campo">
 							<%=fun.GetHTMLOtion("iva_codig", "iva_nombr", "dbCondIva", "")%>
 						</select>
 					</div>
 					<div class="fila">
-						<span class="form-control with-20-00">Tipo de Doc.</span>
-						<select id="prv_tpdoc" class="form-control with-30-00 campo">
+						<span class="form-control with-20-00">Tipo de Doc.</span> <select
+							id="prv_tpdoc" class="form-control with-30-00 campo">
 							<%=fun.GetHTMLOtion("doc_codig", "doc_nombre", "dbTipoDocumentos", "")%>
-						</select>		
-						<span class="form-control with-20-00">Nro. Doc.</span>
-						<input id="prv_nrdoc" class="form-control with-30-00 campo" type="text" maxlength="11">
+						</select> <span class="form-control with-20-00">Nro. Doc.</span> <input
+							id="prv_nrdoc" class="form-control with-30-00 campo" type="text"
+							maxlength="11">
 					</div>
-					<div class="fila">				
-						<span class="form-control with-20-00">Mail</span>						
-						<input id="prv_email" class="form-control with-80-00 campo" type="text" maxlength="80">
-					</div><div class="fila">
+					<div class="fila">
+						<span class="form-control with-20-00">Mail</span> <input
+							id="prv_email" class="form-control with-80-00 campo" type="text"
+							maxlength="80">
+					</div>
+					<div class="fila">
 						<!-- span class="form-control with-20-00">CBU</span>
 						<input id="prv_nrocbu" class="form-control with-30-00 campo" type="text" maxlength="22"-->
-						<span class="form-control with-17-00">Cond. de pagos</span>
-						<select id="prv_condi" class="form-control with-18-00 campo">
-							<%="<option value=\""+Funciones.Contado+"\">Contado</option><option value=\""+Funciones.CtaCorrienta+"\">Cta. Corriente</option>"%>	
-						</select>					
-						<span class="form-control with-10-00">Plazo</span>
-						<input id="prv_plazo" class="form-control with-5-00 campo" type="text" maxlength="2">
+						<span class="form-control with-17-00">Cond. de pagos</span> <select
+							id="prv_condi" class="form-control with-18-00 campo">
+							<%="<option value=\""+Funciones.Contado+"\">Contado</option><option value=\""+Funciones.CtaCorrienta+"\">Cta. Corriente</option>"%>
+						</select> <span class="form-control with-10-00">Plazo</span> <input
+							id="prv_plazo" class="form-control with-5-00 campo" type="text"
+							maxlength="2">
 					</div>
 					<!-- div class="fila">			
 						<span class="form-control with-30-00">Facturar a otra persona</span>	
@@ -139,8 +147,10 @@
 			</div>
 		</div>
 		<div class="modal-footer">
-			<button type="button" class="btn btn-primary" id="btn_confirmar">Guardar Cambios</button>
-			<button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="cerrarFormu('<%=idForm%>');">Cerrar</button>
+			<button type="button" class="btn btn-primary" id="btn_confirmar">Guardar
+				Cambios</button>
+			<button type="button" class="btn btn-secondary" data-dismiss="modal"
+				onclick="cerrarFormu('<%=idForm%>');">Cerrar</button>
 		</div>
 	</div>
 
@@ -331,5 +341,5 @@
     	
 
 	</script>
-	
+
 </div>

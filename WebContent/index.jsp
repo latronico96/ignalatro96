@@ -1,6 +1,6 @@
 <%@page import="java.math.BigInteger"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8;link=index;"
-	pageEncoding="UTF-8"%>
+<%@ page language="java"
+	contentType="text/html; charset=UTF-8;link=index;" pageEncoding="UTF-8"%>
 <%@page import="funciones.Funciones"%>
 <%
 	Funciones fun = new Funciones();
@@ -94,33 +94,37 @@
 		<div class="row justify-content-between">
 			<nav
 				class="navbar navbar-expand col navbar-light negro T-blanco rounded">
-			<div class="collapse navbar-collapse" id="navbarNav">
-				<ul class="navbar-nav">
-					<li class="nav-item">
-						<h3 class="col-12 negro T-blanco rounded-bottom" style="font-weight: bold;text-shadow: 2px 2px #324731;">Latronic</h3>
-					</li>
-				</ul>
-			</div>
+				<div class="collapse navbar-collapse" id="navbarNav">
+					<ul class="navbar-nav">
+						<li class="nav-item">
+							<h3 class="col-12 negro T-blanco rounded-bottom"
+								style="font-weight: bold; text-shadow: 2px 2px #324731;">Latronic</h3>
+						</li>
+					</ul>
+				</div>
 			</nav>
 		</div>
-		<div id="frm_login" style="margin: 10px auto;padding: 20px;" class="negro T-blanco rounded">			
+		<div id="frm_login" style="margin: 10px auto; padding: 20px;"
+			class="negro T-blanco rounded">
 			<div class="fila">
 				<h4 style="margin-bottom: 2px;">Login</h4>
 			</div>
 
 			<div class="fila">
-				<span class="form-control with-30-00">Usuario</span>
-				<input id="usuario" maxlength="45" class="form-control campo  with-70-00" type="text">
-				<input id="form" class="form-control campo" value="frm_login" type="hidden">
+				<span class="form-control with-30-00">Usuario</span> <input
+					id="usuario" maxlength="45" class="form-control campo  with-70-00"
+					type="text"> <input id="form" class="form-control campo"
+					value="frm_login" type="hidden">
 			</div>
 			<div class="fila">
-				<span class="form-control with-30-00">contraseña</span>
-				<input id="contrasenia" class="form-control campo with-70-00" maxlength="60" type="password">
+				<span class="form-control with-30-00">contraseña</span> <input
+					id="contrasenia" class="form-control campo with-70-00"
+					maxlength="60" type="password">
 			</div>
 			<div class="fila">
-				<button id="btn_Enviar" class="form-control campo btn float-right" style="padding: 2px; margin: 0px;" type="button" value="Ingresar">
-					Ingresar
-				</button>
+				<button id="btn_Enviar" class="form-control campo btn float-right"
+					style="padding: 2px; margin: 0px;" type="button" value="Ingresar">
+					Ingresar</button>
 			</div>
 		</div>
 		<!--
@@ -205,11 +209,11 @@
 		<div class="row justify-content-between pie">
 			<nav
 				class="navbar navbar-expand col navbar-light negro T-blanco rounded">
-			<div class="collapse navbar-collapse" id="navbarNav">
-				<ul class="navbar-nav">
-					<li class="nav-item">Hecho por Ignacio Latrónico</li>
-				</ul>
-			</div>
+				<div class="collapse navbar-collapse" id="navbarNav">
+					<ul class="navbar-nav">
+						<li class="nav-item">Hecho por Ignacio Latrónico</li>
+					</ul>
+				</div>
 			</nav>
 		</div>
 	</div>

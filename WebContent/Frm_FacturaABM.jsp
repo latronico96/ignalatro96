@@ -11,45 +11,47 @@
 %>
 <div id="<%=idForm%>" data-popup="true" class="backmodal formulario">
 	<style type="text/css">
-		#form {
-			position: relative;
-			-moz-box-sizing: content-box;
-			-webkit-box-sizing: content-box;
-			box-sizing: content-box;
-			margin: 0px auto;
-			width: 100%;
-			z-index: 1;
-		}
-		
-		.form-control {
-    		margin: 0px auto;
-    	}
-    	
-    	
-		
-		#jqgridSearchForm {
-			position: relative;
-			-moz-box-sizing: content-box;
-			-webkit-box-sizing: content-box;
-			box-sizing: content-box;
-			margin: 0px auto;
-			width: 100%;
-			z-index: 1;
-		}
-		
-		#<%=idForm%>>div {
-			width: 850px;
-			margin-top: 20px;
-		}
-		
-		#<%=idForm%> #fld_totales, #<%=idForm%> #fld_totales .fila * {
-			float: right;
-		}
-	</style>
+#form {
+	position: relative;
+	-moz-box-sizing: content-box;
+	-webkit-box-sizing: content-box;
+	box-sizing: content-box;
+	margin: 0px auto;
+	width: 100%;
+	z-index: 1;
+}
+
+.form-control {
+	margin: 0px auto;
+}
+
+#jqgridSearchForm {
+	position: relative;
+	-moz-box-sizing: content-box;
+	-webkit-box-sizing: content-box;
+	box-sizing: content-box;
+	margin: 0px auto;
+	width: 100%;
+	z-index: 1;
+}
+
+#<%=
+idForm %> >div {
+	width: 850px;
+	margin-top: 20px;
+}
+
+#<%=
+idForm %>#fld_totales, #<%=idForm %>#fld_totales .fila * {
+	float: right;
+}
+</style>
 
 	<div class="modal" data-tmodal="alerta">
 		<div class="modal-header">
-			<h5 class="modal-title" id="exampleModalLabel"><span id="Titulo"></span> Factura</h5>
+			<h5 class="modal-title" id="exampleModalLabel">
+				<span id="Titulo"></span> Factura
+			</h5>
 			<button type="button" type="button" class="close"
 				onclick="cerrarFormu('<%=idForm%>');">
 				<span aria-hidden="true">&times;</span>
@@ -58,57 +60,63 @@
 		<div class="modal-body">
 			<div class="d-block">
 				<fieldset>
-					<div class="fila">						
+					<div class="fila">
 						<input id="modo" class="form-control campo" type="hidden">
-						<input id="cmp_codig" class="form-control campo" type="hidden">					
-						<span class="form-control with-10-00">Fecha</span>
-						<input id="cmp_fecha" class="form-control with-10-00 campo" type="text" maxlength="4">
-						<span class="form-control with-10-00">N°</span>
-						<select id="cmp_letra" class="form-control with-10-00 campo">						
+						<input id="cmp_codig" class="form-control campo" type="hidden">
+						<span class="form-control with-10-00">Fecha</span> <input
+							id="cmp_fecha" class="form-control with-10-00 campo" type="text"
+							maxlength="4"> <span class="form-control with-10-00">N°</span>
+						<select id="cmp_letra" class="form-control with-10-00 campo">
 							<option value="A">A</option>
-							<option value="B">B</option> 
+							<option value="B">B</option>
 							<option value="C">C</option>
-						</select>
-						<select id="cmp_ptvta" class="form-control with-10-00 campo">
+						</select> <select id="cmp_ptvta" class="form-control with-10-00 campo">
 							<%=fun.GetHTMLOtion("ptv_codig", "right(concat(\"0000\",ptv_codig),4)", "dbPuntosVentas", " ptv_activ=1 ")%>
-						</select>
-						<input id="cmp_nroco" class="form-control with-20-00 campo" type="text" maxlength="8">
+						</select> <input id="cmp_nroco" class="form-control with-20-00 campo"
+							type="text" maxlength="8">
 					</div>
 				</fieldset>
 				<fieldset>
-  					<legend>Cliente</legend>
-					<div class="fila">					
-						<span class="form-control with-10-00">Nombre</span>
-						<input id="cmp_codcl" class="form-control with-6-30 campo" type="text" maxlength="30">						
-						<button type="button" class="btn blanco form-control with-3-70" id="btn_HcCli">
-							<img src="/img/iconos/glyphicons-28-search.png"	style="height: auto; filter: invert(55%);">
+					<legend>Cliente</legend>
+					<div class="fila">
+						<span class="form-control with-10-00">Nombre</span> <input
+							id="cmp_codcl" class="form-control with-6-30 campo" type="text"
+							maxlength="30">
+						<button type="button" class="btn blanco form-control with-3-70"
+							id="btn_HcCli">
+							<img src="/img/iconos/glyphicons-28-search.png"
+								style="height: auto; filter: invert(55%);">
 						</button>
-						<input id="cli_nombr" class="form-control with-50-00 campo" type="text" maxlength="30">	
-						<span class="form-control with-5-00">IVA</span>
-						<select id="cmp_fciva" class="form-control with-25-00 campo">
+						<input id="cli_nombr" class="form-control with-50-00 campo"
+							type="text" maxlength="30"> <span
+							class="form-control with-5-00">IVA</span> <select id="cmp_fciva"
+							class="form-control with-25-00 campo">
 							<%=fun.GetHTMLOtion("iva_codig", "iva_nombr", "dbCondIva","")%>
 						</select>
-					</div>					
-					<div class="fila">
-						<span class="form-control with-10-00">Telefono</span>
-						<input id="cmp_ftele" class="form-control with-25-00 campo" type="text" maxlength="30">
-						<span class="form-control with-10-00">Celular</span>						
-						<input id="cmp_fcelu" class="form-control with-25-00 campo" type="text" maxlength="30">
-						<span class="form-control with-5-00">Doc.</span>
-						<select id="cmp_ftdoc" class="form-control with-10-00 campo">
-							<%=fun.GetHTMLOtion("doc_codig", "doc_nombre", "dbTipoDocumentos", "")%>
-						</select>
-						<input id="cmp_fndoc" class="form-control with-15-00 campo" type="text" maxlength="11">						
 					</div>
 					<div class="fila">
-						<span class="form-control with-10-00">Direción</span>
-						<input id="cmp_fdire" class="form-control with-60-00 campo" type="text" maxlength="60">		
+						<span class="form-control with-10-00">Telefono</span> <input
+							id="cmp_ftele" class="form-control with-25-00 campo" type="text"
+							maxlength="30"> <span class="form-control with-10-00">Celular</span>
+						<input id="cmp_fcelu" class="form-control with-25-00 campo"
+							type="text" maxlength="30"> <span
+							class="form-control with-5-00">Doc.</span> <select id="cmp_ftdoc"
+							class="form-control with-10-00 campo">
+							<%=fun.GetHTMLOtion("doc_codig", "doc_nombre", "dbTipoDocumentos", "")%>
+						</select> <input id="cmp_fndoc" class="form-control with-15-00 campo"
+							type="text" maxlength="11">
+					</div>
+					<div class="fila">
+						<span class="form-control with-10-00">Direción</span> <input
+							id="cmp_fdire" class="form-control with-60-00 campo" type="text"
+							maxlength="60">
 					</div>
 				</fieldset>
-				<fieldset id="fld_<%=idGrilla %>" >
-  					<legend>Detalle</legend>
-  					<div class="fila gris T-blanco rounded" style="height: 40px;padding: 4px 10px;">
-  						<div class="tool d-none"></div>
+				<fieldset id="fld_<%=idGrilla %>">
+					<legend>Detalle</legend>
+					<div class="fila gris T-blanco rounded"
+						style="height: 40px; padding: 4px 10px;">
+						<div class="tool d-none"></div>
 						<div class="tool tool-boton" data-modo="ALTA">
 							<img src="/img/iconos/glyphicons-433-plus.png"
 								style="width: auto; filter: invert(55%);">
@@ -130,32 +138,37 @@
 								<div class="textimg">Eliminar</div>
 							</div>
 						</div>
-					</div>				
+					</div>
 					<div class="d-block">
 						<table id="<%=idGrilla%>"></table>
 						<div id="<%=idGrilla%>_pie"></div>
 					</div>
-  				</fieldset>
+				</fieldset>
 				<fieldset id="fld_totales" class="with-50-00">
-  					<legend>Totales</legend>
+					<legend>Totales</legend>
 					<div class="fila">
-						<input id="cmp_fdire" class="form-control with-30-00 campo" type="text" maxlength="60">
-						<span class="form-control with-30-00">Neto</span>
-					</div>	
+						<input id="cmp_fdire" class="form-control with-30-00 campo"
+							type="text" maxlength="60"> <span
+							class="form-control with-30-00">Neto</span>
+					</div>
 					<div class="fila">
-						<input id="cmp_fdire" class="form-control with-30-00 campo" type="text" maxlength="60">
-						<span class="form-control with-30-00">IVA</span>
-					</div>	
+						<input id="cmp_fdire" class="form-control with-30-00 campo"
+							type="text" maxlength="60"> <span
+							class="form-control with-30-00">IVA</span>
+					</div>
 					<div class="fila">
-						<input id="cmp_fdire" class="form-control with-30-00 campo" type="text" maxlength="60">	
-						<span class="form-control with-30-00">Total</span>
+						<input id="cmp_fdire" class="form-control with-30-00 campo"
+							type="text" maxlength="60"> <span
+							class="form-control with-30-00">Total</span>
 					</div>
 				</fieldset>
 			</div>
 		</div>
 		<div class="modal-footer">
-			<button type="button" class="btn btn-primary" id="btn_confirmar">Guardar Cambios</button>
-			<button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="cerrarFormu('<%=idForm%>');">Cerrar</button>
+			<button type="button" class="btn btn-primary" id="btn_confirmar">Guardar
+				Cambios</button>
+			<button type="button" class="btn btn-secondary" data-dismiss="modal"
+				onclick="cerrarFormu('<%=idForm%>');">Cerrar</button>
 		</div>
 	</div>
 
@@ -305,5 +318,5 @@
 	      	});
         }
 
-	</script>	
+	</script>
 </div>

@@ -9,48 +9,58 @@
 %>
 <div id="<%=idForm%>" class="formulario">
 	<style type="text/css">
-		#form {
-			position: relative;
-			-moz-box-sizing: content-box;
-			-webkit-box-sizing: content-box;
-			box-sizing: content-box;
-			margin: 0px auto;
-			width: 100%;
-			z-index: 1;
-		}
-		
-		#jqgridSearchForm {
-			position: relative;
-			-moz-box-sizing: content-box;
-			-webkit-box-sizing: content-box;
-			box-sizing: content-box;
-			margin: 0px auto;
-			width: 100%;
-			z-index: 1;
-		}
-		
-		#<%=idForm %> >div {
-			width: 100%;
-			margin-top: 1px;
-		}
-		
-		#<%=idForm %> > h3>img {
-			background-color: #ffffff;
-		}
-		
-		#<%=idForm %> {
-			width: 100%;
-		}
-		
-		#<%=idForm %>  .tool:not(:first-child) {
-		    cursor: pointer;
-		    border-right: solid #fff 1px;
-		}
-	</style>
-	<div class="fila negro T-blanco rounded" style="height: 40px;padding: 4px 10px;">
+#form {
+	position: relative;
+	-moz-box-sizing: content-box;
+	-webkit-box-sizing: content-box;
+	box-sizing: content-box;
+	margin: 0px auto;
+	width: 100%;
+	z-index: 1;
+}
+
+#jqgridSearchForm {
+	position: relative;
+	-moz-box-sizing: content-box;
+	-webkit-box-sizing: content-box;
+	box-sizing: content-box;
+	margin: 0px auto;
+	width: 100%;
+	z-index: 1;
+}
+
+#<%=
+idForm %> >div {
+	width: 100%;
+	margin-top: 1px;
+}
+
+#<%=
+idForm %> > h3>img {
+	background-color: #ffffff;
+}
+
+#<%=
+idForm
+ 
+%>
+{
+width
+:
+ 
+100%;
+}
+#<%=
+idForm %> .tool:not (:first-child ) {
+	cursor: pointer;
+	border-right: solid #fff 1px;
+}
+</style>
+	<div class="fila negro T-blanco rounded"
+		style="height: 40px; padding: 4px 10px;">
 		<div class="tool">
 			<h3 style="margin: 0px;">Recibos</h3>
-		</div>			
+		</div>
 		<div class="tool tool-boton" data-modo="CONS">
 			<img src="/img/iconos/glyphicons-28-search.png"
 				style="width: auto; filter: invert(55%);">
@@ -86,7 +96,7 @@
 		<div id="<%=idGrilla%>_pie"></div>
 	</div>
 
-<script type="text/javascript">
+	<script type="text/javascript">
 	formulario = $.fn.extend($(<%="\"#"+idForm+"\""%>), {
 		idGrilla:"<%=idGrilla%>",
 		NidGrilla: "#" + "<%=idGrilla%>",

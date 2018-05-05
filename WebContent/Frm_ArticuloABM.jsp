@@ -11,39 +11,42 @@
 %>
 <div id="<%=idForm%>" data-popup="true" class="backmodal formulario">
 	<style type="text/css">
-		#form {
-			position: relative;
-			-moz-box-sizing: content-box;
-			-webkit-box-sizing: content-box;
-			box-sizing: content-box;
-			margin: 0px auto;
-			width: 100%;
-			z-index: 1;
-		}
-		
-		.form-control {
-    		margin: 0px auto;
-    	}
-		
-		#jqgridSearchForm {
-			position: relative;
-			-moz-box-sizing: content-box;
-			-webkit-box-sizing: content-box;
-			box-sizing: content-box;
-			margin: 0px auto;
-			width: 100%;
-			z-index: 1;
-		}
-		
-		#<%=idForm%>>div {
-			width: 720px;
-			margin-top: 20px;
-		}
-	</style>
+#form {
+	position: relative;
+	-moz-box-sizing: content-box;
+	-webkit-box-sizing: content-box;
+	box-sizing: content-box;
+	margin: 0px auto;
+	width: 100%;
+	z-index: 1;
+}
+
+.form-control {
+	margin: 0px auto;
+}
+
+#jqgridSearchForm {
+	position: relative;
+	-moz-box-sizing: content-box;
+	-webkit-box-sizing: content-box;
+	box-sizing: content-box;
+	margin: 0px auto;
+	width: 100%;
+	z-index: 1;
+}
+
+#<%=
+idForm %> >div {
+	width: 720px;
+	margin-top: 20px;
+}
+</style>
 
 	<div class="modal" data-tmodal="alerta">
 		<div class="modal-header">
-			<h5 class="modal-title" id="exampleModalLabel"><span id="Titulo"></span> Artículo</h5>
+			<h5 class="modal-title" id="exampleModalLabel">
+				<span id="Titulo"></span> Artículo
+			</h5>
 			<button type="button" type="button" class="close"
 				onclick="cerrarFormu('<%=idForm%>');">
 				<span aria-hidden="true">&times;</span>
@@ -52,41 +55,47 @@
 		<div class="modal-body">
 			<div class="d-block">
 				<fieldset>
-  					<legend>Datos:</legend>
+					<legend>Datos:</legend>
 					<div class="fila">
-						<input id="modo" class="form-control campo"type="hidden" >					
-						<span class="form-control with-10-00">Nombre</span>
-						<input id="art_codig" class="form-control with-10-00 campo" type="number" maxlength="4">
-						<input id="art_nombr" class="form-control with-70-00 campo" type="text" maxlength="45">
+						<input id="modo" class="form-control campo" type="hidden">
+						<span class="form-control with-10-00">Nombre</span> <input
+							id="art_codig" class="form-control with-10-00 campo"
+							type="number" maxlength="4"> <input id="art_nombr"
+							class="form-control with-70-00 campo" type="text" maxlength="45">
 					</div>
-					<div class="fila">				
-						<span class="form-control with-10-00">Marca</span>
-						<select id="art_marca" class="form-control with-20-00 campo">
+					<div class="fila">
+						<span class="form-control with-10-00">Marca</span> <select
+							id="art_marca" class="form-control with-20-00 campo">
 							<%=fun.GetHTMLOtion("mar_codig", "mar_nombr", "dbMarcas","") %>
-						</select>
-						<span class="form-control with-10-00">C. Barra</span>
-						<input id="art_codbr" class="form-control with-20-00 campo" type="text" maxlength="13">
-						<span class="form-control with-10-00">Stk. min</span>
-						<input id="art_stmin" class="form-control with-20-00 campo" type="text" maxlength="7">
+						</select> <span class="form-control with-10-00">C. Barra</span> <input
+							id="art_codbr" class="form-control with-20-00 campo" type="text"
+							maxlength="13"> <span class="form-control with-10-00">Stk.
+							min</span> <input id="art_stmin" class="form-control with-20-00 campo"
+							type="text" maxlength="7">
 					</div>
 					<div class="fila">
-						<span class="form-control with-10-00">Costo</span>							
-						<input id="art_costo" class="form-control with-20-00 campo precio" type="text">	
-						<span class="form-control with-10-00">$ Menor</span>							
-						<input id="art_pmeno" class="form-control with-20-00 campo precio" type="text">	
-						<span class="form-control with-10-00" >$ Mayor</span>
-						<input id="art_pmayo" class="form-control with-20-00 campo precio" type="text">
+						<span class="form-control with-10-00">Costo</span> <input
+							id="art_costo" class="form-control with-20-00 campo precio"
+							type="text"> <span class="form-control with-10-00">$
+							Menor</span> <input id="art_pmeno"
+							class="form-control with-20-00 campo precio" type="text">
+						<span class="form-control with-10-00">$ Mayor</span> <input
+							id="art_pmayo" class="form-control with-20-00 campo precio"
+							type="text">
 					</div>
 					<div class="fila">
 						<span class="form-control with-10-00" style="padding-left: 10px;">Activo</span>
-						<input id="art_activ" class="form-control with-10-00 campo" style="margin: 5.5px 0px;" type="checkbox">
+						<input id="art_activ" class="form-control with-10-00 campo"
+							style="margin: 5.5px 0px;" type="checkbox">
 					</div>
-				</fieldset>				
+				</fieldset>
 			</div>
 		</div>
 		<div class="modal-footer">
-			<button type="button" class="btn btn-primary" id="btn_confirmar">Guardar Cambios</button>
-			<button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="cerrarFormu('<%=idForm%>');">Cerrar</button>
+			<button type="button" class="btn btn-primary" id="btn_confirmar">Guardar
+				Cambios</button>
+			<button type="button" class="btn btn-secondary" data-dismiss="modal"
+				onclick="cerrarFormu('<%=idForm%>');">Cerrar</button>
 		</div>
 	</div>
 
@@ -214,5 +223,5 @@
     	
 
 	</script>
-	
+
 </div>

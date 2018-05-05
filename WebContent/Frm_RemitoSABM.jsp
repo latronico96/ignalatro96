@@ -12,100 +12,116 @@
 %>
 <div id="<%=idForm%>" data-popup="true" class="backmodal formulario">
 	<style type="text/css">
-		#<%=idForm%> #form {
-			position: relative;
-			-moz-box-sizing: content-box;
-			-webkit-box-sizing: content-box;
-			box-sizing: content-box;
-			margin: 0px;
-			z-index: 1;
-		}
-		
-		#<%=idForm%> .form-control {
-    		margin: 0px auto;
-    	}
-    	
-    	
-		
-		#<%=idForm%> #jqgridSearchForm {
-			position: relative;
-			-moz-box-sizing: content-box;
-			-webkit-box-sizing: content-box;
-			box-sizing: content-box;
-			margin: 0px auto;
-			width: 100%;
-			z-index: 1;
-		}
-		
-		#<%=idForm%>>div {
-			width: 850px;
-			margin-top: 20px;
-		}
-		
-		#<%=idForm%> #fld_totales, #<%=idForm%> #fld_totales .fila * {
-			float: right;
-		}
-	</style>
+#<%=
+idForm %>#form {
+	position: relative;
+	-moz-box-sizing: content-box;
+	-webkit-box-sizing: content-box;
+	box-sizing: content-box;
+	margin: 0px;
+	z-index: 1;
+}
+
+#<%=
+idForm %>.form-control {
+	margin: 0px auto;
+}
+
+#<%=
+idForm %>#jqgridSearchForm {
+	position: relative;
+	-moz-box-sizing: content-box;
+	-webkit-box-sizing: content-box;
+	box-sizing: content-box;
+	margin: 0px auto;
+	width: 100%;
+	z-index: 1;
+}
+
+#<%=
+idForm %> >div {
+	width: 850px;
+	margin-top: 20px;
+}
+
+#<%=
+idForm %>#fld_totales, #<%=idForm %>#fld_totales .fila * {
+	float: right;
+}
+</style>
 
 	<div class="modal" data-tmodal="alerta">
 		<div class="modal-header">
-			<h5 class="modal-title" id="exampleModalLabel"><span id="Titulo"></span> Remito</h5>
-			<button type="button" type="button" class="close" onclick="cerrarFormu('<%=idForm%>');">
+			<h5 class="modal-title" id="exampleModalLabel">
+				<span id="Titulo"></span> Remito
+			</h5>
+			<button type="button" type="button" class="close"
+				onclick="cerrarFormu('<%=idForm%>');">
 				<span aria-hidden="true">&times;</span>
 			</button>
 		</div>
 		<div class="modal-body">
 			<div class="d-block">
 				<fieldset>
-					<div class="fila">						
-						<input id="modo" class="form-control campo" type="hidden">					
-						<input id="rem_tipor" class="campo" type="hidden" value="S">					
-						<span class="form-control with-10-00">Fecha</span>						
-						<input id="rem_fecha" class="form-control with-20-00 campo fecha" type="text" maxlength="4">						
-						<input id="rem_codig" class="form-control with-20-00 campo float-right" type="text" maxlength="8">
-						<span class="form-control with-10-00 float-right">N°</span>
+					<div class="fila">
+						<input id="modo" class="form-control campo" type="hidden">
+						<input id="rem_tipor" class="campo" type="hidden" value="S">
+						<span class="form-control with-10-00">Fecha</span> <input
+							id="rem_fecha" class="form-control with-20-00 campo fecha"
+							type="text" maxlength="4"> <input id="rem_codig"
+							class="form-control with-20-00 campo float-right" type="text"
+							maxlength="8"> <span
+							class="form-control with-10-00 float-right">N°</span>
 					</div>
-				</fieldset>				
+				</fieldset>
 				<fieldset>
-  					<legend>Cliente</legend>
-					<div class="fila">					
-						<span class="form-control with-10-00">Nombre</span>
-						<input id="rem_codcl" class="form-control with-6-30 campo" type="text" maxlength="30">						
-						<button type="button" class="btn blanco form-control with-3-70 campo" id="btn_HcCli">
-							<img src="/img/iconos/glyphicons-28-search.png"	style="height: auto; filter: invert(55%);">
+					<legend>Cliente</legend>
+					<div class="fila">
+						<span class="form-control with-10-00">Nombre</span> <input
+							id="rem_codcl" class="form-control with-6-30 campo" type="text"
+							maxlength="30">
+						<button type="button"
+							class="btn blanco form-control with-3-70 campo" id="btn_HcCli">
+							<img src="/img/iconos/glyphicons-28-search.png"
+								style="height: auto; filter: invert(55%);">
 						</button>
-						<input id="cli_nombr" class="form-control with-50-00 cli_campo" type="text" maxlength="30">	
-						<span class="form-control with-5-00">IVA</span>
-						<select id="cli_cliva" class="form-control with-25-00 cli_campo">
+						<input id="cli_nombr" class="form-control with-50-00 cli_campo"
+							type="text" maxlength="30"> <span
+							class="form-control with-5-00">IVA</span> <select id="cli_cliva"
+							class="form-control with-25-00 cli_campo">
 							<%=fun.GetHTMLOtion("iva_codig", "iva_nombr", "dbCondIva", "")%>
 						</select>
-					</div>					
-					<div class="fila">
-						<span class="form-control with-10-00">Telefono</span>
-						<input id="cli_telef" class="form-control with-25-00 cli_campo" type="text" maxlength="30">
-						<span class="form-control with-10-00">Celular</span>						
-						<input id="cli_celul" class="form-control with-25-00 cli_campo" type="text" maxlength="30">
-						<span class="form-control with-5-00">Doc.</span>
-						<select id="cli_tpdoc" class="form-control with-10-00 cli_campo">
-							<%=fun.GetHTMLOtion("doc_codig", "doc_nombre", "dbTipoDocumentos", "")%>
-						</select>
-						<input id="cli_nrdoc" class="form-control with-15-00 cli_campo" type="text" maxlength="11">						
 					</div>
 					<div class="fila">
-						<span class="form-control with-10-00">Direción</span>
-						<input id="cli_direc" class="form-control with-45-00 cli_campo" type="text" maxlength="60">
-						<span class="form-control with-17-00">Cond. de pagos</span>
-						<select id="rem_condi" class="form-control with-18-00 campo">
-							<%="<option value=\""+Funciones.Contado+"\">Contado</option><option value=\""+Funciones.CtaCorrienta+"\">Cta. Corriente</option>"%>	
-						</select>					
-						<span class="form-control with-5-00">Plazo</span>
-						<input id="cli_plazo" class="form-control with-5-00 cli_campo" type="text" maxlength="2">		
+						<span class="form-control with-10-00">Telefono</span> <input
+							id="cli_telef" class="form-control with-25-00 cli_campo"
+							type="text" maxlength="30"> <span
+							class="form-control with-10-00">Celular</span> <input
+							id="cli_celul" class="form-control with-25-00 cli_campo"
+							type="text" maxlength="30"> <span
+							class="form-control with-5-00">Doc.</span> <select id="cli_tpdoc"
+							class="form-control with-10-00 cli_campo">
+							<%=fun.GetHTMLOtion("doc_codig", "doc_nombre", "dbTipoDocumentos", "")%>
+						</select> <input id="cli_nrdoc" class="form-control with-15-00 cli_campo"
+							type="text" maxlength="11">
+					</div>
+					<div class="fila">
+						<span class="form-control with-10-00">Direción</span> <input
+							id="cli_direc" class="form-control with-45-00 cli_campo"
+							type="text" maxlength="60"> <span
+							class="form-control with-17-00">Cond. de pagos</span> <select
+							id="rem_condi" class="form-control with-18-00 campo">
+							<%="<option value=\""+Funciones.Contado+"\">Contado</option><option value=\""+Funciones.CtaCorrienta+"\">Cta. Corriente</option>"%>
+						</select> <span class="form-control with-5-00">Plazo</span> <input
+							id="cli_plazo" class="form-control with-5-00 cli_campo"
+							type="text" maxlength="2">
 					</div>
 				</fieldset>
 				<fieldset id="fld_<%=idGrilla %>" class="with-100-00">
-  					<legend>Detalle</legend>
-  					<div class="fila gris T-blanco rounded" style="height: 40px;padding: 4px 10px;">
-  						<div class="tool d-none"></div>
+					<legend>Detalle</legend>
+					<div class="fila gris T-blanco rounded"
+						style="height: 40px; padding: 4px 10px;">
+						<div class="tool d-none"></div>
 						<div class="tool tool-boton" data-modo="ALTA">
 							<img src="/img/iconos/glyphicons-433-plus.png"
 								style="width: auto; filter: invert(55%);">
@@ -113,28 +129,30 @@
 								<div class="textimg">Crear</div>
 							</div>
 						</div>
-						<div class="tool tool-boton" data-modo="MODI" onclick="formulario.ModRow();">
+						<div class="tool tool-boton" data-modo="MODI"
+							onclick="formulario.ModRow();">
 							<img src="/img/iconos/glyphicons-31-pencil.png"
 								style="width: auto; filter: invert(55%);">
 							<div class="overlay gris">
 								<div class="textimg ">Modificar</div>
 							</div>
 						</div>
-						<div class="tool tool-boton" data-modo="BAJA" onclick="formulario.DelRow();">
+						<div class="tool tool-boton" data-modo="BAJA"
+							onclick="formulario.DelRow();">
 							<img src="/img/iconos/glyphicons-208-remove.png"
 								style="width: auto; filter: invert(55%);">
 							<div class="overlay gris">
 								<div class="textimg">Eliminar</div>
 							</div>
 						</div>
-					</div>				
+					</div>
 					<div class="d-block">
 						<table id="<%=idGrilla%>"></table>
 						<div id="<%=idGrilla%>_pie"></div>
 					</div>
-  				</fieldset>
+				</fieldset>
 				<fieldset id="fld_totales" class="with-50-00">
-  					<legend>Totales</legend>
+					<legend>Totales</legend>
 					<!--div class="fila">
 						<input id="rem_fdire" class="form-control with-30-00 campo" type="text" maxlength="60">
 						<span class="form-control with-30-00">Neto</span>
@@ -142,17 +160,20 @@
 					<div class="fila">
 						<input id="rem_fdire" class="form-control with-30-00 campo" type="text" maxlength="60">
 						<span class="form-control with-30-00">IVA</span>
-					</div-->	
+					</div-->
 					<div class="fila">
-						<input id="rem_total" class="form-control with-30-00 campo precio" type="text" maxlength="60">	
-						<span class="form-control with-30-00">Total</span>
+						<input id="rem_total" class="form-control with-30-00 campo precio"
+							type="text" maxlength="60"> <span
+							class="form-control with-30-00">Total</span>
 					</div>
 				</fieldset>
 			</div>
 		</div>
 		<div class="modal-footer">
-			<button type="button" class="btn btn-primary" id="btn_confirmar">Guardar Cambios</button>
-			<button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="cerrarFormu('<%=idForm%>');">Cerrar</button>
+			<button type="button" class="btn btn-primary" id="btn_confirmar">Guardar
+				Cambios</button>
+			<button type="button" class="btn btn-secondary" data-dismiss="modal"
+				onclick="cerrarFormu('<%=idForm%>');">Cerrar</button>
 		</div>
 	</div>
 
@@ -569,5 +590,5 @@
     		$("select.prv_campo,button.prv_campo",formulario).prop("disabled",true);
          	
         });
-	</script>	
+	</script>
 </div>

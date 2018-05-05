@@ -1,10 +1,11 @@
 <%@page import="funciones.Funciones"%>
 <%@page import="helpCampos.HelpCampo"%>
-<%@page language="java" contentType="text/html; charset=UTF-8"  pageEncoding="UTF-8"%>
+<%@page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@page import="java.sql.Connection"%>
 <%@page import="java.sql.Statement"%>
 <%@page import="java.sql.ResultSet"%>
-<%@ page import ="java.util.Map"%>    
+<%@ page import="java.util.Map"%>
 <%	Funciones fun = new Funciones(request);
 
 	String filtExt=(String) request.getAttribute("filtExt");
@@ -124,7 +125,7 @@
 </script>
 <div id="frm_HelpCampo" data-popup="true" class="backmodal formulario">
 	<style type="text/css">
-		/*#frm_HelpCampo #form {
+/*#frm_HelpCampo #form {
 			position: relative;
 			-moz-box-sizing: content-box;
 			-webkit-box-sizing: content-box;
@@ -135,8 +136,8 @@
 			height: 100%;
     		max-height: 17px;
 		}*/
-		
-		/*#frm_HelpCampo #jqgridSearchForm {
+
+/*#frm_HelpCampo #jqgridSearchForm {
 			position: relative;
 			-moz-box-sizing: content-box;
 			-webkit-box-sizing: content-box;
@@ -146,33 +147,38 @@
 			z-index: 1;
 			height: 18.5px;
 		}*/
-		#frm_HelpCampo .busqGrill *{
-			float:left;
-		}
-		
-		#frm_HelpCampo>div {
-			width: calc(<%= hc.getColum().get("ancho") %>px + 20px );
-			margin-top: 20px;
-		}
-	</style>
+#frm_HelpCampo .busqGrill * {
+	float: left;
+}
+
+#frm_HelpCampo>div {
+	width: calc(<%= hc.getColum () .get("ancho")%>px+ 20px);
+	margin-top: 20px;
+}
+</style>
 	<div class="modal" data-tmodal="alerta">
 		<div class="modal-header" id="headerhcmodal">
 			<h5 class="modal-title"><%= hc.getColum().get("titulo") %></h5>
-			<button type="button" type="button" class="close" onclick="bloquear(false);">
+			<button type="button" type="button" class="close"
+				onclick="bloquear(false);">
 				<span aria-hidden="true">&times;</span>
 			</button>
 		</div>
 		<div class="modal-body">
-			<div style="margin: auto; padding-left: 0px;" >	
+			<div style="margin: auto; padding-left: 0px;">
 				<table id="GrillaHelpCampo"></table>
 				<div id="pagerhc"></div>
-				<script type="text/javascript">HC_Grilla();</script>				
-			</div>		
-		</div>				
-		<div class="modal-footer" id="footer-btn" style="background: #ffffff;padding: 5px;border-bottom-left-radius: 5px;border-bottom-right-radius: 5px;">
-			<button type="button" class="btn btn-secondary" style="margin-left:0px;" data-dismiss="modal" onclick="bloquear(false);">Salir</button>
-			<button type="button" class="btn btn-primary" style="margin-left:5px;" onclick="HC_Aceptar();">Ok</button>
+				<script type="text/javascript">HC_Grilla();</script>
+			</div>
+		</div>
+		<div class="modal-footer" id="footer-btn"
+			style="background: #ffffff; padding: 5px; border-bottom-left-radius: 5px; border-bottom-right-radius: 5px;">
+			<button type="button" class="btn btn-secondary"
+				style="margin-left: 0px;" data-dismiss="modal"
+				onclick="bloquear(false);">Salir</button>
+			<button type="button" class="btn btn-primary"
+				style="margin-left: 5px;" onclick="HC_Aceptar();">Ok</button>
 		</div>
 	</div>
-</div>	
-	
+</div>
+

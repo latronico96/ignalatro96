@@ -85,17 +85,17 @@ span.form-control {
 
 .form-control {
 	display: block;
-    width: 100%;
-    padding: 1px 3px;
-    /*margin: 5px auto;*/
-    font-size: 15px !important;
-    line-height: unset;
-    border: 1px solid #ced4da;
-    border-radius: .25rem;
-    transition: border-color ease-in-out 0.0s, box-shadow ease-in-out 0.0s;
-    position: relative;
-    float: left;
-    height: auto !important;
+	width: 100%;
+	padding: 1px 3px;
+	/*margin: 5px auto;*/
+	font-size: 15px !important;
+	line-height: unset;
+	border: 1px solid #ced4da;
+	border-radius: .25rem;
+	transition: border-color ease-in-out 0.0s, box-shadow ease-in-out 0.0s;
+	position: relative;
+	float: left;
+	height: auto !important;
 }
 
 .custom-file-control:lang(en)::after {
@@ -136,7 +136,7 @@ span.form-control {
 }
 
 .card-header {
-    background-color: #2a6992;
+	background-color: #2a6992;
 }
 
 .card-header h5 a {
@@ -155,35 +155,34 @@ span.form-control {
 }
 
 fieldset {
-    min-width: 0;
-    padding: 0px 4px;
-    margin: 0px;
-    border: 0;
-    min-width: -webkit-min-content;
-    border-width: 2px;
-    border-style: groove;
-    border-color: threedface;
-    border-image: initial;
-    border-radius: 8px;
+	min-width: 0;
+	padding: 0px 4px;
+	margin: 0px;
+	border: 0;
+	min-width: -webkit-min-content;
+	border-width: 2px;
+	border-style: groove;
+	border-color: threedface;
+	border-image: initial;
+	border-radius: 8px;
 }
 
 legend {
-    display: block;    
-    width: auto;
-    padding: 0px 5px;
-    margin: 0px 0px 0px 5px;
-    font-size: 1.5rem;
-    line-height: inherit;
-    color: inherit;
-    white-space: normal;
+	display: block;
+	width: auto;
+	padding: 0px 5px;
+	margin: 0px 0px 0px 5px;
+	font-size: 1.5rem;
+	line-height: inherit;
+	color: inherit;
+	white-space: normal;
 }
 
 input[type="radio"].form-control, input[type="checkbox"].form-control {
-    margin: auto 0px;
+	margin: auto 0px;
 }
+
 .navbar-expand .navbar-nav .nav-link {
-
-    padding-right: 1.5rem;
-    padding-left: 1.5rem;
-
+	padding-right: 1.5rem;
+	padding-left: 1.5rem;
 }

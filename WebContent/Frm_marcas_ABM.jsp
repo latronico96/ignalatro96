@@ -11,46 +11,51 @@
 
 <div id="<%=idForm%>" data-popup="true" class="backmodal formulario">
 	<style type="text/css">
-		#<%=idForm%> #form {
-			position: relative;
-			-moz-box-sizing: content-box;
-			-webkit-box-sizing: content-box;
-			box-sizing: content-box;
-			margin: 0px auto;
-			width: 100%;
-			z-index: 1;    
-			height: 100%;
-    		max-height: 17px;
-		}
-		
-		#<%=idForm%> #jqgridSearchForm {
-			position: relative;
-			-moz-box-sizing: content-box;
-			-webkit-box-sizing: content-box;
-			box-sizing: content-box;
-			margin: 0px auto;
-			width: 100%;
-			z-index: 1;
-			height: 18.5px;
-		}
-		
-		#<%=idForm%>>div {
-			width: 720px;
-			margin-top: 20px;
-		}
-		
-		#<%=idForm %>  .tool:not(:first-child) {
-		    cursor: pointer;
-		    border-right: solid #fff 1px;
-		}
-	</style>
+#<%=
+idForm %>#form {
+	position: relative;
+	-moz-box-sizing: content-box;
+	-webkit-box-sizing: content-box;
+	box-sizing: content-box;
+	margin: 0px auto;
+	width: 100%;
+	z-index: 1;
+	height: 100%;
+	max-height: 17px;
+}
+
+#<%=
+idForm %>#jqgridSearchForm {
+	position: relative;
+	-moz-box-sizing: content-box;
+	-webkit-box-sizing: content-box;
+	box-sizing: content-box;
+	margin: 0px auto;
+	width: 100%;
+	z-index: 1;
+	height: 18.5px;
+}
+
+#<%=
+idForm %> >div {
+	width: 720px;
+	margin-top: 20px;
+}
+
+#<%=
+idForm %> .tool:not (:first-child ) {
+	cursor: pointer;
+	border-right: solid #fff 1px;
+}
+</style>
 
 	<div class="modal" data-tmodal="alerta">
 		<div class="modal-header">
-			<div class="fila negro T-blanco rounded" style="height: 40px;padding: 4px 10px;">
+			<div class="fila negro T-blanco rounded"
+				style="height: 40px; padding: 4px 10px;">
 				<div class="tool">
 					<h3 style="margin: 0px;">Marcas</h3>
-				</div>		
+				</div>
 				<div class="tool tool-boton" data-modo="ALTA">
 					<img src="/img/iconos/glyphicons-433-plus.png"
 						style="width: auto; filter: invert(55%);">
@@ -71,7 +76,7 @@
 					<div class="overlay">
 						<div class="textimg">Eliminar</div>
 					</div>
-				</div>				
+				</div>
 				<button type="button" type="button" class="close"
 					onclick="cerrarFormu('<%=idForm%>');">
 					<span aria-hidden="true">&times;</span>
@@ -85,8 +90,10 @@
 			</div>
 		</div>
 		<div class="modal-footer">
-			<button type="button" class="btn btn-primary">Guardar Cambios</button>
-			<button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="cerrarFormu('<%=idForm%>');">Cerrar</button>
+			<button type="button" class="btn btn-primary">Guardar
+				Cambios</button>
+			<button type="button" class="btn btn-secondary" data-dismiss="modal"
+				onclick="cerrarFormu('<%=idForm%>');">Cerrar</button>
 		</div>
 	</div>
 
@@ -235,5 +242,5 @@
 		formulario.Grilla();
 	});
 	
-	</script>	
+	</script>
 </div>

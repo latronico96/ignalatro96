@@ -9,48 +9,58 @@
 %>
 <div id="<%=idForm%>" class="formulario">
 	<style type="text/css">
-		#form {
-			position: relative;
-			-moz-box-sizing: content-box;
-			-webkit-box-sizing: content-box;
-			box-sizing: content-box;
-			margin: 0px auto;
-			width: 100%;
-			z-index: 1;
-		}
-		
-		#jqgridSearchForm {
-			position: relative;
-			-moz-box-sizing: content-box;
-			-webkit-box-sizing: content-box;
-			box-sizing: content-box;
-			margin: 0px auto;
-			width: 100%;
-			z-index: 1;
-		}
-		
-		#<%=idForm %> >div {
-			width: 100%;
-			margin-top: 1px;
-		}
-		
-		#<%=idForm %> > h3>img {
-			background-color: #ffffff;
-		}
-		
-		#<%=idForm %> {
-			width: 100%;
-		}
-		
-		#<%=idForm %>  .tool:not(:first-child) {
-		    cursor: pointer;
-		    border-right: solid #fff 1px;
-		}
-	</style>
-	<div class="fila negro T-blanco rounded" style="height: 40px;padding: 4px 10px;">
+#form {
+	position: relative;
+	-moz-box-sizing: content-box;
+	-webkit-box-sizing: content-box;
+	box-sizing: content-box;
+	margin: 0px auto;
+	width: 100%;
+	z-index: 1;
+}
+
+#jqgridSearchForm {
+	position: relative;
+	-moz-box-sizing: content-box;
+	-webkit-box-sizing: content-box;
+	box-sizing: content-box;
+	margin: 0px auto;
+	width: 100%;
+	z-index: 1;
+}
+
+#<%=
+idForm %> >div {
+	width: 100%;
+	margin-top: 1px;
+}
+
+#<%=
+idForm %> > h3>img {
+	background-color: #ffffff;
+}
+
+#<%=
+idForm
+ 
+%>
+{
+width
+:
+ 
+100%;
+}
+#<%=
+idForm %> .tool:not (:first-child ) {
+	cursor: pointer;
+	border-right: solid #fff 1px;
+}
+</style>
+	<div class="fila negro T-blanco rounded"
+		style="height: 40px; padding: 4px 10px;">
 		<div class="tool">
 			<h3 style="margin: 0px;">Remitos</h3>
-		</div>			
+		</div>
 		<div class="tool tool-boton" data-modo="CONS">
 			<img src="/img/iconos/glyphicons-28-search.png"
 				style="width: auto; filter: invert(55%);">
@@ -59,13 +69,13 @@
 			</div>
 		</div>
 		<div class="tool tool-boton" data-modo="ALTA">
-			<img src="/img/login.png" style="width: auto;padding: 3px;">
+			<img src="/img/login.png" style="width: auto; padding: 3px;">
 			<div class="overlay">
 				<div class="textimg">Entrada</div>
 			</div>
-		</div>	
+		</div>
 		<div class="tool tool-boton" data-modo="ALTA" data-tipo="S">
-			<img src="/img/logout.png" style="width: auto;padding: 3px;">
+			<img src="/img/logout.png" style="width: auto; padding: 3px;">
 			<div class="overlay">
 				<div class="textimg">Salida</div>
 			</div>
@@ -90,7 +100,7 @@
 		<table id="<%=idGrilla%>"></table>
 		<div id="<%=idGrilla%>_pie"></div>
 	</div>
-<script type="text/javascript">
+	<script type="text/javascript">
 	formulario = $.fn.extend($(<%="\"#"+idForm+"\""%>), {
 		idGrilla:"<%=idGrilla%>",
 		NidGrilla: "#" + "<%=idGrilla%>",
