@@ -12,7 +12,7 @@
 	String URL = "'./Frm_GrillaArticulos'";
 	
 	String marcas="<li class='nav-item'>"
-			+"	<a class='negro nav-link active' href='#' data-cod='0'>todos</a>"
+			+"	<a class='nav-link active negro' href='#' data-cod='0'>todos</a>"
 			+"</li>	";
 	
 	
@@ -22,7 +22,7 @@
 		ResultSet rs=st.executeQuery("select * from dbMarcas order by mar_nombr");
 		while(rs.next()){
 			marcas+="<li class='nav-item'>"
-					+"	<a class='negro nav-link' href='#' data-cod='"+rs.getString("mar_codig")+"'>"+rs.getString("mar_nombr")+"</a>"
+					+"	<a class='nav-link negro' href='#' data-cod='"+rs.getString("mar_codig")+"'>"+rs.getString("mar_nombr")+"</a>"
 					+"</li>	";			  
 		}
 		
@@ -195,12 +195,12 @@ idForm %> label {
 	        	colNames:['Cod.','Marca','Articúlo','Cod. Barra','Costo','P. Menor','P. Mayor','Activo'],
 	        	colModel:[
 	        		{name:'art_codig', index:'art_codig', width:15, hidden:false, formatter:'FormatClient'},
-	        		{name:'mar_nombr', index:'mar_nombr', width:120, hidden:false},
-	        		{name:'art_nombr', index:'art_nombr', width:140,hidden:false},
-	        		{name:'art_codbr', index:'art_codbr', width:60,hidden:false,},
-	        		{name:'art_costo', index:'art_costo', width:50,hidden:false, align:'right'},
-	        		{name:'art_pmeno', index:'art_pmeno', width:50,hidden:false, align:'right'},
-	        		{name:'art_pmayo', index:'art_pmayo', width:50,hidden:false, align:'right'},
+	        		{name:'mar_nombr', index:'mar_nombr', width:100, hidden:false},
+	        		{name:'art_nombr', index:'art_nombr', width:100,hidden:false},
+	        		{name:'art_codbr', index:'art_codbr', width:80,hidden:false,},
+	        		{name:'art_costo', index:'art_costo', width:60,hidden:false, align:'right'},
+	        		{name:'art_pmeno', index:'art_pmeno', width:60,hidden:false, align:'right'},
+	        		{name:'art_pmayo', index:'art_pmayo', width:60,hidden:false, align:'right'},
 	        		{name:'art_activ', index:'art_activ', width:15,hidden:false, formatter:'FormatActivo'}],
 	        	width: ($("#Cuerpo").width()-10),
 	        	height: ($("#Cuerpo").height()-80),
@@ -212,8 +212,7 @@ idForm %> label {
 	        	sortorder:"asc",
 	        	hidegrid:false,
 	        	title:false,
-	        	gridComplete:function(){	
-	            	formulario.textbox=$(':focus');        			        	
+	        	gridComplete:function(){	        			        	
 	        		$('tbody [role="row"]',formulario).each(function(id, val){
 	        			if(id % 2 == 0){
 	        				$(formulario.NidGrilla + ' #' + id,formulario).css('background-color', 'rgb(224, 224, 224)');
