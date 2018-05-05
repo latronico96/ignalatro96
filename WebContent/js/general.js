@@ -124,7 +124,8 @@ function abrirFormulario(parametros={}){// parametros.url parametros.parametros
 	    		}else{
 	    			cerrarFormu();
 					$("#Cuerpo").html($(data));
-	    		}   
+	    		}  
+	    		
     		}, 
     		error:function(data){        			
 	    		cerrarAlerta();
@@ -361,9 +362,11 @@ $.fn.extend(
             			if ($(this).is(":checked")){
             				result[$(this).attr('name')]=$(this).val();
             			}
+            		}else if ($(this).hasClass("multipleSelect")){
+            			 $("select").multipleSelect("getSelects");
             		}else{
             			result[$(this).attr('id')]=$(this).val();            			
-            		}            		
+            		}      		
             	});
             	return ((result));
             }

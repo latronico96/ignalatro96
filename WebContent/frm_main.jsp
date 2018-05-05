@@ -18,6 +18,7 @@
 <script type="text/javascript" src="js/jquery.priceformat.js"></script>
 <script type="text/javascript" src="js/jquery.jqGrid.min.js"></script>
 <script type="text/javascript" src="js/i18n/grid.locale-es.js"></script>
+<script type="text/javascript" src="js/multiple-select.js" ></script>
 <script type="text/javascript" src="js/general.js" charset="UTF-8"></script>
 </head>
 <body style="height: 100vh;">
@@ -85,6 +86,7 @@
 							</a>
 							<div class="dropdown-menu" aria-labelledby="configuracion">
 								<a class="dropdown-item" id="marcas" data-url="Frm_marcas_ABM.jsp" data-form="Frm_marcas_ABM">Marcas</a>
+								<a class="dropdown-item" id="autos" data-url="Frm_autos_ABM.jsp" data-form="Frm_autos_ABM">Autos</a>
 								<a class="dropdown-item" id="cargaRapida" data-url="Frm_Articulos_CargaRapida.jsp" data-form="Frm_Articulos_CargaRapida">Carga Rapida</a>
 								<a class="dropdown-item" id="stockHoy" data-url="Rpt_StockHoy.jsp" data-form="Rpt_StockHoy">Informa de Stock de Hoy</a>
 							</div>
