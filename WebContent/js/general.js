@@ -124,8 +124,7 @@ function abrirFormulario(parametros={}){// parametros.url parametros.parametros
 	    		}else{
 	    			cerrarFormu();
 					$("#Cuerpo").html($(data));
-	    		}  
-	    		
+	    		}   
     		}, 
     		error:function(data){        			
 	    		cerrarAlerta();
