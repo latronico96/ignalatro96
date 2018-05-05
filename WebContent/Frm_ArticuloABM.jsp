@@ -99,7 +99,7 @@
     		var formulario = $("#<%=idForm%>");    		
     		var res=true;
     		
-    		$("#art_codbr",formulario).val(($("#art_codbr",formulario).val()==0?"":fillZero($("#art_codbr",formulario).val().toString().trim(), 13)));
+    		$("#art_codbr",formulario).val(($("#art_codbr",formulario).val()==0?"":fillZero($("#art_codbr",formulario).val().toString().trim(), 13));
     		
     		if(res && $("#art_nombr",formulario).val()==""){
     			mensaje="El nombre no puede quedar vacio.";
@@ -177,7 +177,6 @@
         	$(".modal",formulario).draggable();
     		$("#btn_confirmar",formulario).html(modoTitulo);
         	formulario.show();   
-        	
         	
         	$("#art_codbr",formulario).unbind("change").change(function(){ 
         		$(this).val(fillZero($(this).val().toString().trim(), 13));
