@@ -186,3 +186,7 @@ input[type="radio"].form-control, input[type="checkbox"].form-control {
 	padding-right: 1.5rem;
 	padding-left: 1.5rem;
 }
+
+a.nav-link.negro.active{
+	background-color: #6d6c6c !important;
+}

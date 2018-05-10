@@ -39,6 +39,7 @@
 idForm %> >div {
 	width: 720px;
 	margin-top: 20px;
+    overflow: initial;
 }
 </style>
 
@@ -58,20 +59,15 @@ idForm %> >div {
 					<legend>Datos:</legend>
 					<div class="fila">
 						<input id="modo" class="form-control campo" type="hidden">
-						<span class="form-control with-10-00">Nombre</span> <input
-							id="art_codig" class="form-control with-10-00 campo"
-							type="number" maxlength="4"> <input id="art_nombr"
-							class="form-control with-70-00 campo" type="text" maxlength="45">
+						<span class="form-control with-10-00">Nombre</span>
+						<input id="art_codig" class="form-control with-10-00 campo" type="number" maxlength="4">
+						<input id="art_nombr" class="form-control with-70-00 campo" type="text" maxlength="45">
 					</div>
 					<div class="fila">
-						<span class="form-control with-10-00">Marca</span> <select
-							id="art_marca" class="form-control with-20-00 campo">
+						<span class="form-control with-10-00">Marca</span>
+						<select id="art_marca" class="form-control with-20-00 campo">
 							<%=fun.GetHTMLOtion("mar_codig", "mar_nombr", "dbMarcas","") %>
-						</select> <span class="form-control with-10-00">C. Barra</span> <input
-							id="art_codbr" class="form-control with-20-00 campo" type="text"
-							maxlength="13"> <span class="form-control with-10-00">Stk.
-							min</span> <input id="art_stmin" class="form-control with-20-00 campo"
-							type="text" maxlength="7">
+						</select> 
 					</div>
 					<div class="fila">
 						<span class="form-control with-10-00">Costo</span> <input
@@ -84,9 +80,10 @@ idForm %> >div {
 							type="text">
 					</div>
 					<div class="fila">
-						<span class="form-control with-10-00">Autos</span>
-						<select id="aut_autos" class="with-30-00 multiselect" multiple="multiple">
-    					</select>    
+						<span class="form-control with-10-00">C. Barra</span>
+						<input id="art_codbr" class="form-control with-20-00 campo" type="text" maxlength="13">
+						<span class="form-control with-10-00">Stk. min</span>
+						<input id="art_stmin" class="form-control with-20-00 campo"	type="text" maxlength="7">
 					</div>
 					<div class="fila">
 						<span class="form-control with-10-00" style="padding-left: 10px;">Activo</span>
@@ -94,7 +91,34 @@ idForm %> >div {
 							style="margin: 5.5px 0px;" type="checkbox">
 					</div>
 				</fieldset>
-			</div>
+			</div>    
+			<div class="row">
+		        <div class="col-sm-5">
+		            <select name="from" id="optgroup" class="form-control" size="8" multiple="multiple">
+		            </select>
+		        </div>
+		        
+		        <div class="col-sm-2">
+		            <button type="button" id="optgroup_rightAll" class="btn btn-block">
+		            	<img src="/img/iconos/glyphicons-177-forward.png"	style="width: auto; filter: invert(55%);">
+		            </button>
+		            <button type="button" id="optgroup_rightSelected" class="btn btn-block">
+		            	<img src="/img/iconos/glyphicons-224-chevron-right.png"	style="width: auto; filter: invert(55%);">
+		            </button>
+		            <button type="button" id="optgroup_leftSelected" class="btn btn-block">
+		            	<img src="/img/iconos/glyphicons-225-chevron-left.png"	style="width: auto; filter: invert(55%);">
+		            </button>
+		            <button type="button" id="optgroup_leftAll" class="btn btn-block">
+		            	<img src="/img/iconos/glyphicons-173-rewind.png"	style="width: auto; filter: invert(55%);">
+		            </button>
+		        </div>
+		        
+		        <div class="col-sm-5">
+		            <select name="to" id="optgroup_to" class="form-control" size="8" multiple="multiple">
+		               
+		            </select>
+		        </div>
+		    </div>
 		</div>
 		<div class="modal-footer">
 			<button type="button" class="btn btn-primary" id="btn_confirmar">Guardar
@@ -113,7 +137,7 @@ idForm %> >div {
     		var formulario = $("#<%=idForm%>");    		
     		var res=true;
     		
-    		$("#art_codbr",formulario).val(($("#art_codbr",formulario).val()==0?"":fillZero($("#art_codbr",formulario).val().toString().trim(), 13));
+    		$("#art_codbr",formulario).val($("#art_codbr",formulario).val()==0?"":fillZero($("#art_codbr",formulario).val().toString().trim(), 13));
     		
     		if(res && $("#art_nombr",formulario).val()==""){
     			mensaje="El nombre no puede quedar vacio.";
@@ -219,10 +243,19 @@ idForm %> >div {
 				    });
         		}
         	}); 
-        	$("#aut_autos",formulario).html(funciones("GetHTMLOtionMarca",[]));
 
-   		 	$('select.multiselect').multipleSelect({position: 'top'});
-        	
+        	$("#optgroup",formulario).html(funciones("GetHTMLOtionAutos",[]));
+
+   		 	//$('select.multiselect').multipleSelect({ filter: true, maxHeight:'500'});
+   		 	$("#optgroup").multiselect({
+   		        search: {
+   		            left: '<input type="text" name="q" class="form-control" placeholder="Search..." />',
+   		            right: '<input type="text" name="q" class="form-control" placeholder="Search..." />',
+   		        },
+   		        fireSearch: function(value) {
+   		            return value.length > 3;
+   		        }
+   		    });
         	$("#Titulo",formulario).html(modoTitulo);
         });
         

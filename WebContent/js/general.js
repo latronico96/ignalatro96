@@ -362,7 +362,7 @@ $.fn.extend(
             				result[$(this).attr('name')]=$(this).val();
             			}
             		}else if ($(this).hasClass("multipleSelect")){
-            			 $("select").multipleSelect("getSelects");
+            			result[$(this).attr('id')]=""+$(this).multipleSelect("getSelects");
             		}else{
             			result[$(this).attr('id')]=$(this).val();            			
             		}      		

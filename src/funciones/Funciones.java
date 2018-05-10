@@ -162,33 +162,11 @@ public class Funciones {
 	}
 
 	public static String isNull(String valor,String valorDefault){
-		return (valor==null?valorDefault:valor);
+		return (valor==null?valorDefault:valor.trim());
 	}
 	
 	public String GetHTMLOtion(String CampoValue,String CampoTexto,String Tabla ){
 		return  GetHTMLOtion(CampoValue,CampoTexto,Tabla , "");
-	}
-
-	
-	public String GetHTMLOtionMarca(){
-
-		String html="";
-		try{
-			Connection cn=this.Conectar();
-			Statement st=cn.createStatement();
-			String sql="select aut_codig as campo, concat(TRIM(mar_nombr),' ',TRIM(aut_nombr))  as texto "
-					+ " from dbautos "
-					+ " left join dbmarcas on (mar_codig=aut_marca) ";
-			ResultSet rs=st.executeQuery(sql);
-			while( rs.next()){
-				html+="<option value=\""+rs.getString("campo")+"\">"+rs.getString("texto")+"</option>";
-			}
-		}
-		catch(Exception e){
-			e.printStackTrace();
-		}
-
-		return html;
 	}
 
 	public String GetHTMLOtion(String CampoValue,String CampoTexto,String Tabla , String where){
@@ -209,6 +187,41 @@ public class Funciones {
 
 		return html;
 	}
+	
+
+	public String GetHTMLOtionAutos(){
+		return GetHTMLOtionAutos("");
+	}
+	public String GetHTMLOtionAutos(String Marca){
+
+		String html="";
+		try{
+			Connection cn=this.Conectar();
+			Statement st=cn.createStatement();
+			String sql="select aut_marca,TRIM(mar_nombr) as mar_nombr,aut_codig,TRIM(aut_nombr)  as aut_nombr "
+					+ " from dbautos "
+					+ " left join dbmarcas on (mar_codig=aut_marca) "
+					+ (!Marca.equals("")?" where mar_codig is null or mar_codig="+Marca:"")
+					+ " order by   TRIM(mar_nombr) asc, TRIM(aut_nombr) asc ";
+			ResultSet rs=st.executeQuery(sql);
+			String marcaAct="";
+			while( rs.next()){
+				if(!Funciones.isNull(rs.getString("aut_marca")).equals(marcaAct)){
+					html+=(marcaAct.equals("")?"":" </optgroup>");
+					html+=" <optgroup label=\""+Funciones.isNull(rs.getString("mar_nombr"))+"\">";
+					marcaAct=Funciones.isNull(rs.getString("aut_marca"));
+				}
+				html+="<option  value=\""+Funciones.isNull(rs.getString("aut_codig"))+"\">"+Funciones.isNull(rs.getString("aut_nombr"))+"</option>";
+
+			}
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+
+		return html;
+	}
+	
 	
 	public String GetHTMLOtionList(String CampoValue,String CampoTexto,String Tabla ){
 		return this.GetHTMLOtionList(CampoValue, CampoTexto, Tabla, "" );
@@ -306,7 +319,7 @@ public class Funciones {
 				while (rs.next()){
 					objAux= new JSONObject();
 					for (int i = 0 ; i <vec.length;i++){	       
-						objAux.put(vec[i], this.acentos( this.isNull(rs.getString(vec[i])).replaceAll("\n", "")));	         
+						objAux.put(vec[i], this.acentos( Funciones.isNull(rs.getString(vec[i])).replaceAll("\n", "")));	         
 					}
 					json.add(objAux);
 				}
@@ -496,7 +509,7 @@ public class Funciones {
 	}
 	
 	public String Ahora(String tipo){
-		return this.FormatDate(this.Ahora(), tipo);		
+		return Funciones.FormatDate(this.Ahora(), tipo);		
 	}
 	
 
@@ -687,7 +700,7 @@ public class Funciones {
 						+ "	from dbArticulos \n"
 						+ "		left join dbMarcas on (art_marca=mar_codig) \n"	
 						+ "		left join stockhoy on (stk_artic=art_codig) \n"	
-						+ " where art_codbr='"+this.fillZero(id,13)+"' \n";
+						+ " where art_codbr='"+Funciones.fillZero(id,13)+"' \n";
 				break;
 		}
 		

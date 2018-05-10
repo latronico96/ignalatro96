@@ -31,6 +31,8 @@ public class Frm_ArticuloABM extends HttpServlet {
     private Funciones fun = null;
     private String tabla="dbArticulos";
     private String claveCampo="art_codig";
+    private String tablaAut="dbartaut";
+    private String claveCampoAUT="ara_artic";
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -140,6 +142,12 @@ public class Frm_ArticuloABM extends HttpServlet {
 				Statement stBaja = cn.createStatement();	
 				stBaja.executeUpdate(delete);
 				stBaja.close();
+				
+				delete="delete from "+this.tablaAut+" where "+this.claveCampoAUT+"='"+claveValor+"'";
+				stBaja = cn.createStatement();	
+				stBaja.executeUpdate(delete);
+				stBaja.close();
+				
 			}
 			
 			if (!parametros.getOrDefault("modo", "ALTA").equals("BAJA")){
@@ -147,6 +155,13 @@ public class Frm_ArticuloABM extends HttpServlet {
 				Statement stAlta = cn.createStatement();	
 				stAlta.executeUpdate(insert);
 				stAlta.close();
+				
+				insert="insert into dbartaut (ara_nauto,ara_artic) ";
+				String[] autos=parametros.get("").split("z");
+						
+						/*+ "select '1' ,4328
+				union all*/
+				
 			}		
 			
 			cn.commit();
