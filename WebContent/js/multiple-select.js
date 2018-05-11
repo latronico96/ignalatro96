@@ -533,7 +533,17 @@ if (typeof jQuery === 'undefined') {
                             break;
                     }
                 }
-            }
+            }, 
+            val: function() {
+            	if(self.options.submitAllRight){
+            		self.$left.find('option').prop('selected', self.options.submitAllLeft);
+            	}
+            	if (self.options.submitAllRight){           		
+            		self.$right.find('option').prop('selected', self.options.submitAllRight);
+            	}
+            	return self.$right.val().concat( self.$left.val());                
+            }  
+
         }
 
         return Multiselect;

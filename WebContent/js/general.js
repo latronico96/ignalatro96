@@ -258,10 +258,10 @@ function funciones(nombre,arg1=[],funcionSuccess=''){//devuelve resultados de la
 				x = data.trim();
 			}
 			if(funcionSuccess!=''){
-				funcionSuccess();
+				funcionSuccess(x);
 			}
 		},	
-		async:false
+		async:(funcionSuccess=='')
 	});
 	return x;
 	

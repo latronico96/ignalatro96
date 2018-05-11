@@ -35,12 +35,15 @@
 	z-index: 1;
 }
 
-#<%=
-idForm %> >div {
-	width: 720px;
+#<%=idForm %>  button.btn-multi {
+	padding: 4px 1px;
+}
+
+#<%=idForm %> >div {
+	width: 920px;
 	margin-top: 20px;
     overflow: initial;
-}
+} 
 </style>
 
 	<div class="modal" data-tmodal="alerta">
@@ -54,36 +57,36 @@ idForm %> >div {
 			</button>
 		</div>
 		<div class="modal-body">
-			<div class="d-block">
+			<div class="d-block float-left with-59-00" style="height: 100%; margin-right: 1%">
 				<fieldset>
 					<legend>Datos:</legend>
 					<div class="fila">
 						<input id="modo" class="form-control campo" type="hidden">
-						<span class="form-control with-10-00">Nombre</span>
+						<span class="form-control with-20-00">Nombre</span>
 						<input id="art_codig" class="form-control with-10-00 campo" type="number" maxlength="4">
 						<input id="art_nombr" class="form-control with-70-00 campo" type="text" maxlength="45">
 					</div>
 					<div class="fila">
-						<span class="form-control with-10-00">Marca</span>
-						<select id="art_marca" class="form-control with-20-00 campo">
+						<span class="form-control with-20-00">Marca</span>
+						<select id="art_marca" class="form-control with-30-00 campo">
 							<%=fun.GetHTMLOtion("mar_codig", "mar_nombr", "dbMarcas","") %>
 						</select> 
+						<span class="form-control with-20-00">Costo</span>
+						<input id="art_costo" class="form-control with-20-00 campo precio" type="text">
 					</div>
 					<div class="fila">
-						<span class="form-control with-10-00">Costo</span> <input
-							id="art_costo" class="form-control with-20-00 campo precio"
-							type="text"> <span class="form-control with-10-00">$
-							Menor</span> <input id="art_pmeno"
-							class="form-control with-20-00 campo precio" type="text">
-						<span class="form-control with-10-00">$ Mayor</span> <input
-							id="art_pmayo" class="form-control with-20-00 campo precio"
-							type="text">
+						<span class="form-control with-20-00">$	Menor</span>
+						<input id="art_ppmeno" class="form-control with-10-00 campo precio" type="text">
+						<input id="art_pmeno" class="form-control with-20-00 campo precio" type="text">
+						<span class="form-control with-20-00">$ Mayor</span>
+						<input id="art_ppmay" class="form-control with-10-00 campo precio" type="text">
+						<input id="art_pmayo" class="form-control with-20-00 campo precio" type="text">
 					</div>
 					<div class="fila">
-						<span class="form-control with-10-00">C. Barra</span>
-						<input id="art_codbr" class="form-control with-20-00 campo" type="text" maxlength="13">
-						<span class="form-control with-10-00">Stk. min</span>
-						<input id="art_stmin" class="form-control with-20-00 campo"	type="text" maxlength="7">
+						<span class="form-control with-20-00">C. Barra</span>
+						<input id="art_codbr" class="form-control with-30-00 campo" type="text" maxlength="13">
+						<span class="form-control with-20-00">Stk. min</span>
+						<input id="art_stmin" class="form-control with-10-00 campo"	type="text" maxlength="7">
 					</div>
 					<div class="fila">
 						<span class="form-control with-10-00" style="padding-left: 10px;">Activo</span>
@@ -92,32 +95,35 @@ idForm %> >div {
 					</div>
 				</fieldset>
 			</div>    
-			<div class="row">
-		        <div class="col-sm-5">
-		            <select name="from" id="optgroup" class="form-control" size="8" multiple="multiple">
-		            </select>
-		        </div>
-		        
-		        <div class="col-sm-2">
-		            <button type="button" id="optgroup_rightAll" class="btn btn-block">
-		            	<img src="/img/iconos/glyphicons-177-forward.png"	style="width: auto; filter: invert(55%);">
-		            </button>
-		            <button type="button" id="optgroup_rightSelected" class="btn btn-block">
-		            	<img src="/img/iconos/glyphicons-224-chevron-right.png"	style="width: auto; filter: invert(55%);">
-		            </button>
-		            <button type="button" id="optgroup_leftSelected" class="btn btn-block">
-		            	<img src="/img/iconos/glyphicons-225-chevron-left.png"	style="width: auto; filter: invert(55%);">
-		            </button>
-		            <button type="button" id="optgroup_leftAll" class="btn btn-block">
-		            	<img src="/img/iconos/glyphicons-173-rewind.png"	style="width: auto; filter: invert(55%);">
-		            </button>
-		        </div>
-		        
-		        <div class="col-sm-5">
-		            <select name="to" id="optgroup_to" class="form-control" size="8" multiple="multiple">
-		               
-		            </select>
-		        </div>
+			<div class="d-block float-left with-40-00" style="height: 100%;">
+				<fieldset>
+					<legend>Modelos:</legend>
+			       	<div class="d-block float-left with-42-50">
+			            <select name="from" id="optgroup" class="form-control" size="8" multiple="multiple">
+			            </select>
+			        </div>
+			        
+			        <div class="d-block float-left with-15-00" style="padding: 0px 7px;">
+			            <button type="button" id="optgroup_rightAll" class="btn btn-block btn-multi">
+			            	<img src="/img/iconos/glyphicons-177-forward.png"	style="width: auto; filter: invert(55%);">
+			            </button>
+			            <button type="button" id="optgroup_rightSelected" class="btn btn-block btn-multi">
+			            	<img src="/img/iconos/glyphicons-224-chevron-right.png"	style="width: auto; filter: invert(55%);">
+			            </button>
+			            <button type="button" id="optgroup_leftSelected" class="btn btn-block btn-multi">
+			            	<img src="/img/iconos/glyphicons-225-chevron-left.png"	style="width: auto; filter: invert(55%);">
+			            </button>
+			            <button type="button" id="optgroup_leftAll" class="btn btn-block btn-multi">
+			            	<img src="/img/iconos/glyphicons-173-rewind.png"	style="width: auto; filter: invert(55%);">
+			            </button>
+			        </div>
+			        
+			        <div class="d-block float-left with-42-50">
+			            <select name="to" id="optgroup_to" class="form-control" size="8" multiple="multiple">
+			               
+			            </select>
+			        </div>
+			    </fieldset>
 		    </div>
 		</div>
 		<div class="modal-footer">
@@ -247,15 +253,15 @@ idForm %> >div {
         	$("#optgroup",formulario).html(funciones("GetHTMLOtionAutos",[]));
 
    		 	//$('select.multiselect').multipleSelect({ filter: true, maxHeight:'500'});
-   		 	$("#optgroup").multiselect({
+   		 	/*$("#optgroup").multiselect({
    		        search: {
-   		            left: '<input type="text" name="q" class="form-control" placeholder="Search..." />',
-   		            right: '<input type="text" name="q" class="form-control" placeholder="Search..." />',
+   		            left: '<input type="text" name="q" class="form-control" placeholder="Buscar..." />',
+   		            right: '<input type="text" name="q" class="form-control" placeholder="Buscar..." />',
    		        },
    		        fireSearch: function(value) {
-   		            return value.length > 3;
+   		            return value.length > 1;
    		        }
-   		    });
+   		    });*/
         	$("#Titulo",formulario).html(modoTitulo);
         });
         
