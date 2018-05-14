@@ -48,6 +48,7 @@ public class Frm_GrillaArticulos extends HttpServlet {
 		String search_valor=request.getParameter("searchString");
 		String search_oper=request.getParameter("searchOper");
 		String marca=request.getParameter("marca");
+		String modelo=request.getParameter("modelo");
 		String search_operador="";
 		String sentenciaWhere="";
 
@@ -143,8 +144,22 @@ public class Frm_GrillaArticulos extends HttpServlet {
 				}else{
 					filtro+= " and ";
 				}	    	
-				filtro+= "art_marca= "+marca+" ";	  
-			}
+				filtro+= "aut_marca= "+marca+" ";	
+				
+				if(!(modelo == null || modelo.length() == 0)){
+					if (!modelo.equals("0")){
+						if(filtro==""){
+							filtro= "where ";
+						}else{
+							filtro+= " and ";
+						}	    	
+						filtro+= "ara_auto= "+modelo+" ";	  
+						
+					}			
+				}
+				
+				
+			}			
 		}
 		
 		
@@ -157,7 +172,9 @@ public class Frm_GrillaArticulos extends HttpServlet {
 
 			String sql="select  art_codig,art_marca,mar_nombr,art_nombr,art_codbr,art_costo,art_pmeno,art_pmayo,art_activ \n"
 					+ "	from dbArticulos \n"
-					+ "		left join dbMarcas on (art_marca=mar_codig) \n"	
+					+ "		left join dbMarcas as art on (art_marca=mar_codig) \n"
+					+ "		left join dbartaut on (ara_artic=art_codig)\n"
+					+ "		left join dbautos on (ara_nauto=aut_codig) \n"
 					+ filtro			;
 			JSONObject jsonGrilla=fun.Grilla(sql,empieza,termina,pagina,rp
 					,ordenarcampo, ordenarmetodo);	 		   

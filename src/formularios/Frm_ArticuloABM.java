@@ -72,6 +72,18 @@ public class Frm_ArticuloABM extends HttpServlet {
 				pst.setInt(1, cod);
 				ResultSet rs= pst.executeQuery();
 				respuesta=fun.ResultSetToJavaScriptMap("Articulo", rs);
+				rs.close();
+				pst.close();
+				String autos="";
+				pst=cn.prepareStatement("select * from dbartaut where ara_artic = ? ");
+				pst.setInt(1, cod);
+				rs=pst.executeQuery();
+				while (rs.next()){
+					autos+=(autos.equals("")? "":",");
+					autos+=rs.getString("ara_nauto");				}
+					
+				respuesta+="Articulo.set('art_autos_to',["+autos+"]);";
+				
 			} catch (ClassNotFoundException | SQLException e) {
 				// TODO Auto-generated catch block
 				System.out.println("erro al cargar los datos del clientes " + String.valueOf(cod));				
@@ -157,10 +169,16 @@ public class Frm_ArticuloABM extends HttpServlet {
 				stAlta.close();
 				
 				insert="insert into dbartaut (ara_nauto,ara_artic) ";
-				String[] autos=parametros.get("").split("z");
-						
-						/*+ "select '1' ,4328
-				union all*/
+				String[] autos=parametros.get("art_autos_to").split(",");
+				int i = 0;
+				while (autos.length>i && !autos[i].trim().equals("")){
+					insert+=(i==0?"":"union all\n");
+					insert+="select "+autos[i]+" , "+claveValor+" \n";
+					i++;
+				}
+				stAlta = cn.createStatement();	
+				stAlta.executeUpdate(insert);
+				stAlta.close();
 				
 			}		
 			

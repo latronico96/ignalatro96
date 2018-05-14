@@ -355,7 +355,14 @@ $.fn.extend(
             	var conjunto=$(this); 
             	result = new Object();
             	conjunto.each(function(){
-            		if(this.type=="checkbox"){
+            		if($(this).hasClass("multiselect")){
+            			x="";
+            			$(this).find("option").each(
+            					function(i,v){ 
+            						x+=$(this).val()+"," ;
+            					});
+            			result[$(this).attr('id')] = x;
+            		}else if(this.type=="checkbox"){
             			result[$(this).attr('id')]=(this.checked?1:0);            		
             		}else if (this.type=="radio"){
             			if ($(this).is(":checked")){

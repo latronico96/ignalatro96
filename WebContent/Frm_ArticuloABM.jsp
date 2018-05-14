@@ -99,27 +99,27 @@
 				<fieldset>
 					<legend>Modelos:</legend>
 			       	<div class="d-block float-left with-42-50">
-			            <select name="from" id="optgroup" class="form-control" size="8" multiple="multiple">
+			            <select name="from" id="art_autos" class="form-control campo multiselect" size="8" multiple="multiple">
 			            </select>
 			        </div>
 			        
 			        <div class="d-block float-left with-15-00" style="padding: 0px 7px;">
-			            <button type="button" id="optgroup_rightAll" class="btn btn-block btn-multi">
+			            <button type="button" id="art_autos_rightAll" class="btn btn-block btn-multi">
 			            	<img src="/img/iconos/glyphicons-177-forward.png"	style="width: auto; filter: invert(55%);">
 			            </button>
-			            <button type="button" id="optgroup_rightSelected" class="btn btn-block btn-multi">
+			            <button type="button" id="art_autos_rightSelected" class="btn btn-block btn-multi">
 			            	<img src="/img/iconos/glyphicons-224-chevron-right.png"	style="width: auto; filter: invert(55%);">
 			            </button>
-			            <button type="button" id="optgroup_leftSelected" class="btn btn-block btn-multi">
+			            <button type="button" id="art_autos_leftSelected" class="btn btn-block btn-multi">
 			            	<img src="/img/iconos/glyphicons-225-chevron-left.png"	style="width: auto; filter: invert(55%);">
 			            </button>
-			            <button type="button" id="optgroup_leftAll" class="btn btn-block btn-multi">
+			            <button type="button" id="art_autos_leftAll" class="btn btn-block btn-multi">
 			            	<img src="/img/iconos/glyphicons-173-rewind.png"	style="width: auto; filter: invert(55%);">
 			            </button>
 			        </div>
 			        
 			        <div class="d-block float-left with-42-50">
-			            <select name="to" id="optgroup_to" class="form-control" size="8" multiple="multiple">
+			            <select name="to" id="art_autos_to" class="form-control campo multiselect" size="8" multiple="multiple">
 			               
 			            </select>
 			        </div>
@@ -171,13 +171,35 @@
     			$("#art_pmeno").abrirpopover(mensaje);
     		}
     		return res;   		
+    	},
+    	cargarAutos: function(autos=''){
+    		$("#art_autos",formulario).html(autos);
     	}
+    	
    	});
         $(document).ready(function(){	 		
-        	$("#modo",formulario).val(formulario.modo);
+        	$("#modo",formulario).val(formulario.modo);        	
+        	
+        	funciones("GetHTMLOtionAutos",[],formulario.cargarAutos);
+
+   		 	//$('select.multiselect').multipleSelect({ filter: true, maxHeight:'500'});
+   		 	$("#art_autos").multiselect({
+   		        search: {
+   		            left: '<input type="text" name="q" class="form-control" placeholder="Buscar..." />',
+   		            right: '<input type="text" name="q" class="form-control" placeholder="Buscar..." />',
+   		        },
+   		        fireSearch: function(value) {
+   		            return value.length > 1;
+   		        }
+   		    });
+   		 	
         	<%=Articulo%>
-        	Articulo.forEach(function(value,index){	        		
-        		if($("#"+index,formulario).first().attr("type")=="checkbox"){
+        	formulario.articulo=Articulo;
+        	Articulo.forEach(function(value,index){	       
+        		if(index=="art_autos_to"){
+        			$("#art_autos",formulario).val(value);
+        			$("#art_autos_rightSelected",formulario).click()
+        		}else if($("#"+index,formulario).first().attr("type")=="checkbox"){
         			$("#"+index,formulario).first().prop("checked",(value!="" && value!="0" ));	
     			}else{
         			$("#"+index,formulario).first().val(value);     				
@@ -250,18 +272,7 @@
         		}
         	}); 
 
-        	$("#optgroup",formulario).html(funciones("GetHTMLOtionAutos",[]));
 
-   		 	//$('select.multiselect').multipleSelect({ filter: true, maxHeight:'500'});
-   		 	/*$("#optgroup").multiselect({
-   		        search: {
-   		            left: '<input type="text" name="q" class="form-control" placeholder="Buscar..." />',
-   		            right: '<input type="text" name="q" class="form-control" placeholder="Buscar..." />',
-   		        },
-   		        fireSearch: function(value) {
-   		            return value.length > 1;
-   		        }
-   		    });*/
         	$("#Titulo",formulario).html(modoTitulo);
         });
         

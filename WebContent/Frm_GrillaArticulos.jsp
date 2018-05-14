@@ -11,21 +11,35 @@
 	String idGrilla = "GrillaArticulos";
 	String URL = "'./Frm_GrillaArticulos'";
 	
-	String marcas="<li class='nav-item'>"
-			+"	<a class='nav-link active negro' href='#' data-cod='0'>todos</a>"
-			+"</li>	";
+	String marcas="<li class='nav-item'>\n"
+			+"	<a class='nav-link active negro' href='#' data-cod='0'>todos</a>\n"
+			+"</li>\n";
 	
-	
+	String modelos="<li class='nav-item'>\n"
+			+"	<a class='nav-link active negro' href='#' data-cod='0' data-marca='0'>todos</a>\n"
+			+"</li>\n";
+
 	try{
 		Connection cn=fun.Conectar();
 		Statement st=cn.createStatement();
 		ResultSet rs=st.executeQuery("select * from dbMarcas order by mar_nombr");
 		while(rs.next()){
-			marcas+="<li class='nav-item'>"
-					+"	<a class='nav-link negro' href='#' data-cod='"+rs.getString("mar_codig")+"'>"+rs.getString("mar_nombr")+"</a>"
+			marcas+="<li class='nav-item'>\n"
+					+"	<a class='nav-link negro' href='#' data-cod='"+rs.getString("mar_codig")+"'>"+rs.getString("mar_nombr")+"</a>\n"
+					+"</li>\n";
+		}
+		rs.close();
+		st.close();
+		
+		st=cn.createStatement();
+		rs=st.executeQuery("select * from dbautos");
+		while(rs.next()){
+			modelos+="<li class='nav-item'>"
+					+"	<a class='nav-link negro' href='#' data-cod='"+rs.getString("aut_codig")+"' data-marca='"+rs.getString("aut_marca")+"'>"+rs.getString("aut_nombr")+"</a>"
 					+"</li>	";			  
 		}
-		
+		rs.close();
+		st.close();
 	}catch(Exception e){
 
 	}
@@ -138,8 +152,11 @@ idForm %> label {
 			</div>
 		</div>
 	</div>
-	<ul class="nav nav-tabs">
+	<ul class="nav nav-tabs" id="marcas">
 		<%=marcas %>
+	</ul>
+	<ul class="nav nav-tabs" id="modelos">
+		<%=modelos %>
 	</ul>
 	<div class="fila negro rounded" style="padding: 6px 0px 0px 0px;">
 		<label class="float-left with-10-00 T-blanco">Artículo</label> <input
@@ -177,7 +194,8 @@ idForm %> label {
         },
         getFiltro: function(){
         	return $.extend($(".filtro").serializeI(),{
-        		marca: $("#"+formulario.idForm + " .nav-link.active").data("cod"),	        	
+        		marca: $("#marcas .nav-link.active",formulario).data("cod"),	        	
+        		modelo: $("#modelos .nav-link.active",formulario).data("cod"),	        	
 		     	BusquedaValor : $(formulario.NidGrilla + "_pie_left #jqgridSearInput",formulario).val(),
 		     	BusquedaCampo : $(formulario.NidGrilla + "_pie_left #jqgridSearInput",formulario).data("field")	
     		} );
@@ -273,11 +291,24 @@ $(document).ready(function(){
 	/* $("#<%=idForm%>").draggable();*/
 	formulario.Grilla();	
 	
-	$("#"+formulario.idForm + " .nav-link").click(function(){
-		$("#"+formulario.idForm + " .nav-link").removeClass("active");
+	$("#marcas .nav-link",formulario).click(function(){
+		$("#marcas .nav-link",formulario).removeClass("active");
+		var marcaAct=$(this).data("cod");
+		$(this).addClass("active");
+		$("#modelos .nav-link",formulario).show();
+
+		$("#modelos .nav-link[data-marca!='"+marcaAct+"']",formulario).hide().removeClass("active");
+		$("#modelos .nav-link[data-marca='0']",formulario).show().addClass("active");
+		
+		formulario.ActualizarParametros();
+	});
+	
+	$("#modelos .nav-link",formulario).click(function(){
+		$("#modelos .nav-link",formulario).removeClass("active");
 		$(this).addClass("active");
 		formulario.ActualizarParametros();
 	});
+
 
 	
 	$(".tool:not(:first-child)",formulario).click(function(){
