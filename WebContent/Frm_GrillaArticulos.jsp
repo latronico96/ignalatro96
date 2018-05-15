@@ -35,7 +35,7 @@
 		rs=st.executeQuery("select * from dbautos");
 		while(rs.next()){
 			modelos+="<li class='nav-item'>"
-					+"	<a class='nav-link negro' href='#' data-cod='"+rs.getString("aut_codig")+"' data-marca='"+rs.getString("aut_marca")+"'>"+rs.getString("aut_nombr")+"</a>"
+					+"	<a class='nav-link negro'  style='display:none;' href='#' data-cod='"+rs.getString("aut_codig")+"' data-marca='"+rs.getString("aut_marca")+"'>"+rs.getString("aut_nombr")+"</a>"
 					+"</li>	";			  
 		}
 		rs.close();
@@ -317,7 +317,8 @@ $(document).ready(function(){
 		parametros.parametros={ modo: $(this).data("modo"), art_codig: formulario.GetSelected() };
 		abrirFormulario(parametros);		
 	});	
-	$(".filtro").on('change keydown paste input propertychange click keyup blur', function(){
+	$(".filtro").on('change paste input propertychange keyup ', function(){
+		formulario.textbox=$(this);
 		formulario.ActualizarParametros(this);
 	});
 	

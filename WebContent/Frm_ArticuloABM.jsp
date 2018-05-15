@@ -198,7 +198,7 @@
         	Articulo.forEach(function(value,index){	       
         		if(index=="art_autos_to"){
         			$("#art_autos",formulario).val(value);
-        			$("#art_autos_rightSelected",formulario).click()
+        			$("#art_autos_rightSelected",formulario).click();
         		}else if($("#"+index,formulario).first().attr("type")=="checkbox"){
         			$("#"+index,formulario).first().prop("checked",(value!="" && value!="0" ));	
     			}else{

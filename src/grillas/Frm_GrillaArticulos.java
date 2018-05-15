@@ -49,6 +49,12 @@ public class Frm_GrillaArticulos extends HttpServlet {
 		String search_oper=request.getParameter("searchOper");
 		String marca=request.getParameter("marca");
 		String modelo=request.getParameter("modelo");
+		String mod_nombr1=request.getParameter("mod_nombr1");
+		String mod_nombr2=request.getParameter("mod_nombr2");
+		String mod_nombr3=request.getParameter("mod_nombr3");
+		String operador=request.getParameter("operador");
+		
+		
 		String search_operador="";
 		String sentenciaWhere="";
 
@@ -162,6 +168,46 @@ public class Frm_GrillaArticulos extends HttpServlet {
 			}			
 		}
 		
+		if(!( (mod_nombr1+mod_nombr2+mod_nombr3) == null || (mod_nombr1+mod_nombr2+mod_nombr3).length() == 0)){
+			String filtro2="(";
+			if (!mod_nombr1.equals("")){   	
+				filtro2+= " ( art_nombr like '%"+mod_nombr1+"%' ";	
+				filtro2+= " OR art_nombr like '%"+mod_nombr1+"' ";	
+				filtro2+= " OR art_nombr like '"+mod_nombr1+"%' ) ";	
+					
+			}			
+			
+			if (!mod_nombr2.equals("")){
+				if(!filtro2.equals("(")){
+					filtro2+= " "+operador+" ";
+				}	    	
+				filtro2+= " ( art_nombr like '%"+mod_nombr2+"%' ";	
+				filtro2+= " OR art_nombr like '%"+mod_nombr2+"' ";	
+				filtro2+= " OR art_nombr like '"+mod_nombr2+"%' ) ";						
+			}	
+			
+			if (!mod_nombr3.equals("")){
+				if(!filtro2.equals("(")){
+					filtro2+= " "+operador+" ";
+				}	    	
+				filtro2+= " ( art_nombr like '%"+mod_nombr3+"%' ";	
+				filtro2+= " OR art_nombr like '%"+mod_nombr3+"' ";	
+				filtro2+= " OR art_nombr like '"+mod_nombr3+"%' ) ";						
+			}	
+			filtro2+=")";
+			
+			if (!filtro2.equals("()")){
+				if(filtro==""){
+					filtro= "where ";
+				}else{
+					filtro+= " and ";
+				}
+				filtro+=filtro2;
+			}
+		}
+		
+		
+		
 		
 
 
@@ -170,7 +216,7 @@ public class Frm_GrillaArticulos extends HttpServlet {
 		try{			    
 			// the sql server url		          			
 
-			String sql="select  art_codig,art_marca,mar_nombr,art_nombr,art_codbr,art_costo,art_pmeno,art_pmayo,art_activ \n"
+			String sql="select distinct  art_codig,art_marca,mar_nombr,art_nombr,art_codbr,art_costo,art_pmeno,art_pmayo,art_activ \n"
 					+ "	from dbArticulos \n"
 					+ "		left join dbMarcas as art on (art_marca=mar_codig) \n"
 					+ "		left join dbartaut on (ara_artic=art_codig)\n"
