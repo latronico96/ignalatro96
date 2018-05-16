@@ -66,7 +66,9 @@ public class Frm_ArticuloABM extends HttpServlet {
 			try {
 				cn = fun.Conectar();
 				PreparedStatement pst=cn.prepareStatement(
-						"select *  "
+						"select *,"
+						+ "		ROUND((art_pmeno-art_costo)/art_costo*100, 2) as art_ppmen,"
+						+ "		ROUND((art_pmayo-art_costo)/art_costo*100, 2) as art_ppmay  "
 						+ "from "+tabla+" "
 						+ " where "+claveCampo+"= ?  ");
 				pst.setInt(1, cod);

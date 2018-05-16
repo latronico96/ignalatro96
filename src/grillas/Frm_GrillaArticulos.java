@@ -159,7 +159,7 @@ public class Frm_GrillaArticulos extends HttpServlet {
 						}else{
 							filtro+= " and ";
 						}	    	
-						filtro+= "ara_auto= "+modelo+" ";	  
+						filtro+= "ara_nauto= "+modelo+" ";	  
 						
 					}			
 				}

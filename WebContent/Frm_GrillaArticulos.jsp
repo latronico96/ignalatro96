@@ -11,22 +11,16 @@
 	String idGrilla = "GrillaArticulos";
 	String URL = "'./Frm_GrillaArticulos'";
 	
-	String marcas="<li class='nav-item'>\n"
-			+"	<a class='nav-link active negro' href='#' data-cod='0'>todos</a>\n"
-			+"</li>\n";
+	String optionMarca="<option value='0'>Todos</option>";
 	
-	String modelos="<li class='nav-item'>\n"
-			+"	<a class='nav-link active negro' href='#' data-cod='0' data-marca='0'>todos</a>\n"
-			+"</li>\n";
+	String optionModelos="<option value='0' data-marca='0'>Todos</option>";			
 
 	try{
 		Connection cn=fun.Conectar();
 		Statement st=cn.createStatement();
 		ResultSet rs=st.executeQuery("select * from dbMarcas order by mar_nombr");
 		while(rs.next()){
-			marcas+="<li class='nav-item'>\n"
-					+"	<a class='nav-link negro' href='#' data-cod='"+rs.getString("mar_codig")+"'>"+rs.getString("mar_nombr")+"</a>\n"
-					+"</li>\n";
+			optionMarca+="<option value='"+rs.getString("mar_codig")+"'>"+rs.getString("mar_nombr")+"</option>";		
 		}
 		rs.close();
 		st.close();
@@ -34,19 +28,14 @@
 		st=cn.createStatement();
 		rs=st.executeQuery("select * from dbautos");
 		while(rs.next()){
-			modelos+="<li class='nav-item'>"
-					+"	<a class='nav-link negro'  style='display:none;' href='#' data-cod='"+rs.getString("aut_codig")+"' data-marca='"+rs.getString("aut_marca")+"'>"+rs.getString("aut_nombr")+"</a>"
-					+"</li>	";			  
+			optionModelos+="<option value='"+rs.getString("aut_codig")+"' data-marca='"+rs.getString("aut_marca")+"'>"+rs.getString("aut_nombr")+"</option>";
 		}
 		rs.close();
 		st.close();
 	}catch(Exception e){
 
 	}
-	
-
-	
-	
+		
 %>
 <div id="<%=idForm%>" class="formulario">
 	<style type="text/css">
@@ -81,42 +70,21 @@ idForm %> > h3>img {
 	background-color: #ffffff;
 }
 
-#<%=
-idForm
- 
-%>
+#<%=idForm%>
 {
-width
-:
- 
-100%;
+width:100%;
 }
-#<%=
-idForm %> .tool:not (:first-child ) {
+
+#<%=idForm %> .tool:not (:first-child ) {
 	cursor: pointer;
 	border-right: solid #fff 1px;
-}
-
-#<%=
-idForm %> .nav-tabs .nav-link {
-	border: 1px solid transparent;
-	border-top-left-radius: 0.25rem;
-	border-top-right-radius: 0.25rem;
-	/*background-color: #4444448f;*/
-	color: #ffffff;
-	min-height: 28px;
-	margin-left: 1px;
-}
-
-#<%=
-idForm %> .nav-link {
-	padding: 0.05rem 0.5rem;
 }
 
 #<%=
 idForm %> label {
 	padding: 0px 15px;
 }
+
 </style>
 	<div class="fila negro T-blanco rounded"
 		style="height: 40px; padding: 4px 10px;">
@@ -152,26 +120,18 @@ idForm %> label {
 			</div>
 		</div>
 	</div>
-	<ul class="nav nav-tabs" id="marcas">
-		<%=marcas %>
-	</ul>
-	<ul class="nav nav-tabs" id="modelos">
-		<%=modelos %>
-	</ul>
 	<div class="fila negro rounded" style="padding: 6px 0px 0px 0px;">
-		<label class="float-left with-10-00 T-blanco">Artículo</label> <input
-			class="form-control with-20-00 filtro" id="mod_nombr1" type="text">
-		<input class="form-control with-20-00 filtro" id="mod_nombr2"
-			type="text"> <input class="form-control with-20-00 filtro"
-			id="mod_nombr3" type="text"> <label
-			class="float-left with-5-00 T-blanco">O</label> <input
-			class="form-control filtro with-2-00 " id="mod_nombr5" type="radio"
-			name="operador" value="OR" checked="checked" style="top: 7px;">
-		<label class="float-left with-5-00 T-blanco">Y</label> <input
-			class="form-control filtro with-2-00 " id="mod_nombr4" type="radio"
-			name="operador" value="AND" style="top: 7px;">
-		<button class="form-control with-7-00 btn "
-			onclick="formulario.ActualizarParametros();">Actulizar</button>
+		<label class="float-left with-7-00 T-blanco">Artículo</label>
+		<select class="form-control with-15-00 filtro" id="aut_marca"><%=optionMarca %></select>
+		<select class="form-control with-15-00 filtro" id="aut_nauto"><%=optionModelos %></select>
+		<input class="form-control with-15-00 filtro" id="mod_nombr1" type="text">
+		<input class="form-control with-15-00 filtro" id="mod_nombr2" type="text">
+		<input class="form-control with-15-00 filtro" id="mod_nombr3" type="text">
+		<label class="float-left with-2-00 T-blanco">O</label>
+		<input class="form-control filtro with-2-00 " id="mod_nombr5" type="radio" name="operador" value="OR" checked="checked" style="top: 7px;">
+		<label class="float-left with-2-00 T-blanco">Y</label>
+		<input class="form-control filtro with-2-00 " id="mod_nombr4" type="radio" name="operador" value="AND" style="top: 7px;">
+		<button class="form-control with-7-00 btn" onclick="formulario.ActualizarParametros();">Actulizar</button>
 	</div>
 	<div class="d-block">
 		<table id="<%=idGrilla%>"></table>
@@ -194,8 +154,8 @@ idForm %> label {
         },
         getFiltro: function(){
         	return $.extend($(".filtro").serializeI(),{
-        		marca: $("#marcas .nav-link.active",formulario).data("cod"),	        	
-        		modelo: $("#modelos .nav-link.active",formulario).data("cod"),	        	
+        		marca: $("#aut_marca",formulario).val(),	        	
+        		modelo: $("#aut_nauto",formulario).val(),     	
 		     	BusquedaValor : $(formulario.NidGrilla + "_pie_left #jqgridSearInput",formulario).val(),
 		     	BusquedaCampo : $(formulario.NidGrilla + "_pie_left #jqgridSearInput",formulario).data("field")	
     		} );
@@ -290,26 +250,26 @@ idForm %> label {
 $(document).ready(function(){	        
 	/* $("#<%=idForm%>").draggable();*/
 	formulario.Grilla();	
-	
-	$("#marcas .nav-link",formulario).click(function(){
-		$("#marcas .nav-link",formulario).removeClass("active");
-		var marcaAct=$(this).data("cod");
-		$(this).addClass("active");
-		$("#modelos .nav-link",formulario).show();
 
-		$("#modelos .nav-link[data-marca!='"+marcaAct+"']",formulario).hide().removeClass("active");
-		$("#modelos .nav-link[data-marca='0']",formulario).show().addClass("active");
-		
+	$("#aut_marca",formulario).change(function(){
+		var marcaAct=$(this).val();
+		if (marcaAct==0){
+			$("#aut_nauto",formulario).enable();
+			$("#aut_nauto",formulario).val("0");
+			$("#aut_nauto",formulario).disable();
+		}else{
+			$("#aut_nauto",formulario).enable();
+			$("#aut_nauto",formulario).val("0");
+			$("#aut_nauto option",formulario).disable().hide();
+			$("#aut_nauto option[data-marca='"+marcaAct+"']",formulario).enable().show();
+			$("#aut_nauto option[data-marca='0']",formulario).enable().show();
+		}		
 		formulario.ActualizarParametros();
 	});
-	
-	$("#modelos .nav-link",formulario).click(function(){
-		$("#modelos .nav-link",formulario).removeClass("active");
-		$(this).addClass("active");
+
+	$("#aut_nauto",formulario).change(function(){	
 		formulario.ActualizarParametros();
 	});
-
-
 	
 	$(".tool:not(:first-child)",formulario).click(function(){
 		var parametros=$(this).data();

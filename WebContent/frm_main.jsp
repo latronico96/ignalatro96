@@ -24,7 +24,7 @@
 <body style="height: 100vh;">
 	<div class="container container-fluid cuerpo" style="">
 		<!-- Barra de menus -->
-		<div class="row justify-content-between">
+		<div class="row justify-content-between" id="barraMenu">
 			<nav class="navbar navbar-expand col navbar-light negro T-blanco rounded">
 				<div class="collapse navbar-collapse" id="navbarNav">
 					<ul class="navbar-nav">
@@ -119,7 +119,7 @@
 			</nav>
 		</div>
 		<!-- fin  Barra de menus -->
-		<div class="row justify-content-between">
+		<div class="row justify-content-between" id="cuerpo">
 			<!-- Barra Lateral -->
 			<div class="fila">
 				<div class="list-group d-none" id="list-tab" role="tablist">
@@ -172,7 +172,7 @@
 			<!-- fin cuerpo -->
 		</div>		
 		<!-- pie -->
-		<div class="fila">
+		<div class="fila" id="pie">
 			<nav class="navbar navbar-expand col navbar-light negro T-blanco rounded">
 				<div class="collapse navbar-collapse" id="navbarNav">
 					<ul class="navbar-nav">

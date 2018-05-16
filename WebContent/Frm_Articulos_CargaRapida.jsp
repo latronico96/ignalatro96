@@ -105,6 +105,9 @@ idForm %> >div {
     		}
     		return res;   		
     	},
+    	cargarMarcas: function(marcas){
+    		$("#listaMarca",formulario).html(marcas);
+    	},    	
     	Grilla: function (){	        
 	        $(formulario.NidGrilla).jqGrid({
 	        	url: <%=URL%>,
@@ -146,7 +149,8 @@ idForm %> >div {
 	        		$("#form div:first *",formulario).each(function( index ) {
 	        			  $(this).width(parseFloat($(this).width()-2));
 	        			});
-	        		$("#listaMarca",formulario).html(funciones("GetHTMLOtionList",["mar_codig","String","mar_nombr","String","dbmarcas","String"]));
+	        		
+	        		funciones("GetHTMLOtionList",["mar_codig","String","mar_nombr","String","dbmarcas","String"],formulario.cargarMarcas);
 	        		
 	        		$('#mar_nombr',formulario).change(function(){
 	        	        var clave=$("#listaMarca option[value='" + $('#mar_nombr',formulario).val() + "']",formulario).attr('data-id');
