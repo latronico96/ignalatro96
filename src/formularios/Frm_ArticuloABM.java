@@ -178,9 +178,11 @@ public class Frm_ArticuloABM extends HttpServlet {
 					insert+="select "+autos[i]+" , "+claveValor+" \n";
 					i++;
 				}
-				stAlta = cn.createStatement();	
-				stAlta.executeUpdate(insert);
-				stAlta.close();
+				if (i>0){
+					stAlta = cn.createStatement();	
+					stAlta.executeUpdate(insert);
+					stAlta.close();					
+				}
 				
 			}		
 			
