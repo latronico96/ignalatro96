@@ -100,6 +100,7 @@ idForm %> .tool:not (:first-child ) {
 	<script type="text/javascript">
 	formulario = $.fn.extend($(<%="\"#"+idForm+"\""%>), {
 		idGrilla:"<%=idGrilla%>",
+		idForm: "#<%=idForm%>",
    		NidGrilla: "#" + "<%=idGrilla%>",
 		stringFrom: "<div id=\"form\">\n"+
 						"<button id=\"btn_rev\" class=\"form-control \" style=\"width:20px; height: 18px; padding: 1px;\" type=\"button\" value=\"se apreto\">\n"+
@@ -187,7 +188,8 @@ idForm %> .tool:not (:first-child ) {
 	        			}
 	        		});
 	        		$("#form",formulario).remove();
-	        		$(".ui-jqgrid-bdiv",formulario).prepend(formulario.stringFrom);
+	        		//$(".ui-jqgrid-bdiv",formulario).prepend(formulario.stringFrom);
+	        		$(formulario.stringFrom).insertBefore(formulario.idForm + " .ui-jqgrid-bdiv");
 	        		$("#btn_rev",formulario).unbind("click").click(function(){
 	        			$(".dato",formulario).val("");
 		        		$("#mar_codig",formulario).val(Math.max(...$(formulario.NidGrilla).jqGrid('getCol', 'mar_codig', false).concat([0]))+1);   	

@@ -93,6 +93,7 @@
 	<script type="text/javascript">
 	formulario = $.fn.extend($(<%="\"#"+idForm+"\""%>), {
 		idGrilla:"<%=idGrilla%>",
+		idForm: "#<%=idForm%>",
    		NidGrilla: "#" + "<%=idGrilla%>",
 		stringFrom: "<div id=\"form\">\n"+
 						"<button id=\"btn_rev\" class=\"form-control \" style=\"width:20px; height: 18px; padding: 1px;\" type=\"button\" value=\"se apreto\">\n"+
@@ -184,7 +185,8 @@
 	        			}
 	        		});
 	        		$("#form",formulario).remove();
-	        		$(".ui-jqgrid-bdiv",formulario).prepend(formulario.stringFrom);
+	        		$(formulario.stringFrom).insertBefore(formulario.idForm + " .ui-jqgrid-bdiv");
+	        		//$(".ui-jqgrid-bdiv",formulario).prepend(formulario.stringFrom);
 	        		
 	        		funciones("GetHTMLOtion",["mar_codig","String","mar_nombr","String","dbmarcas","String"], formulario.cargarMarcas);
 	        		
