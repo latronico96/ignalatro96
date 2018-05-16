@@ -152,6 +152,9 @@
 				});
 			}
     	},
+    	cargarMarcas:function(marcas){
+    		$("#aut_marca",formulario).html(marcas);
+    	},
     	Grilla: function (){	        
 	        $(formulario.NidGrilla).jqGrid({
 	        	url: <%=URL%>,
@@ -182,7 +185,9 @@
 	        		});
 	        		$("#form",formulario).remove();
 	        		$(".ui-jqgrid-bdiv",formulario).prepend(formulario.stringFrom);
-	        		$("#aut_marca",formulario).html(funciones("GetHTMLOtion",["mar_codig","String","mar_nombr","String","dbmarcas","String"]));
+	        		
+	        		funciones("GetHTMLOtion",["mar_codig","String","mar_nombr","String","dbmarcas","String"], formulario.cargarMarcas);
+	        		
 	        		$("#btn_rev",formulario).unbind("click").click(function(){
 	        			$(".dato",formulario).val("");
 		        		$("#aut_codig",formulario).val(Math.max(...$(fGetHTMLOtionormulario.NidGrilla).jqGrid('getCol', 'aut_codig', false).concat([0]))+1);  	

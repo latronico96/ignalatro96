@@ -72,14 +72,14 @@
 							<%=fun.GetHTMLOtion("mar_codig", "mar_nombr", "dbMarcas","") %>
 						</select> 
 						<span class="form-control with-20-00">Costo</span>
-						<input id="art_costo" class="form-control with-20-00 campo precio" type="text">
+						<input id="art_costo" class="form-control with-30-00 campo precio" type="text">
 					</div>
 					<div class="fila">
 						<span class="form-control with-20-00">$	Menor</span>
-						<input id="art_ppmeno" class="form-control with-10-00 campo precio" type="text">
+						<input id="art_ppmen" class="form-control with-10-00 campo" type="text">
 						<input id="art_pmeno" class="form-control with-20-00 campo precio" type="text">
 						<span class="form-control with-20-00">$ Mayor</span>
-						<input id="art_ppmay" class="form-control with-10-00 campo precio" type="text">
+						<input id="art_ppmay" class="form-control with-10-00 campo" type="text">
 						<input id="art_pmayo" class="form-control with-20-00 campo precio" type="text">
 					</div>
 					<div class="fila">
@@ -172,8 +172,8 @@
     		}
     		return res;   		
     	},
-    	cargarAutos: function(autos=''){
-    		$("#art_autos",formulario).html(autos);
+    	cargarAutos: function(auto=''){
+    		$("#art_autos",formulario).html(auto);
     	}
     	
    	});
@@ -271,6 +271,33 @@
 				    });
         		}
         	}); 
+        	$('#art_costo,#art_ppmen,#art_ppmay',formulario).change(function(){	 
+    			var costo=$('#art_costo',formulario).val();
+    			$('#art_costo',formulario).val(number_format(costo,2));
+    			var costo=parseFloat($('#art_costo',formulario).val()); 
+    			
+    			var porceMin=$('#art_ppmen',formulario).val();
+    			$('#art_ppmen',formulario).val(number_format(porceMin,2));
+    			var porceMin=parseFloat($("#art_ppmen",formulario).val())/100;
+    			
+    			var porceMay=$('#art_ppmay',formulario).val();
+    			$('#art_ppmay',formulario).val(number_format(porceMay,2));
+    			var porceMay=parseFloat($("#art_ppmay",formulario).val())/100;
+    			
+    			$("#art_pmeno",formulario).val(number_format(costo+(costo*porceMin),2));
+    			$("#art_pmayo",formulario).val(number_format(costo+(costo*porceMay),2));	        			
+    	    });	 
+    		
+    		$('#art_pmeno,#art_pmayo',formulario).change(function(){	 
+    			var costo=$('#art_costo',formulario).val();
+    			$('#art_costo',formulario).val(number_format(costo,2));
+    			var costo=parseFloat($('#art_costo',formulario).val()); 
+    			var pmeno=parseFloat($('#art_pmeno',formulario).val()); 
+    			var pmayo=parseFloat($('#art_pmayo',formulario).val()); 
+    			
+    			$('#art_ppmen',formulario).val(number_format( (pmeno/costo - 1)*100 ,2));
+    			$('#art_ppmay',formulario).val(number_format( (pmayo/costo - 1)*100 ,2));		
+    	    });	 
 
 
         	$("#Titulo",formulario).html(modoTitulo);

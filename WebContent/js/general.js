@@ -378,6 +378,22 @@ $.fn.extend(
             }
 );
 
+$.fn.extend(
+	 $.fn.enable = function () {
+	    $.each(this, function (index, el) {
+	        $(el).removeAttr('disabled');
+	    });
+	    return this;
+	}
+);
+$.fn.extend(
+    $.fn.disable = function () {
+	    	$.each(this, function (index, el) {
+	    		$(el).attr('disabled', 'disabled');
+	    });
+	    return this;
+	}
+);
 function stringToBoolean(string){
 	switch(string.toLowerCase().trim()){
 		case "true": case "yes": case "1": case "si": return true;
